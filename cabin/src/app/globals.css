@@ -5,6 +5,7 @@
   --accent-light: #E5D2A6;
   --accent-dark: #58433A;
   --text: #0a0a0a;
+  --font-size-normal: 30;
 }
 
 @theme inline {
@@ -15,6 +16,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-size-normal: var(--font-size-normal);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,6 +25,7 @@
   --accent-light: #A1AEBA;
   --accent-dark: #0F0E29;
   --textl: #FFFFFF;
+  --font-size-normal: 24px;
 }
 }
 
