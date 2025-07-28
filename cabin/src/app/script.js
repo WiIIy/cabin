@@ -9,3 +9,8 @@ openAbout.addEventListener("click",()=>{
 closeAbout.addEventListener("click",()=>{
     aboutTab.classList.remove("open")
 })
+
+function draggableComponent(modal, openBtn, closeBtn){
+    const card = modal;
+    card.addEventListener('mousedown', )
+}
