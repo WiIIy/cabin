@@ -1,3 +1,5 @@
+"use client"
+
 import { Collapsible, CollapsibleContent, CollapsibleTrigger} from "@radix-ui/react-collapsible"
 import { useTheme } from "next-themes";
 import { useState } from "react";

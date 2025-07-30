@@ -22,11 +22,11 @@ export function ThemeToggle() {
   };
 
   return (
-    <button onClick={toggleTheme}>
+    <button className="absolute left-5 top-2 z-10" onClick={toggleTheme}>
       {theme === "dark" ? (
-        <Image src="/moonicon.png" alt="sun icon" className="absolute left-5 top-2" width={50} height={50} ></Image>
+        <Image src="/moonicon.png" alt="sun icon" width={50} height={50} ></Image>
       ) : (
-        <Image src="/sunicon.png" alt="moon icon" className="absolute left-5 top-2" width={50} height={50} ></Image>
+        <Image src="/sunicon.png" alt="moon icon" width={50} height={50} ></Image>
       )}
     </button>
   );

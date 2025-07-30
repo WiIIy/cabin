@@ -37,9 +37,9 @@ export function ButtonWithIcon({
   const currentIconSrc = resolvedTheme === "dark" ? iconDarkSrc : iconLightSrc;
 
   return (
-    <Button id={id} onClick={onClick} {...props} className="flex-col text-(length:--font-size-normal) content-between">
+    <Button id={id} onClick={onClick} {...props} className="flex-col text-lg content-between shadow-none">
       {currentIconSrc && (
-        <Image src={currentIconSrc} alt={alt} width={100} height={100} /> // Adjust width/height as needed
+        <Image src={currentIconSrc} alt={alt} width={75} height={75} /> // Adjust width/height as needed
       )}
       <p className="relative top-1">{text}</p>
     </Button>

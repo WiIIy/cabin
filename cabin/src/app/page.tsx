@@ -18,7 +18,7 @@ export default function Home() {
       </div>
 
       <div className="absolute bottom-0 left-0 w-full h-1/2 bg-accent-light -z-10"> {/*half the background thats light */}
-         <p className="absolute bottom-1/6 right-1/2 text-text-normal">Your Footer Content Here</p>
+         <p className="absolute bottom-1/6 left-1/2 -translate-x-1/2 text-center text-text-normal">Your Footer Content Here</p>
       </div>
     </div>
   );

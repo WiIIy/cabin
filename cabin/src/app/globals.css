@@ -8,6 +8,11 @@
   --alt-text: #ffffff;
   --font-size-normal: 24px;
   --font-size-mini: 16px;
+
+  --Speech-Bubble-Border:#222;
+	--Speech-Bubble-Background:#ffefb6;
+	--Speech-Bubble-Text:#222;
+  --Speech-Font-Size:16px;
 }
 
 @theme inline {
@@ -41,11 +46,99 @@
   --text: #FFFFFF;
   --font-size-normal: 24px;
   --font-size-mini: 16px;
-  --alt-text:#ffffff
+  --alt-text:#ffffff;
+
+  --Speech-Bubble-Border:#13133a;
+	--Speech-Bubble-Background:#A1AEBA;
+	--Speech-Bubble-Text:#13133a;
+  --Speech-Font-Size:16px;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* 'silkscreen' font */
+/* author: Jason Aleksandr Kottke */
+/* //www.dafont.com/silkscreen.font */
+@font-face {font-family:"silkscreen"; src: url('https://dl.dropbox.com/s/l0frac4d7bz3zx6/silkscreen.ttf');}
+
+#speech-bubble {
+	width:200px;
+}
+
+#bub-part-a {
+	margin-left:6px;
+	width:calc(100% - 12px);
+	height:2px;
+	background:var(--Speech-Bubble-Border);
+}
+
+#bub-part-b {
+	margin-left:4px;
+	width:calc(100% - 12px);
+	height:2px;
+	background:var(--Speech-Bubble-Background);
+	border-left:2px solid var(--Speech-Bubble-Border);
+	border-right:2px solid var(--Speech-Bubble-Border);
+}
+
+#bub-part-c {
+	margin-left:2px;
+	width:calc(100% - 8px);
+	height:2px;
+	background:var(--Speech-Bubble-Background);
+	border-left:2px solid var(--Speech-Bubble-Border);
+	border-right:2px solid var(--Speech-Bubble-Border);
+}
+
+#speech-txt {
+	width:calc(100% - 4px);
+	padding:10px;
+	font-family:silkscreen;
+	font-size:var(--Speech-Font-Size);
+	color:var(--Speech-Bubble-Text);
+	text-align:center;
+	background:var(--Speech-Bubble-Background);
+	border-left:2px solid var(--Speech-Bubble-Border);
+	border-right:2px solid var(--Speech-Bubble-Border);
+}
+
+#speech-arrow {
+	margin-top:-2px;
+	margin-left:110px;
+}
+
+#arrow-w {
+	width:8px;
+	height:8px;
+	background:var(--Speech-Bubble-Background);
+	border-left:2px solid var(--Speech-Bubble-Border);
+	border-right:2px solid var(--Speech-Bubble-Border);
+}
+
+#arrow-x {
+	width:6px;
+	height:2px;
+	background:var(--Speech-Bubble-Background);
+	border-left:2px solid var(--Speech-Bubble-Border);
+	border-right:2px solid var(--Speech-Bubble-Border);
+}
+
+#arrow-y {
+	margin-left:-2px;
+	width:6px;
+	height:2px;
+	background:var(--Speech-Bubble-Background);
+	border-left:2px solid var(--Speech-Bubble-Border);
+	border-right:2px solid var(--Speech-Bubble-Border);
+}
+
+#arrow-z {
+	margin-left:-2px;
+	width:8px;
+	height:2px;
+	background:var(--Speech-Bubble-Border);
 }

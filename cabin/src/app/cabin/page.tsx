@@ -1,9 +1,18 @@
+import { ThemeToggle } from "../components/theme-toggle";
+import { CabinBG } from "./components/cabin-bg";
+import { SpeechBubble } from "./components/speech-bubble";
+import Image from "next/image";
 
-export default function Home() {
-
+export default function Cabin() {
   return (
-    <div className="relative flex flex-col items-center h-screen w-screen">
-      bahahaa!
+    <div className="relative h-screen w-screen">
+      <ThemeToggle/>
+        
+      <SpeechBubble text="wewaewaeawewa"/>
+
+      <CabinBG/>
+      
     </div>
+    
   );
 }
