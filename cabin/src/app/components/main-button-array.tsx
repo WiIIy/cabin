@@ -22,7 +22,7 @@ export function MainButtonArray(){
   };
 
   const handleOpenWork = () => {
-    setIsWorkTabOpen(!isAboutTabOpen);
+    setIsWorkTabOpen(!isWorkTabOpen);
   };
 
   const handleCloseWork = () => {
@@ -30,7 +30,7 @@ export function MainButtonArray(){
   };
 
 const handleOpenFaq = () => {
-    setIsFaqTabOpen(!isAboutTabOpen);
+    setIsFaqTabOpen(!isFaqTabOpen);
   };
 
   const handleCloseFaq = () => {
@@ -38,7 +38,7 @@ const handleOpenFaq = () => {
   };
 
   const handleOpenLinks = () => {
-    setIsLinksTabOpen(!isAboutTabOpen);
+    setIsLinksTabOpen(!isLinksTabOpen);
   };
 
   const handleCloseLinks = () => {
@@ -46,7 +46,7 @@ const handleOpenFaq = () => {
   };
 
   const handleOpenContact = () => {
-    setIsContactTabOpen(!isAboutTabOpen);
+    setIsContactTabOpen(!isContactTabOpen);
   };
 
   const handleCloseContact = () => {
