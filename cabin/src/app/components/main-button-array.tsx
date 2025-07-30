@@ -19,18 +19,32 @@ export function MainButtonArray(){
 
     return (
         <>
-        {/* <Draggable nodeRef={myRef} >
-            <div ref={myRef} className={`absolute bg-accent-light top-0 pointer-events-none left-0 h-1/2 w-1/2 ${isAboutTabOpen ? 'opacity-100' : 'opacity-0'}`} id="aboutTab">
-                <div className="handle">Drag from here</div>
-            </div>
-        </Draggable> */}
         <Draggable handle="strong" nodeRef={myRef}>
-          <div ref={myRef} className="box no-cursor" style={{display: 'flex', flexDirection: 'column'}}>
-            <strong className="cursor"><div>Drag here</div></strong>
-            <div style={{overflow: 'scroll'}}>
-              <div style={{background: 'yellow', whiteSpace: 'pre-wrap'}}>
-                I have long scrollable content with a handle
-                {'\n' + Array(40).fill('x').join('\n')}
+          <div ref={myRef} className={`absolute box z-10 border-2 border-text rounded-lg no-cursor  ${isAboutTabOpen ? 'visible' : 'invisible'}`} style={{display: 'flex', flexDirection: 'column', height:'50%', overflow:'hidden'}}>
+            <strong className="flex justify-between p-2 cursor-pointer bg-accent-dark text-white"><div>about</div><div onClick={handleCloseAbout}>[X]</div></strong>
+            <div style={{overflow: 'scroll', overscrollBehavior:'none'}}>
+              <div className={"bg-background"} style={{cursor:'pointer' ,whiteSpace: 'pre-wrap', padding:10, textWrap:'wrap'}}>
+                Will *not my real name, I use an alias for stuff on the internet <br/>
+ID-based freelance artist, designer, developer, I..<br/>
+<br/>
+- draw interesting concepts (link to the page)<br/>
+- create assets for games<br/>
+- model things in 3D<br/>
+- do frontend web development<br/>
+<br/>
+Education<br/>
+Bachelor of Information Systems (on-going)<br/>
+University of Indonesia<br/>
+<br/>
+Language<br/>
+- English (Fluent)<br/>
+- Indonesian (Fluent)<br/>
+<br/>
+Other Interests<br/>
+- gamedev<br/>
+- chess<br/>
+- ethical hacking<br/>
+<br/>
               </div>
             </div>
           </div>

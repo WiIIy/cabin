@@ -5,6 +5,7 @@
   --accent-light: #E5D2A6;
   --accent-dark: #58433A;
   --text: #0a0a0a;
+  --alt-text: #ffffff;
   --font-size-normal: 24px;
 }
 
@@ -14,6 +15,7 @@
   --color-accent-dark: var(--accent-dark);
   --color-text-normal: var(--text);
   --color-foreground: var(--foreground);
+  --color-alt-text: var(--alt-text);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-size-normal: var(--font-size-normal);
@@ -26,6 +28,7 @@
   --accent-dark: #0F0E29;
   --text: #FFFFFF;
   --font-size-normal: 24px;
+  --alt-text:#ffffff
 }
 
 body {
