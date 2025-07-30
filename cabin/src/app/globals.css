@@ -7,6 +7,7 @@
   --text: #0a0a0a;
   --alt-text: #ffffff;
   --font-size-normal: 24px;
+  --font-size-mini: 16px;
 }
 
 @theme inline {
@@ -19,6 +20,17 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-size-normal: var(--font-size-normal);
+  --font-size-mini: var(--font-size-mini)
+
+  --animate-rotate180: rotate180 .3s forwards;  
+  @keyframes rotate180 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
 }
 
 
@@ -28,6 +40,7 @@
   --accent-dark: #0F0E29;
   --text: #FFFFFF;
   --font-size-normal: 24px;
+  --font-size-mini: 16px;
   --alt-text:#ffffff
 }
 

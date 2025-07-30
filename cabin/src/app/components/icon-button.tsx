@@ -1,6 +1,6 @@
-"use client"; // If it's a client component
+"use client";
 
-import { Button } from "@/components/ui/button"; // Assuming this path
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -34,7 +34,6 @@ export function ButtonWithIcon({
     return null;
   }
 
-  // Determine the correct image source based on the resolved theme
   const currentIconSrc = resolvedTheme === "dark" ? iconDarkSrc : iconLightSrc;
 
   return (

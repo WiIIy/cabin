@@ -1,5 +1,3 @@
-// import DraggableBox from "@/components/ui/draggableUi";
-import { ButtonWithIcon } from "./components/icon-button";
 import Script from "next/script";
 import { ThemeToggle } from "./components/theme-toggle";
 import { MainButtonArray } from "./components/main-button-array";
@@ -18,14 +16,6 @@ export default function Home() {
             </div>
           </div>
       </div>
-
-      
-{/* 
-      <Draggable>
-            <p>Drag me around!</p>
-            <p className="text-sm mt-2">(Client Component)</p>
-          </Draggable> */}
-
 
       <div className="absolute bottom-0 left-0 w-full h-1/2 bg-accent-light -z-10"> {/*half the background thats light */}
          <p className="absolute bottom-1/6 right-1/2 text-text-normal">Your Footer Content Here</p>
