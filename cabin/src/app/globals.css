@@ -2,6 +2,7 @@
 
 :root {
   --background: #ffffff;
+  --background-darkened: #d6b8a2;
   --accent-light: #E5D2A6;
   --accent-dark: #58433A;
   --text: #0a0a0a;
@@ -17,6 +18,7 @@
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-darkened: var(--background-darkened);
   --color-accent-light: var(--accent-light);
   --color-accent-dark: var(--accent-dark);
   --color-text-normal: var(--text);
@@ -41,6 +43,7 @@
 
 :root.dark {
   --background: #1B2240;
+  --background-darkened: #2d3972;
   --accent-light: #A1AEBA;
   --accent-dark: #0F0E29;
   --text: #FFFFFF;

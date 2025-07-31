@@ -7,6 +7,7 @@ import { CabinBG } from "./components/cabin-bg";
 import { SpeechBubble } from "./components/speech-bubble";
 import { Cinderblock, DraggableCinderblock } from "./components/cinder-block";
 import { useTheme } from "next-themes";
+import { ScrapBook } from "./components/art-book-ui";
 
 // Define types for Will's expressions
 export type WillExpression = 'reading' | 'blinking' | 'talking' | 'shocked'| 'really' ;
@@ -265,9 +266,11 @@ export default function Cabin() {
       {/* Speech Bubble: Ensure it has a high z-index to be visible */}
       {speechText && <SpeechBubble text={speechText} />}
 
+      <ScrapBook/>
+
       <div
         ref={tableRef}
-        className="absolute bg-accent-dark z-10 left-97 top-70 h-30 w-50 border-2 border-white cursor-pointer"
+        className="absolute bg-accent-dark z-110 left-98 top-77 h-11 w-50 border-2 border-white cursor-pointer"
         onClick={handleTableClick}
       >
         <p className="text-white text-center mt-4">Click to grab a cinderblock</p>
@@ -284,7 +287,7 @@ export default function Cabin() {
 
       <div
         ref={windowRef}
-        className="absolute bg-accent-light z-10 left-97 top-25 h-32 w-50 border-white border-2 cursor-pointer"
+        className="absolute bg-accent z-110 left-98 top-25 h-32 w-50 border-white border-2 cursor-pointer"
         onClick={handleWindowClick}
       >
         {/* The visual representation of the window and blinds will be handled by CabinBG */}

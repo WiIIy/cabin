@@ -26,7 +26,7 @@ export function ThemeToggle({className}:themeToggleProps) {
   };
 
   return (
-    <button className={`absolute z-10 ${className}`} onClick={toggleTheme}>
+    <button className={`absolute z-10 cursor-pointer ${className}`} onClick={toggleTheme}>
       {theme === "dark" ? (
         <Image src="/moonicon.png" alt="sun icon" width={50} height={50} ></Image>
       ) : (
