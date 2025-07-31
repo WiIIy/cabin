@@ -9,7 +9,7 @@ import { Cinderblock, DraggableCinderblock } from "./components/cinder-block";
 import { useTheme } from "next-themes";
 
 // Define types for Will's expressions
-export type WillExpression = 'reading' | 'blinking' | 'talking' | 'shocked';
+export type WillExpression = 'reading' | 'blinking' | 'talking' | 'shocked' | 'really';
 
 export default function Cabin() {
   const { theme } = useTheme();
@@ -28,6 +28,20 @@ export default function Cabin() {
   const blinkIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const shockTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Refs to hold the latest state values for use in memoized callbacks
+  const willExpressionRef = useRef(willExpression);
+  const speechTextRef = useRef(speechText);
+
+  // Update refs whenever the state changes
+  useEffect(() => {
+    willExpressionRef.current = willExpression;
+  }, [willExpression]);
+
+  useEffect(() => {
+    speechTextRef.current = speechText;
+  }, [speechText]);
+
+
   // Function to start blinking animation
   const startBlinkingAnimation = useCallback(() => {
     // Ensure no duplicate intervals are running
@@ -36,30 +50,42 @@ export default function Cabin() {
       blinkIntervalRef.current = null;
     }
 
+    // Check current state using refs before starting interval
     // Only start blinking if Will is in 'reading' state and not shocked/talking/has speech
-    if (willExpression === 'reading' && !speechText ) {
+    if (willExpressionRef.current === 'reading' && !speechTextRef.current ) {
       blinkIntervalRef.current = setInterval(() => {
-        setWillExpression('blinking');
-        setTimeout(() => {
-          // After a short blink, revert to reading if still in blinking state and conditions allow
-          if (!windowBroken && speechText === null) {
-            setWillExpression('reading');
+        // Use functional update to ensure latest state for blinking
+        setWillExpression(prev => {
+          // Only blink if current state is reading and no speech
+          if (willExpressionRef.current === 'reading' && speechTextRef.current === null) { // Use ref for latest state
+            return 'blinking';
           }
+          return prev; // Don't change if already talking/shocked/etc.
+        });
+
+        setTimeout(() => {
+          // Revert to reading if still blinking and conditions allow
+          setWillExpression(prev => {
+            if (willExpressionRef.current === 'blinking' && !windowBroken && speechTextRef.current === null) { // Use ref for latest state
+              return 'reading';
+            }
+            return prev;
+          });
         }, 300); // Blink duration
       }, Math.random() * (5000 - 3000) + 3000); // Blink every 3-5 seconds
     }
-  }, [willExpression, windowBroken, speechText]); // Dependencies for useCallback
+  }, [windowBroken]); // Dependencies for useCallback: only windowBroken as it's outside ref/state
 
   // Function to clear speech bubble and reset Will's expression
   const clearSpeechAndResetExpression = useCallback(() => {
     setSpeechText(null);
     // Only revert to reading if not currently shocked or talking
-    if (willExpression !== 'shocked' && willExpression !== 'talking') {
+    if (willExpressionRef.current !== 'reading') { // Use ref for latest state
       setWillExpression('reading');
     }
     // Restart blinking animation if applicable
     startBlinkingAnimation();
-  }, [willExpression, startBlinkingAnimation]); // Depend on willExpression and startBlinkingAnimation
+  }, []); // Depend on startBlinkingAnimation
 
   // Function to trigger speech bubble - now only sets states
   const triggerSpeechBubble = (
@@ -92,7 +118,7 @@ export default function Cabin() {
       }, currentSpeechDuration);
     } else {
       // If speechText is null (e.g., after clearing), ensure blinking restarts if conditions allow
-      if (willExpression !== 'talking' && willExpression !== 'shocked') {
+      if (willExpressionRef.current == 'reading') {
         startBlinkingAnimation();
       }
     }
@@ -101,7 +127,7 @@ export default function Cabin() {
     return () => {
       if (speechTimeoutRef.current) clearTimeout(speechTimeoutRef.current);
     };
-  }, [speechText, willExpression, currentSpeechDuration, clearSpeechAndResetExpression, startBlinkingAnimation]); // Dependencies for this effect
+  }, []); // Dependencies for this effect
 
 
   const handleTableClick = (e: React.MouseEvent<HTMLDivElement>): void => {
@@ -181,16 +207,15 @@ export default function Cabin() {
           clearTimeout(shockTimeoutRef.current);
         }
         shockTimeoutRef.current = setTimeout(() => {
-          triggerSpeechBubble("That was unnecessary...", 2000, 'talking'); // Will says this after being shocked
+          triggerSpeechBubble("That was unnecessary...", 1500, 'really'); // Will says this after being shocked
           // The subsequent reset to reading and blinking is handled by the useEffect for speech.
           // No need for another nested setTimeout here.
         }, 1500); // Duration for "My window!"
       }
     }
-    // After drag stop, if window is not broken, restart blinking
-    if (!windowBroken) {
-      startBlinkingAnimation();
-    }
+
+    startBlinkingAnimation();
+
   };
 
   const handleWindowClick = (): void => {

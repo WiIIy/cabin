@@ -65,6 +65,9 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
             case 'shocked':
                 fileName = `will_shocked_${isDark ? 'dark' : 'light'}.png`;
                 break;
+            case 'really':
+                fileName = `will_really_${isDark ? 'dark' : 'light'}.png`;
+                break;    
             default:
                 fileName = `will_reading_${isDark ? 'dark' : 'light'}.png`; // Default fallback
         }
@@ -142,7 +145,7 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
             {windowBroken && (
                 <Image
                     src={"/cabin/background/window_crack.png"}
-                    className="absolute z-88 mix-blend-overlay pointer-events-none"
+                    className="absolute z-11 mix-blend-overlay pointer-events-none"
                     alt="Window Crack" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
                 />
             )}
