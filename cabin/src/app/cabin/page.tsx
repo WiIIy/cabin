@@ -8,20 +8,23 @@ import { SpeechBubble } from "./components/speech-bubble";
 import { Cinderblock, DraggableCinderblock } from "./components/cinder-block";
 import { useTheme } from "next-themes"; // Import useTheme hook
 
+// Define types for Will's expressions
+export type WillExpression = 'reading' | 'blinking' | 'talking' | 'shocked';
+
 export default function Cabin() {
-  const { theme } = useTheme(); // Get current theme
+  const { theme } = useTheme();
   const [cinderblocks, setCinderblocks] = useState<Cinderblock[]>([]);
-  const [isHoldingCinderblock, setIsHoldingCinderblock] = useState<boolean>(false); // Global holding state
-  const [windowBroken, setWindowBroken] = useState<boolean>(false); // State for window break
-  const [blindsDown, setBlindsDown] = useState<boolean>(false); // State for blinds
-  const [speechText, setSpeechText] = useState<React.ReactNode | null>(null); // State for speech bubble text
-  const [isWillTalking, setIsWillTalking] = useState<boolean>(false); // State for Will's talking sprite
-  const [isWillBlinking, setIsWillBlinking] = useState<boolean>(false); // State for Will's blinking sprite
+  const [isHoldingCinderblock, setIsHoldingCinderblock] = useState<boolean>(false);
+  const [windowBroken, setWindowBroken] = useState<boolean>(false);
+  const [blindsDown, setBlindsDown] = useState<boolean>(false);
+  const [speechText, setSpeechText] = useState<React.ReactNode | null>(null);
+  const [willExpression, setWillExpression] = useState<WillExpression>('reading'); // New state for Will's expression
+  const [hasClickedTableOnce, setHasClickedTableOnce] = useState<boolean>(false); // New state for first table click
 
   const tableRef = useRef<HTMLDivElement>(null);
-  const windowRef = useRef<HTMLDivElement>(null); // Ref for the window div
+  const windowRef = useRef<HTMLDivElement>(null);
   const speechTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const blinkTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const blinkIntervalRef = useRef<NodeJS.Timeout | null>(null); // Changed to interval ref
 
   const handleTableClick = (e: React.MouseEvent<HTMLDivElement>): void => {
     if (tableRef.current) {
@@ -31,7 +34,12 @@ export default function Cabin() {
         y: 300,
       };
       setCinderblocks(prev => [...prev, newCinderblock]);
-      triggerSpeechBubble("I forgot I had a box of cinderblocks!", 2500); // Trigger speech bubble on spawn
+
+      // Only trigger "I forgot..." on the first click
+      if (!hasClickedTableOnce) {
+        triggerSpeechBubble("I forgot I had a box of cinderblocks!", 2500, 'talking');
+        setHasClickedTableOnce(true);
+      }
     }
   };
 
@@ -45,14 +53,12 @@ export default function Cabin() {
 
   const handleDragStopCinderblock = (id: number, finalPosition: { x: number; y: number }): void => {
     setIsHoldingCinderblock(false);
-    // Check for collision with window only if window is not already broken
+
     if (!windowBroken && windowRef.current) {
       const windowRect = windowRef.current.getBoundingClientRect();
-      // Approximate cinderblock size for collision (adjust if cinderblock Image size changes)
-      const cinderblockWidth = 50;
-      const cinderblockHeight = 50;
+      const cinderblockWidth = 50; // Based on your Image width
+      const cinderblockHeight = 50; // Based on your Image height
 
-      // Calculate cinderblock's absolute position
       const cinderblockX = finalPosition.x;
       const cinderblockY = finalPosition.y;
 
@@ -65,67 +71,105 @@ export default function Cabin() {
       ) {
         console.log("Cinderblock hit the window!");
         setWindowBroken(true);
-        triggerSpeechBubble("My window!", 1500); // Trigger speech bubble on window break
-        // Optional: remove all cinderblocks or just the one that hit
+        triggerSpeechBubble("My window!", 1500, 'shocked'); // Trigger shocked expression
         setCinderblocks([]); // Remove all cinderblocks on window break
-      } else {
-        // If it didn't hit the window, let it fall (handled by DraggableCinderblock's default behavior)
       }
     }
   };
 
   const handleWindowClick = (): void => {
     if (!windowBroken) {
-      setBlindsDown(prev => !prev); // Toggle blinds if window is not broken
+      setBlindsDown(prev => !prev);
     } else {
-      // If window is broken, navigate to another page (example: '/')
-      // For now, let's just log a message
       console.log("Navigating to another page because window is broken!");
-      // window.location.href = '/some-other-broken-window-page'; // Uncomment to actually navigate
+      // window.location.href = '/some-other-broken-window-page';
     }
   };
 
-  const triggerSpeechBubble = (text: React.ReactNode, durationMs: number): void => {
+  // Modified triggerSpeechBubble function with optional expression
+  const triggerSpeechBubble = (text: React.ReactNode, durationMs: number, expression: WillExpression = 'talking'): void => {
+    // Clear any existing speech timeout
     if (speechTimeoutRef.current) {
       clearTimeout(speechTimeoutRef.current);
+      speechTimeoutRef.current = null; // Clear the ref
     }
+    // Clear any existing blinking interval
+    if (blinkIntervalRef.current) {
+        clearInterval(blinkIntervalRef.current);
+        blinkIntervalRef.current = null; // Clear the ref
+    }
+
     setSpeechText(text);
-    setIsWillTalking(true);
-    setIsWillBlinking(false); // Stop blinking while talking
+    setWillExpression(expression); // Set Will's expression
 
     speechTimeoutRef.current = setTimeout(() => {
       setSpeechText(null);
-      setIsWillTalking(false);
+      if (!windowBroken) { // Revert to reading if window not broken
+        setWillExpression('reading');
+      } else { // Or stay shocked if window broken
+        setWillExpression('shocked');
+      }
+      // Re-initialize blinking after speech
+      startBlinkingAnimation();
     }, durationMs);
   };
 
-  // Will's blinking animation
-  useEffect(() => {
-    const startBlinking = () => {
-      if (!isWillTalking && !windowBroken) { // Only blink if not talking and window is not broken
-        setIsWillBlinking(true);
-        blinkTimeoutRef.current = setTimeout(() => {
-          setIsWillBlinking(false);
-          blinkTimeoutRef.current = setTimeout(startBlinking, Math.random() * (7000 - 5000) + 5000); // Blink again after 5-7 seconds
-        }, 300); // Blink duration
-      } else if (isWillTalking || windowBroken) {
-        setIsWillBlinking(false); // Ensure blinking is off if talking or window broken
-        if (blinkTimeoutRef.current) {
-          clearTimeout(blinkTimeoutRef.current);
-        }
-      }
-    };
+  // Function to start Will's blinking animation
+  const startBlinkingAnimation = () => {
+    if (blinkIntervalRef.current) {
+        clearInterval(blinkIntervalRef.current); // Ensure no duplicate intervals
+    }
+    // Only start blinking if Will is not talking and window is not broken
+    if (willExpression !== 'talking' && willExpression !== 'shocked' && !windowBroken) {
+        blinkIntervalRef.current = setInterval(() => {
+            setWillExpression('blinking');
+            setTimeout(() => {
+                setWillExpression('reading');
+            }, 300); // Blink duration
+        }, Math.random() * (7000 - 5000) + 5000); // Blink every 5-7 seconds
+    }
+  };
 
-    if (!isWillTalking && !windowBroken) {
-        startBlinking();
+  // Effect to manage Will's expressions and blinking
+  useEffect(() => {
+    if (windowBroken) {
+      setWillExpression('shocked'); // Keep Will shocked if window is broken
+      if (blinkIntervalRef.current) {
+        clearInterval(blinkIntervalRef.current);
+        blinkIntervalRef.current = null;
+      }
+      if (speechTimeoutRef.current) { // Clear any ongoing speech timeout if window breaks
+          clearTimeout(speechTimeoutRef.current);
+          speechTimeoutRef.current = null;
+          setSpeechText(null);
+      }
+    } else if (speechText === null) { // If no speech, revert to reading/blinking
+      setWillExpression('reading');
+      startBlinkingAnimation(); // Start blinking when not talking/shocked
     }
 
+    // Cleanup function for useEffect
     return () => {
-      if (speechTimeoutRef.current) clearTimeout(speechTimeoutRef.current);
-      if (blinkTimeoutRef.current) clearTimeout(blinkTimeoutRef.current);
+      if (speechTimeoutRef.current) {
+        clearTimeout(speechTimeoutRef.current);
+      }
+      if (blinkIntervalRef.current) {
+        clearInterval(blinkIntervalRef.current);
+      }
     };
-  }, [isWillTalking, windowBroken]);
+  }, [speechText, windowBroken]); // Depend on speechText and windowBroken
 
+  // Initial blinking setup when component mounts
+  useEffect(() => {
+    if (!windowBroken && speechText === null) {
+      startBlinkingAnimation();
+    }
+    return () => {
+      if (blinkIntervalRef.current) {
+        clearInterval(blinkIntervalRef.current);
+      }
+    };
+  }, []); // Run once on mount
 
   return (
     <div className="absolute h-screen w-fit overscroll-none">
@@ -140,16 +184,15 @@ export default function Cabin() {
         onClick={handleTableClick}
       >
         <p className="text-white text-center mt-4">Click to grab a cinderblock</p>
-      </div> {/*table*/}
+      </div>
 
       <div
         ref={windowRef}
-        className="absolute bg-accent-light z-10 left-97 top-25 h-32 w-50 border-white border-2"
-        onClick={handleWindowClick} // Click handler for window/blinds/navigation
+        className="absolute z-100 left-98 top-25 h-32 w-50 border-white border-2"
+        onClick={handleWindowClick}
       >
         {/* The visual representation of the window and blinds will be handled by CabinBG */}
-      </div> {/*window. clicking it moves the blinds up and down. clicking a cinderblock at it makes it break, but the blinds are still able to be clicked up or down*/}
-      {/*only once the window is broken, the user can click the window to get transported to another page. the broken state persists on dark/light theme*/}
+      </div>
 
       {cinderblocks.map((block: Cinderblock) => (
         <DraggableCinderblock
@@ -158,17 +201,16 @@ export default function Cabin() {
           initialPosition={{ x: block.x, y: block.y }}
           onDelete={handleDeleteCinderblock}
           onDragStart={handleDragStartCinderblock}
-          onDragStop={handleDragStopCinderblock} // Pass the modified handler
-          disableFallingAnimation={windowBroken} // Pass prop to disable fall
+          onDragStop={handleDragStopCinderblock}
+          disableFallingAnimation={windowBroken}
         />
       ))}
 
       <CabinBG
         blindsDown={blindsDown}
         windowBroken={windowBroken}
-        isWillTalking={isWillTalking}
-        isWillBlinking={isWillBlinking}
-        currentTheme={theme as 'light' | 'dark'} // Pass current theme
+        willExpression={willExpression} // Pass Will's expression
+        currentTheme={theme as 'light' | 'dark'}
       />
     </div>
   );

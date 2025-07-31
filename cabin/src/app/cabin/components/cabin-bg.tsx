@@ -3,23 +3,21 @@
 
 import Image from "next/image"
 import { useState, useEffect } from "react";
-// No need for useTheme here as it's passed from page.tsx now
+import { WillExpression } from "../page"; // Import the WillExpression type
+
 const imageAspectRatio = 3;
 
 interface CabinBGProps {
     blindsDown: boolean;
     windowBroken: boolean;
-    isWillTalking: boolean;
-    isWillBlinking: boolean;
+    willExpression: WillExpression; // Changed to single expression prop
     currentTheme: 'light' | 'dark';
 }
 
-export function CabinBG({ blindsDown, windowBroken, isWillTalking, isWillBlinking, currentTheme }: CabinBGProps) {
+export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme }: CabinBGProps) {
     const isDark = currentTheme === 'dark';
 
-    // State for animated lights
     const [lightsToggle, setLightsToggle] = useState(false);
-    // State for animated window shine
     const [windowShineToggle, setWindowShineToggle] = useState(false);
 
     // Light animation effect
@@ -36,13 +34,17 @@ export function CabinBG({ blindsDown, windowBroken, isWillTalking, isWillBlinkin
     // Window shine animation effect
     useEffect(() => {
         let shineInterval: NodeJS.Timeout;
-        if (!windowBroken) { // Only animate shine if window is not broken
+        // Only animate shine if window is not broken and Will is not shocked
+        if (!windowBroken && willExpression !== 'shocked') { // Ensure shine stops if window is broken OR Will is shocked
             shineInterval = setInterval(() => {
                 setWindowShineToggle(prev => !prev);
             }, 500); // Toggle every 0.5 seconds for a shakey effect
+        } else {
+            // Stop shine if window broken or Will is shocked
+            setWindowShineToggle(false); // Ensure shine image is off
         }
         return () => clearInterval(shineInterval);
-    }, [windowBroken]);
+    }, [windowBroken, willExpression]); // Added willExpression to dependencies
 
 
     return (
@@ -94,7 +96,7 @@ export function CabinBG({ blindsDown, windowBroken, isWillTalking, isWillBlinkin
             />
 
             {/* Window Shine or Crack (conditional on windowBroken) */}
-            {!windowBroken && (
+            {!windowBroken && !blindsDown && (
                 <>
                     {windowShineToggle && (
                         <Image
@@ -120,26 +122,33 @@ export function CabinBG({ blindsDown, windowBroken, isWillTalking, isWillBlinkin
                 />
             )}
 
-            {/* Will's Sprites (conditional on talking/blinking/reading and theme) */}
-            {isWillTalking && (
+            {/* Will's Sprites (conditional on expression and theme) */}
+            {willExpression === 'talking' && (
                 <Image
                     src={isDark ? "/cabin/will/will_talking_dark.png" : "/cabin/will/will_talking_light.png"}
                     className="absolute z-88 pointer-events-none"
                     alt="Will Talking" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
                 />
             )}
-            {!isWillTalking && isWillBlinking && (
+            {willExpression === 'blinking' && (
                 <Image
                     src={isDark ? "/cabin/will/will_blinking_dark.png" : "/cabin/will/will_blinking_light.png"}
                     className="absolute z-88 pointer-events-none"
                     alt="Will Blinking" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
                 />
             )}
-            {!isWillTalking && !isWillBlinking && (
+            {willExpression === 'reading' && (
                 <Image
                     src={isDark ? "/cabin/will/will_reading_dark.png" : "/cabin/will/will_reading_light.png"}
                     className="absolute z-88 pointer-events-none"
                     alt="Will Reading" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
+                />
+            )}
+            {willExpression === 'shocked' && (
+                <Image
+                    src={isDark ? "/cabin/will/will_shocked_dark.png" : "/cabin/will/will_shocked_light.png"} // Assuming you have these images
+                    className="absolute z-88 pointer-events-none"
+                    alt="Will Shocked" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
                 />
             )}
         </div>
