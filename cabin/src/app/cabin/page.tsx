@@ -80,7 +80,7 @@ export default function Cabin() {
   const clearSpeechAndResetExpression = useCallback(() => {
     setSpeechText(null);
     // Only revert to reading if not currently shocked or talking
-    if (willExpressionRef.current !== 'reading') { // Use ref for latest state
+    if (willExpressionRef.current !== 'reading' && willExpressionRef.current !== 'shocked' ) { // Use ref for latest state
       setWillExpression('reading');
     }
     // Restart blinking animation if applicable
@@ -119,7 +119,7 @@ export default function Cabin() {
     } else {
       // If speechText is null (e.g., after clearing), ensure blinking restarts if conditions allow
       // Use willExpressionRef.current to check the latest state
-      if (willExpressionRef.current !== 'talking' && willExpressionRef.current !== 'shocked') {
+      if (willExpressionRef.current !== 'talking' && willExpressionRef.current !== 'shocked' && willExpressionRef.current !== 'really') {
         startBlinkingAnimation();
       }
     }
@@ -200,7 +200,7 @@ export default function Cabin() {
         cinderblockRect.bottom > windowRect.top
       ) {
         setWindowBroken(true);
-        triggerSpeechBubble("My window!", 1500, 'shocked');
+        triggerSpeechBubble("My window!", 1700, 'shocked'); //make sure trigger time is more than speech bubble time because new bubble might be wiped by clearSpeechandressetexpression()
         setCinderblocks([]); // Remove all cinderblocks after breaking the window
 
         // Set a timeout to change Will's expression back after being shocked
@@ -212,7 +212,7 @@ export default function Cabin() {
           // After this speech, ensure Will's expression reverts and blinking resumes
           setTimeout(() => {
             clearSpeechAndResetExpression(); // Explicitly call to reset and restart blinking
-          }, 2000); // Duration for "That was unnecessary..."
+          }, 2300); // Duration for "That was unnecessary..."
         }, 1500); // Duration for "My window!"
       }
     }
