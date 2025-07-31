@@ -1,3 +1,4 @@
+// cinder-block.tsx
 "use client"
 
 import React, { useState, useRef, useEffect } from 'react';
@@ -15,13 +16,12 @@ interface DraggableCinderblockProps {
   onDelete: (id: number) => void;
   id: number;
   onDragStart: () => void;
-  onDragStop: () => void;
+  onDragStop: (id: number, finalPosition: { x: number; y: number }) => void; // Modified signature
   disableFallingAnimation?: boolean;
 }
 
 export function DraggableCinderblock({ initialPosition, onDelete, id, onDragStart, onDragStop, disableFallingAnimation = false }: DraggableCinderblockProps) {
   const [isFalling, setIsFalling] = useState<boolean>(false);
-  // We'll manage position ourselves after the drag, not relying on Draggable's internal position
   const [position, setPosition] = useState<{ x: number; y: number }>(initialPosition);
   const myRef = useRef<HTMLImageElement>(null);
   const fallSpeed: number = 5;
@@ -33,26 +33,24 @@ export function DraggableCinderblock({ initialPosition, onDelete, id, onDragStar
   };
 
   const handleDrag: DraggableEventHandler = (e, ui) => {
-    // During drag, update our internal position state
-    // ui.x and ui.y are the absolute coordinates relative to the draggable's parent (or document.body if no parent)
     setPosition({ x: ui.x, y: ui.y });
   };
 
   const handleStop: DraggableEventHandler = (e, ui) => {
-    onDragStop();
-    // Set the final position from the drag
-    setPosition({ x: ui.x, y: ui.y }); // Use ui.x and ui.y for the drop position
+    // Pass the ID and final position to the parent's onDragStop handler
+    onDragStop(id, { x: ui.x, y: ui.y }); // Pass final position here
+    setPosition({ x: ui.x, y: ui.y });
 
     if (!disableFallingAnimation) {
       setIsFalling(true);
-      startFallingAnimation(ui.x, ui.y); // Pass the exact drop coordinates to start the fall
+      startFallingAnimation(ui.x, ui.y);
     } else {
+      // If falling animation is disabled (e.g., window broken), just delete it
       onDelete(id);
     }
   };
 
   const startFallingAnimation = (startX: number, startY: number): void => {
-    // Use an internal currentY for the falling animation, starting from the dropped Y
     let currentFallY = startY;
 
     const animateFall = (): void => {
@@ -62,7 +60,6 @@ export function DraggableCinderblock({ initialPosition, onDelete, id, onDragStar
 
         if (bottom < viewportHeight + 100) {
           currentFallY += fallSpeed;
-          // Update the component's position state to reflect the fall
           setPosition({ x: startX, y: currentFallY });
           animationFrameRef.current = requestAnimationFrame(animateFall);
         } else {
@@ -86,24 +83,21 @@ export function DraggableCinderblock({ initialPosition, onDelete, id, onDragStar
   return (
     <Draggable
       onStart={handleStart}
-      onDrag={handleDrag} // Add onDrag handler to continuously update position
+      onDrag={handleDrag}
       onStop={handleStop}
-      position={position} // Draggable always controls the position based on our state
+      position={position}
       bounds="parent"
       disabled={isFalling || disableFallingAnimation}
       nodeRef={myRef}
     >
       <Image
         ref={myRef}
-        src="/cabin/cinderblock_light.png"
+        src="/cabin/cinderblock_light.png" // Assuming this image exists
         alt="Cinderblock"
         className="absolute w-12 h-12 cursor-grab z-101"
         width={50}
         height={50}
         style={{
-          // We no longer set 'left' or 'top' directly here.
-          // Draggable will manage the transform based on the 'position' prop.
-          // The initial spawning position is handled by the first 'position' state update.
           transition: isFalling ? 'none' : 'transform 0s ease-out',
           zIndex: 100
         }}
