@@ -177,50 +177,57 @@ export default function Cabin() {
   };
 
   const handleDragStopCinderblock = (id: number, finalPosition: { x: number; y: number }): void => {
-    setIsHoldingCinderblock(false);
+  setIsHoldingCinderblock(false);
 
-    if (!windowBroken && windowRef.current) {
-      const windowRect = windowRef.current.getBoundingClientRect();
-      const cinderblockWidth = 50; // Assuming a fixed width for the cinderblock
-      const cinderblockHeight = 50; // Assuming a fixed height for the cinderblock
+  if (!windowBroken && windowRef.current) {
+    // Get the window's position relative to the parent
+    const windowRect = {
+      left: windowRef.current.offsetLeft,
+      top: windowRef.current.offsetTop,
+      right: windowRef.current.offsetLeft + windowRef.current.offsetWidth,
+      bottom: windowRef.current.offsetTop + windowRef.current.offsetHeight,
+    };
 
-      // Calculate the actual position of the cinderblock relative to the viewport
-      const cinderblockRect = {
-        left: finalPosition.x,
-        top: finalPosition.y,
-        right: finalPosition.x + cinderblockWidth,
-        bottom: finalPosition.y + cinderblockHeight,
-      };
+    const cinderblockWidth = 50;
+    const cinderblockHeight = 50;
 
-      // Check for intersection
-      if (
-        cinderblockRect.left < windowRect.right &&
-        cinderblockRect.right > windowRect.left &&
-        cinderblockRect.top < windowRect.bottom &&
-        cinderblockRect.bottom > windowRect.top
-      ) {
-        setWindowBroken(true);
-        triggerSpeechBubble("My window!", 1700, 'shocked'); //make sure trigger time is more than speech bubble time because new bubble might be wiped by clearSpeechandressetexpression()
-        setCinderblocks([]); // Remove all cinderblocks after breaking the window
+    // Calculate the actual position of the cinderblock relative to the same coordinate system
+    const cinderblockRect = {
+      left: finalPosition.x,
+      top: finalPosition.y,
+      right: finalPosition.x + cinderblockWidth,
+      bottom: finalPosition.y + cinderblockHeight,
+    };
 
-        // Set a timeout to change Will's expression back after being shocked
-        if (shockTimeoutRef.current) {
-          clearTimeout(shockTimeoutRef.current);
-        }
-        shockTimeoutRef.current = setTimeout(() => {
-          triggerSpeechBubble("That was unnecessary...", 2000, 'really');
-          // After this speech, ensure Will's expression reverts and blinking resumes
-          setTimeout(() => {
-            clearSpeechAndResetExpression(); // Explicitly call to reset and restart blinking
-          }, 2300); // Duration for "That was unnecessary..."
-        }, 1500); // Duration for "My window!"
+    // Check for intersection
+    if (
+      cinderblockRect.left < windowRect.right &&
+      cinderblockRect.right > windowRect.left &&
+      cinderblockRect.top < windowRect.bottom &&
+      cinderblockRect.bottom > windowRect.top
+    ) {
+      setWindowBroken(true);
+      triggerSpeechBubble("My window!", 1700, 'shocked');
+      setCinderblocks([]); // Remove all cinderblocks after breaking the window
+
+      // Set a timeout to change Will's expression back after being shocked
+      if (shockTimeoutRef.current) {
+        clearTimeout(shockTimeoutRef.current);
       }
+      shockTimeoutRef.current = setTimeout(() => {
+        triggerSpeechBubble("That was unnecessary...", 2000, 'really');
+        // After this speech, ensure Will's expression reverts and blinking resumes
+        setTimeout(() => {
+          clearSpeechAndResetExpression(); // Explicitly call to reset and restart blinking
+        }, 2300); // Duration for "That was unnecessary..."
+      }, 1500); // Duration for "My window!"
     }
-    // After drag stop, if window is not broken, restart blinking
-    if (!windowBroken) {
-      startBlinkingAnimation();
-    }
-  };
+  }
+  // After drag stop, if window is not broken, restart blinking
+  if (!windowBroken) {
+    startBlinkingAnimation();
+  }
+};
 
   const handleWindowClick = (): void => {
     setBlindsDown(prev => !prev);
