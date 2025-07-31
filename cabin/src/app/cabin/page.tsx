@@ -25,7 +25,12 @@ export default function Cabin() {
   const [speechText, setSpeechText] = useState<React.ReactNode | null>(null);
   const [willExpression, setWillExpression] = useState<WillExpression>('reading');
   const [hasClickedTableOnce, setHasClickedTableOnce] = useState<boolean>(false);
-  const [currentSpeechDuration, setCurrentSpeechDuration] = useState<number>(0); // New state to hold duration
+  const [currentSpeechDuration, setCurrentSpeechDuration] = useState<number>(0);
+
+  const openBookAudio = useRef<HTMLAudioElement>(null);
+  const glassShatterAudio = useRef<HTMLAudioElement>(null);
+  const blindsUpAudio = useRef<HTMLAudioElement>(null);
+  const tapAudio = useRef<HTMLAudioElement>(null);
 
   const tableRef = useRef<HTMLDivElement>(null);
   const windowRef = useRef<HTMLDivElement>(null);
@@ -223,6 +228,10 @@ export default function Cabin() {
       cinderblockRect.bottom > windowRect.top
     ) {
       setWindowBroken(true);
+      if (glassShatterAudio.current) {
+          glassShatterAudio.current.play();
+        }
+      setBlindsDown(true)
       triggerSpeechBubble("My window!", 1700, 'shocked');
       setCinderblocks([]); // Remove all cinderblocks after breaking the window
 
@@ -247,6 +256,9 @@ export default function Cabin() {
 
   const handleWindowClick = (): void => {
     setBlindsDown(prev => !prev);
+    if (blindsDown === true && blindsUpAudio.current){
+      blindsUpAudio.current.play()
+    }
     // The user wants to be able to click the window even while holding a cinderblock.
     // However, the current logic for breaking the window is tied to onDragStopCinderblock.
     // If you want clicking the window while holding a cinderblock to break it, you'd need
@@ -276,12 +288,22 @@ export default function Cabin() {
 
   return (
     <div className="absolute h-screen w-fit overscroll-none">
+
+    <audio ref={glassShatterAudio} src="/sounds/window_shatter.mp3" preload="auto" />
+    <audio ref={openBookAudio} src="/sounds/open_book.mp3" preload="auto" />
+    <audio ref={blindsUpAudio} src="/sounds/open_blinds.mp3" preload="auto" />
+    <audio src="/sounds/tap.mp3" ref={tapAudio} preload="auto"/>
+
       <ThemeToggle className="left-1/4 top-5" />
 
       {/* Speech Bubble: Ensure it has a high z-index to be visible */}
       {speechText && <SpeechBubble text={speechText} />}
 
-      <ScrapBook isOpen={isScrapBookOpen} onClose={()=>{setScrapBookOpen(false)}}/>
+      <ScrapBook isOpen={isScrapBookOpen} onClose={()=>{setScrapBookOpen(false)
+        if (tapAudio.current){
+            tapAudio.current.play()
+        }
+      }}/>
 
       <div
         ref={tableRef}
@@ -293,7 +315,12 @@ export default function Cabin() {
 
       <div
         className="absolute z-100 left-235 top-70 h-30 w-50 cursor-pointer"
-        onClick={()=>{setScrapBookOpen(true)}}
+        onClick={()=>{
+          setScrapBookOpen(true)
+          if (openBookAudio.current){
+            openBookAudio.current.play()
+          }
+        }}
       >
       </div>
       <div
