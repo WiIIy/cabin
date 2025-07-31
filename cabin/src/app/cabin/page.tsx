@@ -9,7 +9,7 @@ import { Cinderblock, DraggableCinderblock } from "./components/cinder-block";
 import { useTheme } from "next-themes";
 
 // Define types for Will's expressions
-export type WillExpression = 'reading' | 'blinking' | 'talking' | 'shocked'; // Added 'normal' for a default non-blinking/reading state
+export type WillExpression = 'reading' | 'blinking' | 'talking' | 'shocked';
 
 export default function Cabin() {
   const { theme } = useTheme();
@@ -20,12 +20,35 @@ export default function Cabin() {
   const [speechText, setSpeechText] = useState<React.ReactNode | null>(null);
   const [willExpression, setWillExpression] = useState<WillExpression>('reading');
   const [hasClickedTableOnce, setHasClickedTableOnce] = useState<boolean>(false);
+  const [currentSpeechDuration, setCurrentSpeechDuration] = useState<number>(0); // New state to hold duration
 
   const tableRef = useRef<HTMLDivElement>(null);
   const windowRef = useRef<HTMLDivElement>(null);
   const speechTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const blinkIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const shockTimeoutRef = useRef<NodeJS.Timeout | null>(null); // New ref for shock duration
+  const shockTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Function to start blinking animation
+  const startBlinkingAnimation = useCallback(() => {
+    // Ensure no duplicate intervals are running
+    if (blinkIntervalRef.current) {
+      clearInterval(blinkIntervalRef.current);
+      blinkIntervalRef.current = null;
+    }
+
+    // Only start blinking if Will is in 'reading' state and not shocked/talking/has speech
+    if (willExpression === 'reading' && !speechText ) {
+      blinkIntervalRef.current = setInterval(() => {
+        setWillExpression('blinking');
+        setTimeout(() => {
+          // After a short blink, revert to reading if still in blinking state and conditions allow
+          if (!windowBroken && speechText === null) {
+            setWillExpression('reading');
+          }
+        }, 300); // Blink duration
+      }, Math.random() * (5000 - 3000) + 3000); // Blink every 3-5 seconds
+    }
+  }, [willExpression, windowBroken, speechText]); // Dependencies for useCallback
 
   // Function to clear speech bubble and reset Will's expression
   const clearSpeechAndResetExpression = useCallback(() => {
@@ -36,55 +59,49 @@ export default function Cabin() {
     }
     // Restart blinking animation if applicable
     startBlinkingAnimation();
-  }, [willExpression]);
+  }, [willExpression, startBlinkingAnimation]); // Depend on willExpression and startBlinkingAnimation
 
-
-  const triggerSpeechBubble = useCallback((
+  // Function to trigger speech bubble - now only sets states
+  const triggerSpeechBubble = (
     text: React.ReactNode,
     durationMs: number,
-    expression: WillExpression = 'talking' // Default to 'talking' if not provided
+    expression: WillExpression = 'talking'
   ): void => {
+    // Clear any existing blinking interval immediately when new speech starts
+    if (blinkIntervalRef.current) {
+      clearInterval(blinkIntervalRef.current);
+      blinkIntervalRef.current = null;
+    }
+    setSpeechText(text);
+    setWillExpression(expression);
+    setCurrentSpeechDuration(durationMs); // Store duration for the effect
+  };
+
+  // useEffect to manage speech bubble timeouts and expression changes
+  useEffect(() => {
     // Clear any existing speech timeout to prevent overlap
     if (speechTimeoutRef.current) {
       clearTimeout(speechTimeoutRef.current);
       speechTimeoutRef.current = null;
     }
-    // Clear any existing blinking interval to stop current blinking loop
-    if (blinkIntervalRef.current) {
-      clearInterval(blinkIntervalRef.current);
-      blinkIntervalRef.current = null;
+
+    if (speechText !== null) {
+      // Set a timeout to clear the speech bubble and reset expression
+      speechTimeoutRef.current = setTimeout(() => {
+        clearSpeechAndResetExpression();
+      }, currentSpeechDuration);
+    } else {
+      // If speechText is null (e.g., after clearing), ensure blinking restarts if conditions allow
+      if (willExpression !== 'talking' && willExpression !== 'shocked') {
+        startBlinkingAnimation();
+      }
     }
 
-    setSpeechText(text);
-    setWillExpression(expression); // Set Will's expression immediately
-
-    // Set a timeout to clear the speech bubble and reset expression
-    speechTimeoutRef.current = setTimeout(() => {
-      clearSpeechAndResetExpression();
-    }, durationMs);
-  }, [clearSpeechAndResetExpression]); // Depend on clearSpeechAndResetExpression
-
-
-  const startBlinkingAnimation = useCallback(() => {
-    // Ensure no duplicate intervals are running
-    if (blinkIntervalRef.current) {
-      clearInterval(blinkIntervalRef.current);
-      blinkIntervalRef.current = null;
-    }
-
-    // Only start blinking if Will is in a 'reading' or 'normal' state and not shocked/talking
-    if (willExpression === 'reading') {
-      blinkIntervalRef.current = setInterval(() => {
-        setWillExpression('blinking');
-        setTimeout(() => {
-          // After a short blink, revert to reading
-          if (!windowBroken && speechText === null) {
-            setWillExpression('reading');
-          }
-        }, 300); // Blink duration
-      }, Math.random() * (5000 - 3000) + 3000); // Blink every 3-5 seconds
-    }
-  }, [willExpression, windowBroken, speechText]); // Add speechText to dependencies
+    // Cleanup on component unmount or when dependencies change
+    return () => {
+      if (speechTimeoutRef.current) clearTimeout(speechTimeoutRef.current);
+    };
+  }, [speechText, willExpression, currentSpeechDuration, clearSpeechAndResetExpression, startBlinkingAnimation]); // Dependencies for this effect
 
 
   const handleTableClick = (e: React.MouseEvent<HTMLDivElement>): void => {
@@ -165,10 +182,8 @@ export default function Cabin() {
         }
         shockTimeoutRef.current = setTimeout(() => {
           triggerSpeechBubble("That was unnecessary...", 2000, 'talking'); // Will says this after being shocked
-          setTimeout(() => {
-            setWillExpression('reading'); // Revert to reading after the second speech bubble
-            startBlinkingAnimation(); // Restart blinking after everything settles
-          }, 2000); // Duration for "That was unnecessary..."
+          // The subsequent reset to reading and blinking is handled by the useEffect for speech.
+          // No need for another nested setTimeout here.
         }, 1500); // Duration for "My window!"
       }
     }
@@ -192,22 +207,6 @@ export default function Cabin() {
     //   setCinderblocks([]);
     // }
   };
-
-  // Effect to manage blinking and speech bubble timeouts
-  useEffect(() => {
-    // This effect now primarily ensures blinking starts when no speech is active
-    // and Will is not shocked.
-    if (speechText === null && willExpression !== 'talking' && willExpression !== 'shocked') {
-      startBlinkingAnimation();
-    }
-
-    // Cleanup on component unmount
-    return () => {
-      if (speechTimeoutRef.current) clearTimeout(speechTimeoutRef.current);
-      if (blinkIntervalRef.current) clearInterval(blinkIntervalRef.current);
-      if (shockTimeoutRef.current) clearTimeout(shockTimeoutRef.current);
-    };
-  }, [speechText, willExpression, windowBroken, startBlinkingAnimation]); // Added windowBroken to dependencies
 
   // Initial setup for blinking when component mounts
   useEffect(() => {
