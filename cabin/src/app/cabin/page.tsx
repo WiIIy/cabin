@@ -267,6 +267,15 @@ export default function Cabin() {
       </div>
 
       <div
+        className="absolute bg-accent-dark z-100 left-235 top-70 h-30 w-50 border-2 border-white cursor-pointer"
+      >will book
+      </div>
+      <div
+        className="absolute bg-accent-dark z-100 left-245 top-15 h-30 w-25 border-2 border-white cursor-pointer"
+      >will face
+      </div>
+
+      <div
         ref={windowRef}
         className="absolute bg-accent-light z-10 left-97 top-25 h-32 w-50 border-white border-2 cursor-pointer"
         onClick={handleWindowClick}
