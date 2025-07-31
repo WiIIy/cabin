@@ -17,8 +17,8 @@ export default function Cabin() {
       const rect = tableRef.current.getBoundingClientRect();
       const newCinderblock: Cinderblock = {
         id: Date.now(),
-        x: rect.left,
-        y: rect.top,
+        x: 500,
+        y: 300,
       };
       setCinderblocks(prev => [...prev, newCinderblock]);
     }
@@ -70,7 +70,12 @@ export default function Cabin() {
         <p className="text-white text-center mt-4">Click to grab a cinderblock</p>
       </div>
 
-      <CabinBG />
+      <div className="absolute bg-accent-light z-10 left-97 top-25 h-32 w-50 border-white border-2">
+        {/* default state : blinds open, on Click -> close/open depending on previous condition */}
+        {/* if blinds open and upon clicking, user is holding a cinderblock, the window breaks, changing the window image but the blinds still work, theyre a separate component */}
+        </div> {/*window*/}
+
+      
 
       {cinderblocks.map((block: Cinderblock) => (
         <DraggableCinderblock
@@ -89,6 +94,8 @@ export default function Cabin() {
           <p className="text-white text-4xl font-bold">WINDOW BROKEN!</p>
         </div>
       )}
+
+      <CabinBG />
     </div>
   );
 }
