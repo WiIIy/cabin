@@ -4,7 +4,11 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
-export function ThemeToggle() {
+interface themeToggleProps {
+  className:string
+}
+
+export function ThemeToggle({className}:themeToggleProps) {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
 
@@ -22,7 +26,7 @@ export function ThemeToggle() {
   };
 
   return (
-    <button className="absolute left-5 top-2 z-10" onClick={toggleTheme}>
+    <button className={`absolute z-10 ${className}`} onClick={toggleTheme}>
       {theme === "dark" ? (
         <Image src="/moonicon.png" alt="sun icon" width={50} height={50} ></Image>
       ) : (

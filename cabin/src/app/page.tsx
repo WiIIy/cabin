@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="relative flex flex-col items-center h-screen w-screen">
       <Script src="./script.js" />
-      <ThemeToggle/>
+      <ThemeToggle className="left-5 top-2"/>
 
       <div className="flex items-center justify-center h-screen w-screen"> {/*invisible frame takes up the whole screen */}
           <div className="flex w-6/13 h-2/3 bg-accent-dark border-2 border-text items-end rounded-lg overflow-hidden"> {/*main window*/}
