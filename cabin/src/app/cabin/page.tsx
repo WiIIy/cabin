@@ -10,12 +10,13 @@ import { useTheme } from "next-themes";
 import { ScrapBook } from "./components/art-book-ui";
 
 // Define types for Will's expressions
-export type WillExpression = 'reading' | 'blinking' | 'talking' | 'shocked'| 'really' ;
+export type WillExpression = 'reading' | 'blinking' | 'talking' | 'shocked'| 'really' | 'poked';
 
 export default function Cabin() {
   const { theme } = useTheme();
 
   const [isScrapBookOpen, setScrapBookOpen] = useState<boolean>(false);
+  const [amountFaceIsClicked, setAmountFaceIsClicked] = useState<number>(0);
 
   const [cinderblocks, setCinderblocks] = useState<Cinderblock[]>([]);
   const [isHoldingCinderblock, setIsHoldingCinderblock] = useState<boolean>(false);
@@ -45,6 +46,7 @@ export default function Cabin() {
     speechTextRef.current = speechText;
   }, [speechText]);
 
+  
 
   // Function to start blinking animation
   const startBlinkingAnimation = useCallback(() => {
@@ -134,6 +136,16 @@ export default function Cabin() {
     };
   }, [speechText, willExpression, currentSpeechDuration, clearSpeechAndResetExpression, startBlinkingAnimation]); // Dependencies for this effect
 
+  const handleFacePoked = (()=>{
+    if (amountFaceIsClicked === 10){
+      triggerSpeechBubble("stop that",1000,"talking")
+      setAmountFaceIsClicked(amountFaceIsClicked+1)
+    } else {
+      setAmountFaceIsClicked(amountFaceIsClicked+1)
+      triggerSpeechBubble("ow",200,"poked")
+    }
+  
+  })
 
   const handleTableClick = (e: React.MouseEvent<HTMLDivElement>): void => {
     if (tableRef.current) {
@@ -280,13 +292,14 @@ export default function Cabin() {
       </div>
 
       <div
-        className="absolute bg-accent-dark z-100 left-235 top-70 h-30 w-50 border-2 border-white cursor-pointer"
+        className="absolute z-100 left-235 top-70 h-30 w-50 cursor-pointer"
         onClick={()=>{setScrapBookOpen(true)}}
-      >will book
+      >
       </div>
       <div
-        className="absolute bg-accent-dark z-100 left-245 top-15 h-30 w-25 border-2 border-white cursor-pointer"
-      >will face
+        className="absolute z-100 left-245 top-15 h-30 w-25 cursor-pointer"
+        onClick={handleFacePoked}
+      >
       </div>
 
       <div
@@ -294,7 +307,6 @@ export default function Cabin() {
         className="absolute bg-accent z-110 left-98 top-25 h-32 w-50 border-white border-2 cursor-pointer"
         onClick={handleWindowClick}
       >
-        {/* The visual representation of the window and blinds will be handled by CabinBG */}
       </div>
 
       {cinderblocks.map((block: Cinderblock) => (

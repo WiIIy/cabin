@@ -4,6 +4,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
 import Image from 'next/image';
+import { useTheme } from 'next-themes';
 
 export interface Cinderblock {
   id: number;
@@ -22,6 +23,7 @@ interface DraggableCinderblockProps {
 
 export function DraggableCinderblock({ initialPosition, onDelete, id, onDragStart, onDragStop, disableFallingAnimation = false }: DraggableCinderblockProps) {
   const [isFalling, setIsFalling] = useState<boolean>(false);
+  const {resolvedTheme} = useTheme()
   const [position, setPosition] = useState<{ x: number; y: number }>(initialPosition);
   const myRef = useRef<HTMLImageElement>(null);
   const fallSpeed: number = 5;
@@ -92,7 +94,7 @@ export function DraggableCinderblock({ initialPosition, onDelete, id, onDragStar
     >
       <Image
         ref={myRef}
-        src="/cabin/cinderblock_light.png" // Assuming this image exists
+        src={`${resolvedTheme === 'dark'? '/cabin/items/cinderblock_dark.png' : '/cabin/items/cinderblock_light.png'}`} // Assuming this image exists
         alt="Cinderblock"
         className="absolute w-12 h-12 cursor-grab z-101"
         width={50}

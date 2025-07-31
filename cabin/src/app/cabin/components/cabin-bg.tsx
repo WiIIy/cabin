@@ -67,7 +67,10 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
                 break;
             case 'really':
                 fileName = `will_really_${isDark ? 'dark' : 'light'}.png`;
-                break;    
+                break;  
+            case 'poked':
+                fileName = `will_poked_${isDark ? 'dark' : 'light'}.png`;
+                break;  
             default:
                 fileName = `will_reading_${isDark ? 'dark' : 'light'}.png`; // Default fallback
         }
