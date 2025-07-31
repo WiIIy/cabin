@@ -34,8 +34,8 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
     // Window shine animation effect
     useEffect(() => {
         let shineInterval: NodeJS.Timeout;
-        // Only animate shine if window is not broken and Will is not shocked
-        if (!windowBroken && willExpression !== 'shocked') { // Ensure shine stops if window is broken OR Will is shocked
+        // Only animate shine if window is not broken AND Will is not shocked
+        if (!windowBroken && willExpression !== 'shocked') {
             shineInterval = setInterval(() => {
                 setWindowShineToggle(prev => !prev);
             }, 500); // Toggle every 0.5 seconds for a shakey effect
@@ -44,7 +44,32 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
             setWindowShineToggle(false); // Ensure shine image is off
         }
         return () => clearInterval(shineInterval);
-    }, [windowBroken, willExpression]); // Added willExpression to dependencies
+    }, [windowBroken, willExpression]);
+
+
+    // Determine Will's sprite path based on expression and theme
+    const getWillSpriteSrc = () => {
+        const basePath = "/cabin/will/";
+        let fileName = "";
+
+        switch (willExpression) {
+            case 'talking':
+                fileName = `will_talking_${isDark ? 'dark' : 'light'}.png`;
+                break;
+            case 'blinking':
+                fileName = `will_blinking_${isDark ? 'dark' : 'light'}.png`;
+                break;
+            case 'reading':
+                fileName = `will_reading_${isDark ? 'dark' : 'light'}.png`;
+                break;
+            case 'shocked':
+                fileName = `will_shocked_${isDark ? 'dark' : 'light'}.png`;
+                break;
+            default:
+                fileName = `will_reading_${isDark ? 'dark' : 'light'}.png`; // Default fallback
+        }
+        return basePath + fileName;
+    };
 
 
     return (
@@ -91,7 +116,7 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
                     ? (blindsDown ? "/cabin/background/background_dark/blinds_down_dark.png" : "/cabin/background/background_dark/blinds_up_dark.png")
                     : (blindsDown ? "/cabin/background/background_light/blinds_down.png" : "/cabin/background/background_light/blinds_up.png")
                 }
-                className="absolute z-10 pointer-events-none"
+                className="absolute z-20 pointer-events-none"
                 alt="Blinds" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
             />
 
@@ -101,14 +126,14 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
                     {windowShineToggle && (
                         <Image
                             src={"/cabin/background/windowshine1_overlay.png"}
-                            className="absolute z-88 mix-blend-overlay pointer-events-none"
+                            className="absolute z-11 mix-blend-overlay pointer-events-none"
                             alt="Window Shine 1" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
                         />
                     )}
                     {!windowShineToggle && (
                         <Image
                             src={"/cabin/background/windowshine2_overlay.png"}
-                            className="absolute z-88 mix-blend-overlay pointer-events-none"
+                            className="absolute z-11 mix-blend-overlay pointer-events-none"
                             alt="Window Shine 2" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
                         />
                     )}
@@ -122,35 +147,13 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
                 />
             )}
 
-            {/* Will's Sprites (conditional on expression and theme) */}
-            {willExpression === 'talking' && (
-                <Image
-                    src={isDark ? "/cabin/will/will_talking_dark.png" : "/cabin/will/will_talking_light.png"}
-                    className="absolute z-88 pointer-events-none"
-                    alt="Will Talking" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
-                />
-            )}
-            {willExpression === 'blinking' && (
-                <Image
-                    src={isDark ? "/cabin/will/will_blinking_dark.png" : "/cabin/will/will_blinking_light.png"}
-                    className="absolute z-88 pointer-events-none"
-                    alt="Will Blinking" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
-                />
-            )}
-            {willExpression === 'reading' && (
-                <Image
-                    src={isDark ? "/cabin/will/will_reading_dark.png" : "/cabin/will/will_reading_light.png"}
-                    className="absolute z-88 pointer-events-none"
-                    alt="Will Reading" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
-                />
-            )}
-            {willExpression === 'shocked' && (
-                <Image
-                    src={isDark ? "/cabin/will/will_shocked_dark.png" : "/cabin/will/will_shocked_light.png"} // Assuming you have these images
-                    className="absolute z-88 pointer-events-none"
-                    alt="Will Shocked" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
-                />
-            )}
+            {/* Will's Sprite - single Image element */}
+            <Image
+                src={getWillSpriteSrc()}
+                className="absolute z-88 pointer-events-none"
+                alt={`Will ${willExpression}`} // Dynamic alt text
+                width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
+            />
         </div>
     )
 }
