@@ -65,8 +65,9 @@ export default function Cabin() {
       {/*speech bubble needs a way to be triggered, for example, it says "my window!" when the cinderblock is thrown at the window*/}
       {/*or will gives a story about the item the user is holding, eg. "i forgot i had a box of cinderblocks" when a player spawns a cinderblock */}
       {/*these speech bubbles time to live is determined by how long the speech text is*/}
-      {/*they will always be overridden by newer ones when they are triggered*/}
+      {/*they will always be overridden by newer ones when they are triggered. only one can be active at a time*/}
 
+      {/*when a speech bubble is active, will's image is the talking one, when a speech bubble isnt active, he is reading, every 5-7 seconds or so he blinks*/}
       <div
         ref={tableRef}
         className="absolute bg-accent-dark z-10 left-97 top-70 h-30 w-50 border-2 border-white"
