@@ -14,6 +14,9 @@ export type WillExpression = 'reading' | 'blinking' | 'talking' | 'shocked'| 're
 
 export default function Cabin() {
   const { theme } = useTheme();
+
+  const [isScrapBookOpen, setScrapBookOpen] = useState<boolean>(false);
+
   const [cinderblocks, setCinderblocks] = useState<Cinderblock[]>([]);
   const [isHoldingCinderblock, setIsHoldingCinderblock] = useState<boolean>(false);
   const [windowBroken, setWindowBroken] = useState<boolean>(false);
@@ -266,7 +269,7 @@ export default function Cabin() {
       {/* Speech Bubble: Ensure it has a high z-index to be visible */}
       {speechText && <SpeechBubble text={speechText} />}
 
-      <ScrapBook/>
+      <ScrapBook isOpen={isScrapBookOpen} onClose={()=>{setScrapBookOpen(false)}}/>
 
       <div
         ref={tableRef}
@@ -278,6 +281,7 @@ export default function Cabin() {
 
       <div
         className="absolute bg-accent-dark z-100 left-235 top-70 h-30 w-50 border-2 border-white cursor-pointer"
+        onClick={()=>{setScrapBookOpen(true)}}
       >will book
       </div>
       <div
