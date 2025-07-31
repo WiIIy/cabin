@@ -9,9 +9,12 @@ export function CabinBG (){
             className="h-fit w-fit overflow-x-scroll overscroll-x-none"
             style={{ minWidth: `calc(var(--vh, 1vh) * 100 * ${imageAspectRatio})` }}
         >
-            {/*users do not interact with any of these directly. the image states are controlled by the elements on the main page*/}
+            {/*users do not interact with any of these elements directly. the image states are controlled by the elements on the main page.*/}
+            {/*lightmode and darkmode will also have a different items and clickboxes*/}
 
             {/*cabin light mode*/}
+            {/*the lights1 and lights2 images will switch between one another with an interval of 1 second for low fps animated effect */}
+            {/*the lights effect will not be seen (hidden) if the blinds are down which is triggered by the window element*/}
             <Image src={"/cabin/background/background_light/cabin_bg_light.png"} className="absolute pointer-events-none" alt="a" width={1800} height={600} unoptimized={true} style={{imageRendering:'pixelated'}}/>
             <Image src={"/cabin/background/background_light/tableNwindow.png"} className="absolute z-10 pointer-events-none" alt="a" width={1800} height={600} unoptimized={true} style={{imageRendering:'pixelated'}}/>
             <Image src={"/cabin/background/background_light/lights1_cdodge_24opcty.png"} className="absolute z-100 opacity-24 mix-blend-color-dodge pointer-events-none" alt="a" width={1800} height={600} unoptimized={true} style={{imageRendering:'pixelated'}}/>

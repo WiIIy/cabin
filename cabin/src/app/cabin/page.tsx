@@ -62,18 +62,24 @@ export default function Cabin() {
       <ThemeToggle className="left-1/4 top-5" />
 
       <SpeechBubble text="wewaewaeawewa" />
+      {/*speech bubble needs a way to be triggered, for example, it says "my window!" when the cinderblock is thrown at the window*/}
+      {/*or will gives a story about the item the user is holding, eg. "i forgot i had a box of cinderblocks" when a player spawns a cinderblock */}
+      {/*these speech bubbles time to live is determined by how long the speech text is*/}
+      {/*they will always be overridden by newer ones when they are triggered*/}
+
       <div
         ref={tableRef}
         className="absolute bg-accent-dark z-10 left-97 top-70 h-30 w-50 border-2 border-white"
         onClick={handleTableClick}
       >
         <p className="text-white text-center mt-4">Click to grab a cinderblock</p>
-      </div>
+      </div> {/*table*/}
 
       <div className="absolute bg-accent-light z-10 left-97 top-25 h-32 w-50 border-white border-2">
-        {/* default state : blinds open, on Click -> close/open depending on previous condition */}
+        {/* default state : blinds open, on Click -> close/open depending on previous condition. this state persists on dark and light mode */}
         {/* if blinds open and upon clicking, user is holding a cinderblock, the window breaks, changing the window image but the blinds still work, theyre a separate component */}
-        </div> {/*window*/}
+        </div> {/*window. clicking it moves the blinds up and down. clicking a cinderblock at it makes it break, but the blinds are still able to be clicked up or down*/}
+        {/*only once the window is broken, the user can click the window to get transported to another page. the broken state persists on dark/light theme*/}
 
       
 
