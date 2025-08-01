@@ -17,6 +17,7 @@ export function FaqTabCollapsible(){
             &#x2022; TailwindCSS <br/>
             &#x2022; shadcn (for components) <br/>
             &#x2022; lucide (for icons) <br/>
+            &#x2022; firebase (for storage) <br/>
             &#x2022; Google Gemini (for help) <br/>
             <br/>
             Packages: <br/>

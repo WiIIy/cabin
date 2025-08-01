@@ -140,8 +140,8 @@ export function MainButtonArray(){
           <div ref={myRef} className={`absolute box z-10 border-2 border-text rounded-lg no-cursor  ${isLinksTabOpen ? 'visible' : 'invisible'}`} style={{display: 'flex', flexDirection: 'column', height:'50%', overflow:'hidden'}}>
             <strong className="flex justify-between p-2 cursor-pointer bg-accent-dark text-white"><div>links</div><div onClick={handleCloseLinks}>[X]</div></strong>
             <div style={{overflow: 'scroll', overscrollBehavior:'none', height:'100%'}}>
-              <div className={"bg-background h-full"} style={{cursor:'pointer' ,whiteSpace: 'pre-wrap', padding:10, textWrap:'wrap'}}>
-                My artwork can be found on my cabin(WIP)!
+              <div className={"bg-background h-full grid grid-rows-3 grid-cols-2"} style={{cursor:'pointer' ,whiteSpace: 'pre-wrap', padding:10, textWrap:'wrap'}}>
+                <a href="https://github.com/WiIIy"><ButtonWithIcon onClick={()=>{}} id="aboutIcon" iconLightSrc={"/icons/github_grey.png"} iconDarkSrc="/icons/github_white.png" text={"github"} alt="github icon"></ButtonWithIcon></a>
               </div>
             </div>
           </div>
@@ -152,8 +152,8 @@ export function MainButtonArray(){
           <div ref={myRef} className={`absolute box z-10 border-2 border-text rounded-lg no-cursor  ${isContactTabOpen ? 'visible' : 'invisible'}`} style={{display: 'flex', flexDirection: 'column', height:'50%', overflow:'hidden'}}>
             <strong className="flex justify-between p-2 cursor-pointer bg-accent-dark text-white"><div>contact</div><div onClick={handleCloseContact}>[X]</div></strong>
             <div style={{overflow: 'scroll', overscrollBehavior:'none', height:'100%'}}>
-              <div className={"bg-background h-full"} style={{cursor:'pointer' ,whiteSpace: 'pre-wrap', padding:10, textWrap:'wrap'}}>
-                My artwork can be found on my cabin(WIP)!
+              <div className={"bg-background h-full text-center"} style={{cursor:'pointer' ,whiteSpace: 'pre-wrap', padding:10, textWrap:'wrap'}}>
+                You can mail me at <br/><a className="underline"href="mailto:willydoesthings@gmail.com">willydoesthings@gmail.com</a>
               </div>
             </div>
           </div>

@@ -35,6 +35,7 @@ export default function Cabin() {
   const glassShatterAudio = useRef<HTMLAudioElement>(null);
   const blindsUpAudio = useRef<HTMLAudioElement>(null);
   const tapAudio = useRef<HTMLAudioElement>(null);
+  const lockedDrawerAudio = useRef<HTMLAudioElement>(null);
 
   const cinderblocksBoxRef = useRef<HTMLDivElement>(null);
   const windowRef = useRef<HTMLDivElement>(null);
@@ -296,7 +297,8 @@ export default function Cabin() {
     <audio ref={glassShatterAudio} src="https://wiiiy.github.io/cabin/sounds/window_shatter.mp3" preload="auto" />
     <audio ref={openBookAudio} src="https://wiiiy.github.io/cabin/sounds/open_book.mp3" preload="auto" />
     <audio ref={blindsUpAudio} src="https://wiiiy.github.io/cabin/sounds/open_blinds.mp3" preload="auto" />
-    <audio src="https://wiiiy.github.io/cabin/sounds/tap.mp3" ref={tapAudio} preload="auto"/>
+    <audio ref={tapAudio} src="https://wiiiy.github.io/cabin/sounds/tap.mp3" preload="auto"/>
+    <audio ref={lockedDrawerAudio} src="https://wiiiy.github.io/cabin/sounds/locked_drawer.mp3" preload="auto"/>
 
       <ThemeToggle className="left-1/4 top-5" />
       <ReturnToHome/>
@@ -312,7 +314,12 @@ export default function Cabin() {
 
       {/*drawer*/}
       <div
-        className="absolute bg-accent-dark z-110 left-98 top-77 h-11 w-50 border-2 border-white cursor-pointer"
+        className="absolute z-110 left-98 top-77 h-11 w-50 cursor-pointer"
+        onClick={()=>{
+          if (lockedDrawerAudio.current){
+            lockedDrawerAudio.current.play()
+          }
+        }}
       >
         <p className="text-white text-center mt-4">This drawer is locked</p>
       </div>

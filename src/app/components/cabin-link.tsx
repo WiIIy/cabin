@@ -2,7 +2,6 @@
 
 import { useTheme } from "next-themes";
 import Image from "next/image"
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import { HoverCard, HoverCardContent, HoverCardTrigger,} from "@radix-ui/react-hover-card"
 
@@ -24,21 +23,20 @@ export function CabinLink(){
     return(
         <div  className="absolute right-1/8  top-1/2 -translate-y-9/10 cursor-pointer">
             <HoverCard>
-            {/*https://wiiiy.github.io/cabin*/}
             <HoverCardTrigger>
                 <a href={"cabin"}>
-            <Image
-                src={`https://wiiiy.github.io/cabin${
-                    cabinToggle
-                        ? (isDark ? "/icons/cabin_icon_dark_1.png" : "/icons/cabin_icon_light_1.png")
-                        : (isDark ? "/icons/cabin_icon_dark_2.png" : "/icons/cabin_icon_light_2.png")
-                }`}
-                alt="cabin"
-                width={60}
-                height={180}
-                unoptimized={true}
-                style={{ imageRendering: 'pixelated' }}
-            />
+                    <Image
+                        src={`https://wiiiy.github.io/cabin${
+                            cabinToggle
+                                ? (isDark ? "/icons/cabin_icon_dark_1.png" : "/icons/cabin_icon_light_1.png")
+                                : (isDark ? "/icons/cabin_icon_dark_2.png" : "/icons/cabin_icon_light_2.png")
+                        }`}
+                        alt="cabin"
+                        width={60}
+                        height={180}
+                        unoptimized={true}
+                        style={{ imageRendering: 'pixelated' }}
+                    />
             </a>
             </HoverCardTrigger>
             <HoverCardContent>

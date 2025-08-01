@@ -24,6 +24,9 @@ export function DarkModeBG(){
 
         {/*fire*/}
         <div className="absolute bg-accent-dark z-112 left-175 top-78 h-26 w-32 border-white border-2 cursor-pointer"></div>
+
+        {/*laptop*/}
+        <div className="absolute bg-accent-dark z-112 left-17 top-98 h-32 w-36 border-white border-2 cursor-pointer"></div>
         </>
     )
 }
