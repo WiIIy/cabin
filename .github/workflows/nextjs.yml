@@ -21,6 +21,9 @@ jobs:
 
       - name: print
         run: echo "BASE_PATH=/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)"
+
+      - name: change dir
+        run: cd cabin
         
       - name: reinstall
         run: npm ci
