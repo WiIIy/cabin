@@ -15,40 +15,60 @@ export function MainButtonArray(){
   const [isLinksTabOpen, setIsLinksTabOpen] = useState(false);
   const [isContactTabOpen, setIsContactTabOpen] = useState(false);
   const myRef = useRef(null);
+  const tapAudio = useRef<HTMLAudioElement>(null);
+  
 
   const handleOpenAbout = () => {
+    playTap();
     setIsAboutTabOpen(!isAboutTabOpen);
   };
   const handleCloseAbout = () => {
+    playTap();
     setIsAboutTabOpen(false);
   };
   const handleOpenWork = () => {
+    playTap();
     setIsWorkTabOpen(!isWorkTabOpen);
   };
   const handleCloseWork = () => {
+    playTap();
     setIsWorkTabOpen(false);
   };
   const handleOpenFaq = () => {
+    playTap();
     setIsFaqTabOpen(!isFaqTabOpen);
   };
   const handleCloseFaq = () => {
+    playTap();
     setIsFaqTabOpen(false);
   };
   const handleOpenLinks = () => {
+    playTap();
     setIsLinksTabOpen(!isLinksTabOpen);
   };
   const handleCloseLinks = () => {
+    playTap();
     setIsLinksTabOpen(false);
   };
   const handleOpenContact = () => {
+    playTap();
     setIsContactTabOpen(!isContactTabOpen);
   };
   const handleCloseContact = () => {
+    playTap();
     setIsContactTabOpen(false);
   };
+  function playTap(){
+    if (tapAudio.current){
+            tapAudio.current.play()
+        }
+  }
 
     return (
         <>
+        {/*audio files*/}
+        <audio src="https://wiiiy.github.io/cabin/sounds/tap.mp3" ref={tapAudio} preload="auto"/>
+
         {/*about tab*/}
         <Draggable handle="strong" nodeRef={myRef}>
           <div ref={myRef} className={`absolute box z-10 border-2 border-text rounded-lg no-cursor  ${isAboutTabOpen ? 'visible' : 'invisible'}`} style={{display: 'flex', flexDirection: 'column', height:'50%', overflow:'hidden'}}>
@@ -99,7 +119,7 @@ export function MainButtonArray(){
             <strong className="flex justify-between p-2 cursor-pointer bg-accent-dark text-white"><div>work</div><div onClick={handleCloseWork}>[X]</div></strong>
             <div style={{overflow: 'scroll', overscrollBehavior:'none', height:'100%'}}>
               <div className={"bg-background h-full"} style={{cursor:'pointer' ,whiteSpace: 'pre-wrap', padding:10, textWrap:'wrap'}}>
-                My artwork can be found on my <p className="inline underline"><Link href={"/cabin"}>art cabin(WIP)</Link></p>!
+                My artwork can be found on my <p className="inline underline"><Link href={"/cabin"}>cabin(WIP)</Link></p>!
               </div>
             </div>
           </div>
@@ -121,7 +141,7 @@ export function MainButtonArray(){
             <strong className="flex justify-between p-2 cursor-pointer bg-accent-dark text-white"><div>links</div><div onClick={handleCloseLinks}>[X]</div></strong>
             <div style={{overflow: 'scroll', overscrollBehavior:'none', height:'100%'}}>
               <div className={"bg-background h-full"} style={{cursor:'pointer' ,whiteSpace: 'pre-wrap', padding:10, textWrap:'wrap'}}>
-                My artwork can be found on my art cabin(WIP)!
+                My artwork can be found on my cabin(WIP)!
               </div>
             </div>
           </div>
@@ -133,7 +153,7 @@ export function MainButtonArray(){
             <strong className="flex justify-between p-2 cursor-pointer bg-accent-dark text-white"><div>contact</div><div onClick={handleCloseContact}>[X]</div></strong>
             <div style={{overflow: 'scroll', overscrollBehavior:'none', height:'100%'}}>
               <div className={"bg-background h-full"} style={{cursor:'pointer' ,whiteSpace: 'pre-wrap', padding:10, textWrap:'wrap'}}>
-                My artwork can be found on my art cabin(WIP)!
+                My artwork can be found on my cabin(WIP)!
               </div>
             </div>
           </div>

@@ -24,7 +24,7 @@ export function ButtonWithIcon({
   ...props
 }: IconButtonProps) {
   const [mounted, setMounted] = useState(false);
-  const { theme, resolvedTheme } = useTheme();
+  const {resolvedTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);

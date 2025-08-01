@@ -98,22 +98,19 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
 
             {/* Lights (conditional on blinds and theme) */}
             {!blindsDown && (
-                <>
-                    {lightsToggle && (
-                        <Image
-                            src={`https://wiiiy.github.io/cabin${isDark ? "/cabin/background/background_dark/lights1_cdodge_24opcty_dark.png" : "/cabin/background/background_light/lights1_cdodge_24opcty.png"}`}
-                            className="absolute z-100 opacity-24 mix-blend-color-dodge pointer-events-none"
-                            alt="Lights 1" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
-                        />
-                    )}
-                    {!lightsToggle && (
-                        <Image
-                            src={`https://wiiiy.github.io/cabin${isDark ? "/cabin/background/background_dark/lights2_cdodge_24opcty_dark.png" : "/cabin/background/background_light/lights2_cdodge_24opcty.png"}`}
-                            className="absolute z-100 opacity-24 mix-blend-color-dodge pointer-events-none"
-                            alt="Lights 2" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
-                        />
-                    )}
-                </>
+                <Image
+                    src={`https://wiiiy.github.io/cabin${
+                        lightsToggle 
+                            ? (isDark ? "/cabin/background/background_dark/lights1_cdodge_24opcty_dark.png" : "/cabin/background/background_light/lights1_cdodge_24opcty.png")
+                            : (isDark ? "/cabin/background/background_dark/lights2_cdodge_24opcty_dark.png" : "/cabin/background/background_light/lights2_cdodge_24opcty.png")
+                    }`}
+                    className="absolute z-100 opacity-24 mix-blend-color-dodge pointer-events-none"
+                    alt="Lights"
+                    width={1800}
+                    height={600}
+                    unoptimized={true}
+                    style={{ imageRendering: 'pixelated' }}
+                />
             )}
 
             {/* Blinds (conditional on blindsDown state and theme) */}

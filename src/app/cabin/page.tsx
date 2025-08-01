@@ -8,6 +8,7 @@ import { SpeechBubble } from "./components/speech-bubble";
 import { Cinderblock, DraggableCinderblock } from "./components/cinder-block";
 import { useTheme } from "next-themes";
 import { ScrapBook } from "./components/art-book-ui";
+import { ReturnToHome } from "./components/return-to-main";
 
 // Define types for Will's expressions
 export type WillExpression = 'reading' | 'blinking' | 'talking' | 'shocked'| 'really' | 'poked';
@@ -295,6 +296,7 @@ export default function Cabin() {
     <audio src="https://wiiiy.github.io/cabin/sounds/tap.mp3" ref={tapAudio} preload="auto"/>
 
       <ThemeToggle className="left-1/4 top-5" />
+      <ReturnToHome/>
 
       {/* Speech Bubble: Ensure it has a high z-index to be visible */}
       {speechText && <SpeechBubble text={speechText} />}
