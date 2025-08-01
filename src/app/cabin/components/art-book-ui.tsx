@@ -21,7 +21,7 @@ export function ScrapBook ( {isOpen,onClose}: ScrapBookProps){
         return (
             <Draggable nodeRef={myRef}>
                 <Tabs ref={myRef} defaultValue="home" className={`absolute w-100 h-100 z-120 bg-background z-100 opacity-94 rounded-lg text-black border-1 border-text-normal ${isOpen? 'visible' : 'hidden'}`}>
-                <audio src="/sounds/tap.mp3" ref={tapAudio} preload="auto"/>
+                <audio src="https://wiiiy.github.io/cabin/sounds/tap.mp3" ref={tapAudio} preload="auto"/>
                 <TabsList className="h-8 bg-background-darkened rounded-t-lg">
                     <TabsTrigger className={`h-full px-2 rounded-t-lg text-text-normal cursor-pointer ${selectedTab === "home"? 'bg-background' : 'bg-background-darkened'}`} onClick={()=>{setSelectedTab("home"); playTap()}} value="home">home</TabsTrigger>
                     <TabsTrigger className={`h-full px-2 rounded-t-lg text-text-normal cursor-pointer ${selectedTab === "misc"? 'bg-background' : 'bg-background-darkened'}`} onClick={()=>{setSelectedTab("misc"); playTap()}} value="misc">misc</TabsTrigger>

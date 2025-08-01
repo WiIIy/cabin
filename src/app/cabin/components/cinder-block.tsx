@@ -94,7 +94,7 @@ export function DraggableCinderblock({ initialPosition, onDelete, id, onDragStar
     >
       <Image
         ref={myRef}
-        src={`${resolvedTheme === 'dark'? '/cabin/items/cinderblock_dark.png' : '/cabin/items/cinderblock_light.png'}`} // Assuming this image exists
+        src={`https://wiiiy.github.io/cabin${resolvedTheme === 'dark'? '/cabin/items/cinderblock_dark.png' : '/cabin/items/cinderblock_light.png'}`} // Assuming this image exists
         alt="Cinderblock"
         className="absolute w-12 h-12 cursor-grab z-101"
         width={50}
