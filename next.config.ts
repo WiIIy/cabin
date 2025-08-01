@@ -6,7 +6,7 @@ const nextConfig = {
         unoptimized: true, // Disables image optimization globally
         loader: 'akamai'
       },
-  assetPrefix: "",
+  assetPrefix: "cabin/",
 };;
 
 export default nextConfig;
