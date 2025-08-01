@@ -20,7 +20,7 @@ jobs:
           node-version: "18.x"
 
       - name: Extract repository name
-        run: echo "BASE_PATH=/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
+        run: echo "BASE_PATH=/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)/cabin" >> $GITHUB_ENV
 
       - name: reinstall
         run: npm ci
