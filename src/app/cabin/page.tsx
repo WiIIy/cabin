@@ -9,6 +9,8 @@ import { Cinderblock, DraggableCinderblock } from "./components/cinder-block";
 import { useTheme } from "next-themes";
 import { ScrapBook } from "./components/art-book-ui";
 import { ReturnToHome } from "./components/return-to-main";
+import { DarkModeBG } from "./components/dark-mode-bg";
+import { LightModeBG } from "./components/light-mode-bg";
 
 // Define types for Will's expressions
 export type WillExpression = 'reading' | 'blinking' | 'talking' | 'shocked'| 'really' | 'poked';
@@ -315,6 +317,7 @@ export default function Cabin() {
         <p className="text-white text-center mt-4">Click to grab a cinderblock</p>
       </div>
 
+      {/*Open scrap book*/}
       <div
         className="absolute z-100 left-235 top-70 h-30 w-50 cursor-pointer"
         onClick={()=>{
@@ -325,19 +328,23 @@ export default function Cabin() {
         }}
       >
       </div>
+
+      {/*Face*/}
       <div
         className="absolute z-100 left-245 top-15 h-30 w-25 cursor-pointer"
         onClick={handleFacePoked}
       >
       </div>
 
+      {/*Window*/}
       <div
         ref={windowRef}
         className="absolute bg-accent z-110 left-98 top-25 h-32 w-50 border-white border-2 cursor-pointer"
         onClick={handleWindowClick}
       >
       </div>
-
+      
+      {/*Cinderblocks*/}
       {cinderblocks.map((block: Cinderblock) => (
         <DraggableCinderblock
           key={block.id}
@@ -349,6 +356,10 @@ export default function Cabin() {
         />
       ))}
 
+      {/*background items and hitboxes*/}
+      {theme === "dark"?( <DarkModeBG/>): (<LightModeBG/>)}
+
+      {/*Cabin visuals*/}
       <CabinBG
         blindsDown={blindsDown}
         windowBroken={windowBroken}

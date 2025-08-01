@@ -79,7 +79,7 @@ export function ScrapBook ( {isOpen,onClose}: ScrapBookProps){
                                 <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_7.png" alt="demons" width={200} height={200}/>
                                 <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_8.png" alt="demons" width={200} height={200}/>
                                 <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_9.png" alt="demons" width={200} height={200}/>
-                                <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_10.png" alt="demons" width={200} height={200}/>
+                                <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_10.jpg" alt="demons" width={200} height={200}/>
                             </div>
                         </div>
                     </TabsContent>
@@ -93,7 +93,7 @@ export function ScrapBook ( {isOpen,onClose}: ScrapBookProps){
                                 <Image src="https://wiiiy.github.io/cabin/arts/characters/char_3.png" alt="demons" width={200} height={200}/>
                                 <Image src="https://wiiiy.github.io/cabin/arts/characters/char_4.png" alt="demons" width={200} height={200}/>
                                 <Image src="https://wiiiy.github.io/cabin/arts/characters/char_5.png" alt="demons" width={200} height={200}/>
-                                 <Image src="https://wiiiy.github.io/cabin/arts/characters/char_6.png" alt="demons" width={200} height={200}/>
+                                 <Image src="https://wiiiy.github.io/cabin/arts/characters/char_6.jpg" alt="demons" width={200} height={200}/>
                             </div>
                         </div>
                     </TabsContent>
