@@ -19,14 +19,22 @@ jobs:
         with:
           node-version: "18.x"
 
-      - name: print
-        run: echo "BASE_PATH=/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)"
-        
+      - name: Extract repository name
+        run: echo "BASE_PATH=/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)/cabin" >> $GITHUB_ENV
+
+      - name: Install dependencies
+        run: |
+          if [ -e yarn.lock ]; then
+          yarn install --frozen-lockfile
+          elif [ -e package-lock.json ]; then
+          npm ci
+          else
+          npm i
+          fi
+
+
       - name: reinstall
         run: npm ci
-
-      - name: Extract repository name
-        run: echo "BASE_PATH=/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
 
       - name: Build my App
         run: npm run build && touch ./out/.nojekyll
