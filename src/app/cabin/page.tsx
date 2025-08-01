@@ -11,6 +11,7 @@ import { ScrapBook } from "./components/art-book-ui";
 import { ReturnToHome } from "./components/return-to-main";
 import { DarkModeBG } from "./components/dark-mode-bg";
 import { LightModeBG } from "./components/light-mode-bg";
+import MsgBoard from "./components/anonymous-msg-board";
 
 // Define types for Will's expressions
 export type WillExpression = 'reading' | 'blinking' | 'talking' | 'shocked'| 'really' | 'poked';
@@ -35,7 +36,7 @@ export default function Cabin() {
   const blindsUpAudio = useRef<HTMLAudioElement>(null);
   const tapAudio = useRef<HTMLAudioElement>(null);
 
-  const tableRef = useRef<HTMLDivElement>(null);
+  const cinderblocksBoxRef = useRef<HTMLDivElement>(null);
   const windowRef = useRef<HTMLDivElement>(null);
   const speechTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const blinkIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -155,12 +156,12 @@ export default function Cabin() {
   
   })
 
-  const handleTableClick = (e: React.MouseEvent<HTMLDivElement>): void => {
-    if (tableRef.current) {
+  const handleCinderBlockBoxClick = (e: React.MouseEvent<HTMLDivElement>): void => {
+    if (cinderblocksBoxRef.current) {
       const newCinderblock: Cinderblock = {
         id: Date.now(),
-        x: 500, // Initial position, adjust as needed
-        y: 300, // Initial position, adjust as needed
+        x: 400, // Initial position, adjust as needed
+        y: 400, // Initial position, adjust as needed
       };
       setCinderblocks(prev => [...prev, newCinderblock]);
 
@@ -309,12 +310,11 @@ export default function Cabin() {
         }
       }}/>
 
+      {/*drawer*/}
       <div
-        ref={tableRef}
         className="absolute bg-accent-dark z-110 left-98 top-77 h-11 w-50 border-2 border-white cursor-pointer"
-        onClick={handleTableClick}
       >
-        <p className="text-white text-center mt-4">Click to grab a cinderblock</p>
+        <p className="text-white text-center mt-4">This drawer is locked</p>
       </div>
 
       {/*Open scrap book*/}
@@ -357,8 +357,7 @@ export default function Cabin() {
       ))}
 
       {/*background items and hitboxes*/}
-      {theme === "dark"?( <DarkModeBG/>): (<LightModeBG/>)}
-
+      {theme === "dark"?( <DarkModeBG/>): (<LightModeBG handleCinderBlocksBoxClick={handleCinderBlockBoxClick} ref={cinderblocksBoxRef}/>)}
       {/*Cabin visuals*/}
       <CabinBG
         blindsDown={blindsDown}

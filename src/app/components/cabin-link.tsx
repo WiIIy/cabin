@@ -26,7 +26,7 @@ export function CabinLink(){
             <HoverCard>
             {/*https://wiiiy.github.io/cabin*/}
             <HoverCardTrigger>
-                <Link href={"cabin"}>
+                <a href={"cabin"}>
             <Image
                 src={`https://wiiiy.github.io/cabin${
                     cabinToggle
@@ -39,7 +39,7 @@ export function CabinLink(){
                 unoptimized={true}
                 style={{ imageRendering: 'pixelated' }}
             />
-            </Link>
+            </a>
             </HoverCardTrigger>
             <HoverCardContent>
                 <div className="border-1 border-accent-dark rounded-lg bg-accent-light p-1 text-sm text-accent-dark">This will take you to <br/> an adjacent site!</div>

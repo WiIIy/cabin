@@ -1,7 +1,29 @@
+import { useState } from "react";
+import MsgBoard from "./anonymous-msg-board";
+
 export function DarkModeBG(){
+    const [msgBoardOpen, setMsgBoardOpen] = useState<boolean>(false);
+
     return (
         <>
+        <MsgBoard onClose={()=>{setMsgBoardOpen(false)}} isOpen={msgBoardOpen} />
+
+        {/*wood pile*/}
         <div className="absolute bg-accent-dark z-112 left-120 top-89 h-16 w-42 border-white border-2 cursor-pointer">wood pile</div>
+
+        {/*msg board*/}
+        <div className="absolute bg-accent-dark z-112 left-20 top-32 h-46 w-42 border-white border-2 cursor-pointer"
+        onClick={()=>{setMsgBoardOpen(!msgBoardOpen)}}
+        >msg board</div>
+
+        {/*globe*/}
+        <div className="absolute bg-accent-dark z-112 left-68 bottom-0 h-46 w-46 border-white border-2 cursor-pointer"> </div>
+
+        {/*picture*/}
+        <div className="absolute bg-accent-dark z-112 left-66 bottom-90 h-26 w-26 border-white border-2 cursor-pointer"></div>
+
+        {/*fire*/}
+        <div className="absolute bg-accent-dark z-112 left-175 top-78 h-26 w-32 border-white border-2 cursor-pointer"></div>
         </>
     )
 }
