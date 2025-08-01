@@ -20,7 +20,7 @@ jobs:
           node-version: "18.x"
 
       - name: print
-        run: echo "BASE_PATH=/$(echo $GITHUB_REPOSITORY)"
+        run: find /path/to/your/directory -print | yq -r --arg prefix "$(realpath .)" 'paths | [ $prefix, . ] | join("/")' -
 
       - name: change dir
         run: cd cabin
