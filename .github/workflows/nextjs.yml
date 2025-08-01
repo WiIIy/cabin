@@ -19,7 +19,10 @@ jobs:
         with:
           node-version: "18.x"
 
-      - name: Installing my packages
+      - name: print
+        run: echo "BASE_PATH=/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)"
+        
+      - name: reinstall
         run: npm ci
 
       - name: Extract repository name
