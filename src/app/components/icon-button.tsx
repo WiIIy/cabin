@@ -39,7 +39,7 @@ export function ButtonWithIcon({
   return (
     <Button id={id} onClick={onClick} {...props} className="flex-col text-lg content-between shadow-none">
       {currentIconSrc && (
-        <Image src={currentIconSrc} alt={alt} width={75} height={75} /> // Adjust width/height as needed
+        <Image src={`https://wiiiy.github.io/cabin${currentIconSrc}`} alt={alt} width={75} height={75} /> // Adjust width/height as needed
       )}
       <p className="relative top-1">{text}</p>
     </Button>

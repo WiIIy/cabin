@@ -49,7 +49,7 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
 
     // Determine Will's sprite path based on expression and theme
     const getWillSpriteSrc = () => {
-        const basePath = "/cabin/will/";
+        const basePath = "https://wiiiy.github.io/cabin/cabin/will/";
         let fileName = "";
 
         switch (willExpression) {
@@ -85,13 +85,13 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
         >
             {/* cabin background (light/dark) */}
             <Image
-                src={isDark ? "/cabin/background/background_dark/cabin_bg_dark.png" : "/cabin/background/background_light/cabin_bg_light.png"}
+                src={isDark ? "https://wiiiy.github.io/cabin/cabin/background/background_dark/cabin_bg_dark.png" : "/cabin/background/background_light/cabin_bg_light.png"}
                 className="absolute pointer-events-none"
                 alt="Cabin Background" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
             />
             {/* table and window (light/dark) */}
             <Image
-                src={isDark ? "/cabin/background/background_dark/tableNwindow_dark.png" : "/cabin/background/background_light/tableNwindow.png"}
+                src={isDark ? "https://wiiiy.github.io/cabin/cabin/background/background_dark/tableNwindow_dark.png" : "/cabin/background/background_light/tableNwindow.png"}
                 className="absolute z-10 pointer-events-none"
                 alt="Table and Window" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
             />
@@ -101,14 +101,14 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
                 <>
                     {lightsToggle && (
                         <Image
-                            src={isDark ? "/cabin/background/background_dark/lights1_cdodge_24opcty_dark.png" : "/cabin/background/background_light/lights1_cdodge_24opcty.png"}
+                            src={isDark ? "https://wiiiy.github.io/cabin/cabin/background/background_dark/lights1_cdodge_24opcty_dark.png" : "/cabin/background/background_light/lights1_cdodge_24opcty.png"}
                             className="absolute z-100 opacity-24 mix-blend-color-dodge pointer-events-none"
                             alt="Lights 1" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
                         />
                     )}
                     {!lightsToggle && (
                         <Image
-                            src={isDark ? "/cabin/background/background_dark/lights2_cdodge_24opcty_dark.png" : "/cabin/background/background_light/lights2_cdodge_24opcty.png"}
+                            src={isDark ? "https://wiiiy.github.io/cabin/cabin/background/background_dark/lights2_cdodge_24opcty_dark.png" : "/cabin/background/background_light/lights2_cdodge_24opcty.png"}
                             className="absolute z-100 opacity-24 mix-blend-color-dodge pointer-events-none"
                             alt="Lights 2" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
                         />
@@ -119,8 +119,8 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
             {/* Blinds (conditional on blindsDown state and theme) */}
             <Image
                 src={isDark
-                    ? (blindsDown ? "/cabin/background/background_dark/blinds_down_dark.png" : "/cabin/background/background_dark/blinds_up_dark.png")
-                    : (blindsDown ? "/cabin/background/background_light/blinds_down.png" : "/cabin/background/background_light/blinds_up.png")
+                    ? (blindsDown ? "https://wiiiy.github.io/cabin/cabin/background/background_dark/blinds_down_dark.png" : "/cabin/background/background_dark/blinds_up_dark.png")
+                    : (blindsDown ? "https://wiiiy.github.io/cabin/cabin/background/background_light/blinds_down.png" : "/cabin/background/background_light/blinds_up.png")
                 }
                 className="absolute z-20 pointer-events-none"
                 alt="Blinds" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
@@ -131,14 +131,14 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
                 <>
                     {windowShineToggle && (
                         <Image
-                            src={"/cabin/background/windowshine1_overlay.png"}
+                            src={"https://wiiiy.github.io/cabin/cabin/background/windowshine1_overlay.png"}
                             className="absolute z-11 mix-blend-overlay pointer-events-none"
                             alt="Window Shine 1" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
                         />
                     )}
                     {!windowShineToggle && (
                         <Image
-                            src={"/cabin/background/windowshine2_overlay.png"}
+                            src={"https://wiiiy.github.io/cabin/cabin/background/windowshine2_overlay.png"}
                             className="absolute z-11 mix-blend-overlay pointer-events-none"
                             alt="Window Shine 2" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
                         />
@@ -147,7 +147,7 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
             )}
             {windowBroken && (
                 <Image
-                    src={"/cabin/background/window_crack.png"}
+                    src={"https://wiiiy.github.io/cabin/cabin/background/window_crack.png"}
                     className="absolute z-11 mix-blend-overlay pointer-events-none"
                     alt="Window Crack" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
                 />

@@ -30,9 +30,9 @@ export function InteractiveAvatar() {
             className="flex flex-row justify-between h-100px w-100px"
         >
             {isHovered ? (
-                <Image src={currentHoverSrc} alt={"avatar-hover"} className="bg-accent-light rounded-full" width={90} height={90} />
+                <Image src={`https://wiiiy.github.io/cabin${currentHoverSrc}`} alt={"avatar-hover"} className="bg-accent-light rounded-full" width={90} height={90} />
             ) : (
-                <Image src={currentIconSrc} alt={"avatar"} className="bg-accent-light rounded-full" width={90} height={90} />
+                <Image src={`https://wiiiy.github.io/cabin${currentIconSrc}`} alt={"avatar"} className="bg-accent-light rounded-full" width={90} height={90} />
             )}
             <div className="flex flex-col justify-self-end justify-items-center w-3/4 h-full">
                 <p className="inline pl-3 pt-4 text-xl">Willliam F.</p> <p className="text-sm pl-3 inline">*an alias</p>

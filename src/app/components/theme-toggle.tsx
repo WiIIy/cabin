@@ -33,9 +33,9 @@ export function ThemeToggle({className}:themeToggleProps) {
     <button className={`absolute z-10 cursor-pointer ${className}`} onClick={toggleTheme}>
       <audio ref={clickAudio} src="/sounds/click.mp3" preload="auto" />
       {theme === "dark" ? (
-        <Image src="/moonicon.png" alt="sun icon" width={50} height={50} ></Image>
+        <Image src="https://wiiiy.github.io/cabin/moonicon.png" alt="sun icon" width={50} height={50} ></Image>
       ) : (
-        <Image src="/sunicon.png" alt="moon icon" width={50} height={50} ></Image>
+        <Image src="https://wiiiy.github.io/cabin/sunicon.png" alt="moon icon" width={50} height={50} ></Image>
       )}
     </button>
   );

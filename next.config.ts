@@ -6,7 +6,6 @@ const nextConfig = {
         unoptimized: true, // Disables image optimization globally
         loader: 'akamai'
       },
-  basePath: "https://wiiiy.github.io/cabin",
 };;
 
 export default nextConfig;

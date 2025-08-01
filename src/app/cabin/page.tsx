@@ -289,10 +289,10 @@ export default function Cabin() {
   return (
     <div className="absolute h-screen w-fit overscroll-none">
 
-    <audio ref={glassShatterAudio} src="/sounds/window_shatter.mp3" preload="auto" />
-    <audio ref={openBookAudio} src="/sounds/open_book.mp3" preload="auto" />
-    <audio ref={blindsUpAudio} src="/sounds/open_blinds.mp3" preload="auto" />
-    <audio src="/sounds/tap.mp3" ref={tapAudio} preload="auto"/>
+    <audio ref={glassShatterAudio} src="https://wiiiy.github.io/cabin/sounds/window_shatter.mp3" preload="auto" />
+    <audio ref={openBookAudio} src="https://wiiiy.github.io/cabin/sounds/open_book.mp3" preload="auto" />
+    <audio ref={blindsUpAudio} src="https://wiiiy.github.io/cabin/sounds/open_blinds.mp3" preload="auto" />
+    <audio src="https://wiiiy.github.io/cabin/sounds/tap.mp3" ref={tapAudio} preload="auto"/>
 
       <ThemeToggle className="left-1/4 top-5" />
 
