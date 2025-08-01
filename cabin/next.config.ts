@@ -3,10 +3,9 @@ import type { NextConfig } from "next";
 const nextConfig = {
   output: "export",
   images: {
-    loader: "akamai",
-    path: "",
-  },
-  assetPrefix: "./",
+        unoptimized: true, // Disables image optimization globally
+      },
+  assetPrefix: "",
 };;
 
 export default nextConfig;
