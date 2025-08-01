@@ -10,7 +10,7 @@ export function ReturnToHome(){
         <div className="absolute  h-10 w-10 left-1/4 -translate-x-15/10 top-5 z-10">
             <Link href={"/"}>
             <Image
-                src={`${isDark? "/icons/house_dark.png": "/icons/house_light.png"}`}
+                src={`https://wiiiy.github.io/cabin${isDark? "/icons/house_dark.png": "/icons/house_light.png"}`}
                 alt="cabin"
                 width={60}
                 height={180}

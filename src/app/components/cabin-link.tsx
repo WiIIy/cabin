@@ -28,7 +28,7 @@ export function CabinLink(){
             <HoverCardTrigger>
                 <Link href={"cabin"}>
             <Image
-                src={`${
+                src={`https://wiiiy.github.io/cabin${
                     cabinToggle
                         ? (isDark ? "/icons/cabin_icon_dark_1.png" : "/icons/cabin_icon_light_1.png")
                         : (isDark ? "/icons/cabin_icon_dark_2.png" : "/icons/cabin_icon_light_2.png")
