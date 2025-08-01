@@ -20,16 +20,12 @@ jobs:
           node-version: "18.x"
 
       - name: print
-        run: find /path/to/your/directory -print | yq -r --arg prefix "$(realpath .)" 'paths | [ $prefix, . ] | join("/")' -
-
-      - name: change dir
-        run: cd cabin
-        
-      - name: reinstall
-        run: npm ci
+        run: find $GITHUB_REPOSITORY -print | yq -r --arg prefix "$(realpath .)" 'paths | [ $prefix, . ] | join("/")' -
 
       - name: Extract repository name
         run: echo "BASE_PATH=/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
+
+        
 
       - name: Build my App
         run: npm run build && touch ./out/.nojekyll
