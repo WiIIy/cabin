@@ -1,7 +1,12 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
+const nextConfig = {
+  output: "export",
+  images: {
+    loader: "akamai",
+    path: "",
+  },
+  assetPrefix: "./",
+};;
 
 export default nextConfig;
