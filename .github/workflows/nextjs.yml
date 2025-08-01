@@ -19,9 +19,6 @@ jobs:
         with:
           node-version: "18.x"
 
-      - name: print
-        run: find $GITHUB_REPOSITORY -print | yq -r --arg prefix "$(realpath .)" 'paths | [ $prefix, . ] | join("/")' -
-
       - name: Extract repository name
         run: echo "BASE_PATH=/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
 
