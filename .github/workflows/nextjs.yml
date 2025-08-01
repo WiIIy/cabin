@@ -20,7 +20,7 @@ jobs:
           node-version: "18.x"
 
       - name: print
-        run: echo "BASE_PATH=/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)"
+        run: echo "BASE_PATH=/$(echo $GITHUB_REPOSITORY)"
 
       - name: change dir
         run: cd cabin
