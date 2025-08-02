@@ -162,7 +162,7 @@ export function MsgBoard({isOpen, onClose}: msgBoardProps) {
       <div className="bg-accent-light rounded-lg p-2 w-full max-w-2xl border-1 border-black">
 
         <h1 className="text-xl font-bold text-center text-accent-dark mb-1 cursor-default">message board</h1>
-        <h1 className="absolute text-xl inline right-3 top-2 font-bold text-accent-dark mb-1 cursor-pointer" onClick={onClose}>[x]</h1>
+        <button className="absolute text-xl inline right-3 top-2 font-bold text-accent-dark mb-1 cursor-pointer" onClick={onClose}>[x]</button>
 
         <div className="mt-1 pt-6 border-t border-accent-dark">
             {error && (

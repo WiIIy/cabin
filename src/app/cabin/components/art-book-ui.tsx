@@ -24,13 +24,13 @@ export function ScrapBook ( {isOpen,onClose}: ScrapBookProps){
                 <Tabs ref={myRef} defaultValue="home" className={`absolute w-100 h-100 z-120 bg-background z-100 opacity-94 rounded-lg text-black border-1 border-text-normal ${isOpen? 'visible' : 'hidden'}`}>
                 <audio src="https://wiiiy.github.io/cabin/sounds/tap.mp3" ref={tapAudio} preload="auto"/>
                 <TabsList className="h-8 bg-background-darkened rounded-t-lg">
-                    <TabsTrigger className={`h-full px-2 rounded-t-lg text-text-normal cursor-pointer ${selectedTab === "home"? 'bg-background' : 'bg-background-darkened'}`} onClick={()=>{setSelectedTab("home"); playTap()}} value="home">home</TabsTrigger>
-                    <TabsTrigger className={`h-full px-2 rounded-t-lg text-text-normal cursor-pointer ${selectedTab === "arts"? 'bg-background' : 'bg-background-darkened'}`} onClick={()=>{setSelectedTab("arts"); playTap()}} value="arts">arts</TabsTrigger>
-                    <TabsTrigger className={`h-full px-2 rounded-t-lg text-text-normal cursor-pointer ${selectedTab === "doodles"? 'bg-background' : 'bg-background-darkened'}`} onClick={()=>{setSelectedTab("doodles"); playTap()}} value="doodles">doodles</TabsTrigger>
-                    <TabsTrigger className={`h-full px-2 rounded-t-lg text-text-normal cursor-pointer ${selectedTab === "chars"? 'bg-background' : 'bg-background-darkened'}`} onClick={()=>{setSelectedTab("chars"); playTap()}} value="chars">chars</TabsTrigger>
-                     <TabsTrigger className={`h-full px-2 rounded-t-lg text-text-normal cursor-pointer ${selectedTab === "3D"? 'bg-background' : 'bg-background-darkened'}`} onClick={()=>{setSelectedTab("3D"); playTap()}} value="3D">3D</TabsTrigger>
-                     <TabsTrigger className={`h-full px-2 rounded-t-lg text-text-normal cursor-pointer ${selectedTab === "misc"? 'bg-background' : 'bg-background-darkened'}`} onClick={()=>{setSelectedTab("misc"); playTap()}} value="misc">misc</TabsTrigger>
-                    <div className="absolute right-3 top-1 inline align-right text-text-normal cursor-pointer" onClick={onClose}>[X]</div>
+                    <TabsTrigger className={`h-full px-2 rounded-t-lg text-text-normal cursor-pointer ${selectedTab === "home"? 'bg-background' : 'bg-background-darkened'}`} value="home"><button onClick={()=>{setSelectedTab("home"); playTap()}}>home</button></TabsTrigger>
+                    <TabsTrigger className={`h-full px-2 rounded-t-lg text-text-normal cursor-pointer ${selectedTab === "arts"? 'bg-background' : 'bg-background-darkened'}`}  value="arts"><button  onClick={()=>{setSelectedTab("arts"); playTap()}}>arts</button></TabsTrigger>
+                    <TabsTrigger className={`h-full px-2 rounded-t-lg text-text-normal cursor-pointer ${selectedTab === "doodles"? 'bg-background' : 'bg-background-darkened'}`} value="doodles"><button onClick={()=>{setSelectedTab("doodles"); playTap()}}>doodles</button></TabsTrigger>
+                    <TabsTrigger className={`h-full px-2 rounded-t-lg text-text-normal cursor-pointer ${selectedTab === "chars"? 'bg-background' : 'bg-background-darkened'}`} value="chars"><button onClick={()=>{setSelectedTab("chars"); playTap()}}>chars</button></TabsTrigger>
+                    <TabsTrigger className={`h-full px-2 rounded-t-lg text-text-normal cursor-pointer ${selectedTab === "3D"? 'bg-background' : 'bg-background-darkened'}`} value="3D"><button onClick={()=>{setSelectedTab("3D"); playTap()}}>3D</button></TabsTrigger>
+                    <TabsTrigger className={`h-full px-2 rounded-t-lg text-text-normal cursor-pointer ${selectedTab === "misc"? 'bg-background' : 'bg-background-darkened'}`} value="misc"><button onClick={()=>{setSelectedTab("misc"); playTap()}}>misc</button></TabsTrigger>
+                    <button className="absolute right-3 top-1 inline align-right text-text-normal cursor-pointer" onClick={onClose}>[X]</button>
                     
                 </TabsList>
                     <TabsContent value="home" className="p-2 text-text-normal">

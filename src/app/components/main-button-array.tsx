@@ -72,7 +72,7 @@ export function MainButtonArray(){
         {/*about tab*/}
         <Draggable handle="strong" nodeRef={myRef}>
           <div ref={myRef} className={`absolute box z-10 border-2 border-text rounded-lg no-cursor  ${isAboutTabOpen ? 'visible' : 'invisible'}`} style={{display: 'flex', flexDirection: 'column', height:'50%', overflow:'hidden'}}>
-            <strong className="flex justify-between p-2 cursor-pointer bg-accent-dark text-white"><div>about</div><div onClick={handleCloseAbout}>[X]</div></strong>
+            <strong className="flex justify-between p-2 cursor-pointer bg-accent-dark text-white"><div>about</div><button onClick={handleCloseAbout}>[X]</button></strong>
             <div style={{overflow: 'scroll', overscrollBehavior:'none'}}>
               <div className={"bg-background justify-between"} style={{cursor:'pointer', padding:10}}>
                 
@@ -116,7 +116,7 @@ export function MainButtonArray(){
         {/*work tab*/}
          <Draggable handle="strong" nodeRef={myRef}>
           <div ref={myRef} className={`absolute box z-10 border-2 border-text rounded-lg no-cursor  ${isWorkTabOpen ? 'visible' : 'invisible'}`} style={{display: 'flex', flexDirection: 'column', height:'50%', overflow:'hidden'}}>
-            <strong className="flex justify-between p-2 cursor-pointer bg-accent-dark text-white"><div>work</div><div onClick={handleCloseWork}>[X]</div></strong>
+            <strong className="flex justify-between p-2 cursor-pointer bg-accent-dark text-white"><div>work</div><button onClick={handleCloseWork}>[X]</button></strong>
             <div style={{overflow: 'scroll', overscrollBehavior:'none', height:'100%'}}>
               <div className={"bg-background h-full"} style={{cursor:'pointer' ,whiteSpace: 'pre-wrap', padding:10, textWrap:'wrap'}}>
                 My artwork can be found on my <p className="inline underline"><Link href={"/cabin"}>cabin(WIP)</Link></p>!
@@ -128,7 +128,7 @@ export function MainButtonArray(){
         {/*faq tab*/}
         <Draggable handle="strong" nodeRef={myRef}>
           <div ref={myRef} className={`absolute box z-10 border-2 border-text rounded-lg no-cursor  ${isFaqTabOpen ? 'visible' : 'invisible'}`} style={{display: 'flex', flexDirection: 'column', height:'50%', overflow:'hidden'}}>
-            <strong className="flex justify-between p-2 cursor-pointer bg-accent-dark text-white"><div>faq</div><div onClick={handleCloseFaq}>[X]</div></strong>
+            <strong className="flex justify-between p-2 cursor-pointer bg-accent-dark text-white"><div>faq</div><button onClick={handleCloseFaq}>[X]</button></strong>
             <div style={{overflow: 'scroll', overscrollBehavior:'none', height:'100%'}}>
               <FaqTabCollapsible/>
             </div>
@@ -138,7 +138,7 @@ export function MainButtonArray(){
         {/*links tab*/}
         <Draggable handle="strong" nodeRef={myRef}>
           <div ref={myRef} className={`absolute box z-10 border-2 border-text rounded-lg no-cursor  ${isLinksTabOpen ? 'visible' : 'invisible'}`} style={{display: 'flex', flexDirection: 'column', height:'50%', overflow:'hidden'}}>
-            <strong className="flex justify-between p-2 cursor-pointer bg-accent-dark text-white"><div>links</div><div onClick={handleCloseLinks}>[X]</div></strong>
+            <strong className="flex justify-between p-2 cursor-pointer bg-accent-dark text-white"><div>links</div><button onClick={handleCloseLinks}>[X]</button></strong>
             <div style={{overflow: 'scroll', overscrollBehavior:'none', height:'100%'}}>
               <div className={"bg-background mt-8 h-full grid grid-rows-2 grid-cols-3"} style={{cursor:'pointer' ,whiteSpace: 'pre-wrap', padding:10, textWrap:'wrap'}}>
                 <a href="https://github.com/WiIIy"><ButtonWithIcon onClick={()=>{}} id="githubicon" iconLightSrc={"/icons/github_grey.png"} iconDarkSrc="/icons/github_white.png" text={"f4lcon/wiIIy"} alt="github icon"></ButtonWithIcon></a>
@@ -151,7 +151,7 @@ export function MainButtonArray(){
         {/*contact tab*/}
         <Draggable handle="strong" nodeRef={myRef}>
           <div ref={myRef} className={`absolute box z-10 border-2 border-text rounded-lg no-cursor  ${isContactTabOpen ? 'visible' : 'invisible'}`} style={{display: 'flex', flexDirection: 'column', height:'50%', overflow:'hidden'}}>
-            <strong className="flex justify-between p-2 cursor-pointer bg-accent-dark text-white"><div>contact</div><div onClick={handleCloseContact}>[X]</div></strong>
+            <strong className="flex justify-between p-2 cursor-pointer bg-accent-dark text-white"><div>contact</div><button onClick={handleCloseContact}>[X]</button></strong>
             <div style={{overflow: 'scroll', overscrollBehavior:'none', height:'100%'}}>
               <div className={"bg-background h-full text-center"} style={{cursor:'pointer' ,whiteSpace: 'pre-wrap', padding:10, textWrap:'wrap'}}>
                 You can mail me at <br/><a className="underline"href="mailto:willydoesthings@gmail.com">willydoesthings@gmail.com</a>
