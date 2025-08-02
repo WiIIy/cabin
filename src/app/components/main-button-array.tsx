@@ -160,7 +160,7 @@ export function MainButtonArray(){
           </div>
         </Draggable>
 
-        <div className="flex w-full h-full flex-row items-center justify-center">
+        <div className="w-full h-full grid grid-cols-3 grid-rows-2 gap-1 sm:flex sm:flex-row items-center justify-center">
             <ButtonWithIcon onClick={handleOpenAbout} id="aboutIcon" iconLightSrc={"/icons/about_grey.png"} iconDarkSrc="/icons/about_white.png" text={"about"} alt="about icon"></ButtonWithIcon>
             <ButtonWithIcon onClick={handleOpenWork} id="workIcon" iconLightSrc={"/icons/work_grey.png"} iconDarkSrc="/icons/work_white.png" text={"work"} alt="work icon"></ButtonWithIcon>
             <ButtonWithIcon onClick={handleOpenFaq} id="faqIcon" iconLightSrc={"/icons/faq_grey.png"} iconDarkSrc="/icons/faq_white.png" text={"faq"} alt="faq icon"></ButtonWithIcon>
