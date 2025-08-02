@@ -34,7 +34,7 @@ export function DarkModeBG({onPosterClick}: darkModeBGProps){
         >
             {/*cable plug*/}
             <Image
-                src={`https://wiiiy.github.io/cabin ${plugIn? "/cabin/background/background_dark/plug_in.png" : "/cabin/background/baackground_dark/plug_out.png"}`}
+                src={`https://wiiiy.github.io/cabin${plugIn? "/cabin/background/background_dark/plug_in.png" : "/cabin/background/baackground_dark/plug_out.png"}`}
                 className="absolute pointer-events-none z-11"
                 alt="plug" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
             />
@@ -42,7 +42,7 @@ export function DarkModeBG({onPosterClick}: darkModeBGProps){
             {/*laptop glow*/}
             {plugIn && (
                     <Image
-                        src={`https://wiiiy.github.io/cabin ${laptopGlowToggle ? "/cabin/background/background_dark/laptop_glow_cdodge1.png" : "/cabin/background/baackground_dark/laptop_glow_cdodge2.png"}`}
+                        src={`https://wiiiy.github.io/cabin${laptopGlowToggle ? "/cabin/background/background_dark/laptop_glow_cdodge1.png" : "/cabin/background/background_dark/laptop_glow_cdodge2.png"}`}
                         className="absolute mix-blend-color-dodge pointer-events-none z-20"
                         alt="laptop glow" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
                     />
