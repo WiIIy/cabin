@@ -23,6 +23,9 @@ export default function Cabin() {
   const [isScrapBookOpen, setScrapBookOpen] = useState<boolean>(false);
   const [amountFaceIsClicked, setAmountFaceIsClicked] = useState<number>(0);
   const [msgBoardOpen, setMsgBoardOpen] = useState<boolean>(false);
+  const [isTimeout, setIsTimeout] = useState<boolean>(false);
+  const [timeoutEndTime, setTimeoutEndTime] = useState<number | null>(null);
+
 
   const [cinderblocks, setCinderblocks] = useState<Cinderblock[]>([]);
   const [isHoldingCinderblock, setIsHoldingCinderblock] = useState<boolean>(false);
@@ -57,8 +60,20 @@ export default function Cabin() {
   useEffect(() => {
     speechTextRef.current = speechText;
   }, [speechText]);
-
   
+  // Check for persistent timeout on component mount
+  useEffect(() => {
+    const storedTimeoutEndTime = localStorage.getItem('timeoutEndTime');
+    if (storedTimeoutEndTime) {
+      const endTime = parseInt(storedTimeoutEndTime, 10);
+      if (Date.now() < endTime) {
+        setIsTimeout(true);
+        setTimeoutEndTime(endTime);
+      } else {
+        localStorage.removeItem('timeoutEndTime');
+      }
+    }
+  }, []);
 
   // Function to start blinking animation
   const startBlinkingAnimation = useCallback(() => {
@@ -162,13 +177,15 @@ export default function Cabin() {
       triggerSpeechBubble("i lied about the ban but i am gonna give you a timeout",3400,"talking")
       setAmountFaceIsClicked(amountFaceIsClicked+1)
     } else if (amountFaceIsClicked === 37){
-      //TBA TIMOUT HERE
-      setAmountFaceIsClicked(amountFaceIsClicked+1)
+      const endTime = Date.now() + 60 * 1000; // 1 minute from now
+      localStorage.setItem('timeoutEndTime', endTime.toString());
+      setIsTimeout(true);
+      setTimeoutEndTime(endTime);
+      setAmountFaceIsClicked(amountFaceIsClicked+1);
     } else {
       setAmountFaceIsClicked(amountFaceIsClicked+1)
       triggerSpeechBubble("ow",200,"poked")
     }
-  
   })
 
   const handleCinderBlockBoxClick = (e: React.MouseEvent<HTMLDivElement>): void => {
@@ -278,17 +295,6 @@ export default function Cabin() {
     if (blindsDown === true && blindsUpAudio.current){
       blindsUpAudio.current.play()
     }
-    // The user wants to be able to click the window even while holding a cinderblock.
-    // However, the current logic for breaking the window is tied to onDragStopCinderblock.
-    // If you want clicking the window while holding a cinderblock to break it, you'd need
-    // to add that logic here, checking if isHoldingCinderblock is true.
-    // For now, I'm keeping the breaking logic solely in onDragStopCinderblock as per your
-    // initial description of the bug.
-    // if (!windowBroken && isHoldingCinderblock) {
-    //   setWindowBroken(true);
-    //   triggerSpeechBubble("You clicked the window while holding a cinderblock!", 2000, 'shocked');
-    //   setCinderblocks([]);
-    // }
   };
 
   // Initial setup for blinking when component mounts
@@ -317,9 +323,12 @@ export default function Cabin() {
       <ThemeToggle className="left-1/4 top-5" />
       <ReturnToHome/>
       <MsgBoard onClose={()=>{setMsgBoardOpen(false)}} isOpen={msgBoardOpen} />
-      <Timeout/>
+      {isTimeout && <Timeout timeoutEndTime={timeoutEndTime} onTimeoutEnd={() => {
+        setIsTimeout(false);
+        setTimeoutEndTime(null);
+        localStorage.removeItem('timeoutEndTime');
+      }}/>}
 
-      {/* Speech Bubble: Ensure it has a high z-index to be visible */}
       {speechText && <SpeechBubble text={speechText} />}
 
       <ScrapBook isOpen={isScrapBookOpen} onClose={()=>{setScrapBookOpen(false)

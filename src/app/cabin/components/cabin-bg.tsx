@@ -89,11 +89,19 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
                 className="absolute pointer-events-none"
                 alt="Cabin Background" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
             />
+
             {/* table and window (light/dark) */}
             <Image
                 src={`https://wiiiy.github.io/cabin${isDark ? "/cabin/background/background_dark/tableNwindow_dark.png" : "/cabin/background/background_light/tableNwindow.png"}`}
                 className="absolute z-10 pointer-events-none"
                 alt="Table and Window" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
+            />
+
+            {/*darkmode visual bg LIGHT MODE TBA*/}
+            <Image
+                src={`https://wiiiy.github.io/cabin${isDark ? "/cabin/background/background_dark/bg_leftside_dark.png" : "/"}`}
+                className="absolute pointer-events-none"
+                alt="" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
             />
 
             {/* Lights (conditional on blinds and theme) */}
