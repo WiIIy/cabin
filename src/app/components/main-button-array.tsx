@@ -142,8 +142,7 @@ export function MainButtonArray(){
             <div style={{overflow: 'scroll', overscrollBehavior:'none', height:'100%'}}>
               <div className={"bg-background mt-8 h-full grid grid-rows-2 grid-cols-3"} style={{cursor:'pointer' ,whiteSpace: 'pre-wrap', padding:10, textWrap:'wrap'}}>
                 <a href="https://github.com/WiIIy"><ButtonWithIcon onClick={()=>{}} id="aboutIcon" iconLightSrc={"/icons/github_grey.png"} iconDarkSrc="/icons/github_white.png" text={"github"} alt="github icon"></ButtonWithIcon></a>
-                <a href="https://github.com/WiIIy"><ButtonWithIcon onClick={()=>{}} id="aboutIcon" iconLightSrc={"/icons/github_grey.png"} iconDarkSrc="/icons/github_white.png" text={"github"} alt="github icon"></ButtonWithIcon></a>
-                <a href="https://github.com/WiIIy"><ButtonWithIcon onClick={()=>{}} id="aboutIcon" iconLightSrc={"/icons/github_grey.png"} iconDarkSrc="/icons/github_white.png" text={"github"} alt="github icon"></ButtonWithIcon></a>
+                <a href="https://discord.com/"><ButtonWithIcon onClick={()=>{}} id="aboutIcon" iconLightSrc={"/icons/discord_grey.png"} iconDarkSrc="/icons/discord_white.png" text={"discord"} alt="discord icon"></ButtonWithIcon></a>
               </div>
             </div>
           </div>
