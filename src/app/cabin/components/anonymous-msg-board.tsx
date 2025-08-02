@@ -157,12 +157,12 @@ export function MsgBoard({isOpen, onClose}: msgBoardProps) {
   };
 
   return (
-    <Draggable nodeRef={myRef}>
+    <Draggable nodeRef={myRef} cancel=".no-drag">
     <div ref={myRef} className={`absolute z-112 left-50 h-100 w-1/4 font-inter ${isOpen? 'visible' : 'hidden'}`}>
       <div className="bg-accent-light rounded-lg p-2 w-full max-w-2xl border-1 border-black">
 
         <h1 className="text-xl font-bold text-center text-accent-dark mb-1 cursor-default">message board</h1>
-        <button className="absolute text-xl inline right-3 top-2 font-bold text-accent-dark mb-1 cursor-pointer" onClick={onClose}>[x]</button>
+        <button className="absolute text-xl inline right-3 top-2 font-bold text-accent-dark mb-1 cursor-pointer no-drag" onClick={onClose}>[x]</button>
 
         <div className="mt-1 pt-6 border-t border-accent-dark">
             {error && (
@@ -207,7 +207,7 @@ export function MsgBoard({isOpen, onClose}: msgBoardProps) {
               value={name}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)} // Type the event
               placeholder="anonymous"
-              className="block w-full px-2 py-1 border border-black rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-base transition duration-150 ease-in-out"
+              className="block w-full px-2 py-1 border border-black rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-base transition duration-150 ease-in-out no-drag"
             />
           </div>
           <div>
@@ -219,13 +219,13 @@ export function MsgBoard({isOpen, onClose}: msgBoardProps) {
               placeholder="Write your message here..."
               rows={2}
               required
-              className="block w-full px-2 py-1 border border-black rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-base transition duration-150 ease-in-out resize-y"
+              className="block w-full px-2 py-1 border border-black rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-base transition duration-150 ease-in-out resize-y no-drag"
             ></textarea>
           </div>
           <button
             type="submit"
             disabled={loading || !isAuthReady}
-            className="w-full bg-accent-dark text-white py-2 px-4 rounded-md shadow-lg hover:bg-accent-dark-700 focus:ring-offset-2 transition duration-300 ease-in-out transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-accent-dark text-white py-2 px-4 rounded-md shadow-lg hover:bg-accent-dark-700 focus:ring-offset-2 transition duration-300 ease-in-out transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed no-drag"
           >
             {loading ? 'Posting...' : 'Post Message'}
           </button>
