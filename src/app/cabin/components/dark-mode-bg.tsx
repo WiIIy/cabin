@@ -34,8 +34,8 @@ export function DarkModeBG({onPosterClick}: darkModeBGProps){
         >
             {/*cable plug*/}
             <Image
-                src={`https://wiiiy.github.io/cabin${plugIn? "/cabin/background/background_dark/plug_in.png" : "/cabin/background/baackground_dark/plug_out.png"}`}
-                className="absolute pointer-events-none z-11"
+                src={`https://wiiiy.github.io/cabin${plugIn? "/cabin/background/background_dark/plug_in.png" : "/cabin/background/background_dark/plug_out.png"}`}
+                className="absolute pointer-events-none z-21"
                 alt="plug" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
             />
 
