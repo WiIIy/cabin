@@ -140,7 +140,9 @@ export function MainButtonArray(){
           <div ref={myRef} className={`absolute box z-10 border-2 border-text rounded-lg no-cursor  ${isLinksTabOpen ? 'visible' : 'invisible'}`} style={{display: 'flex', flexDirection: 'column', height:'50%', overflow:'hidden'}}>
             <strong className="flex justify-between p-2 cursor-pointer bg-accent-dark text-white"><div>links</div><div onClick={handleCloseLinks}>[X]</div></strong>
             <div style={{overflow: 'scroll', overscrollBehavior:'none', height:'100%'}}>
-              <div className={"bg-background h-full grid grid-rows-3 grid-cols-2"} style={{cursor:'pointer' ,whiteSpace: 'pre-wrap', padding:10, textWrap:'wrap'}}>
+              <div className={"bg-background mt-8 h-full grid grid-rows-2 grid-cols-3"} style={{cursor:'pointer' ,whiteSpace: 'pre-wrap', padding:10, textWrap:'wrap'}}>
+                <a href="https://github.com/WiIIy"><ButtonWithIcon onClick={()=>{}} id="aboutIcon" iconLightSrc={"/icons/github_grey.png"} iconDarkSrc="/icons/github_white.png" text={"github"} alt="github icon"></ButtonWithIcon></a>
+                <a href="https://github.com/WiIIy"><ButtonWithIcon onClick={()=>{}} id="aboutIcon" iconLightSrc={"/icons/github_grey.png"} iconDarkSrc="/icons/github_white.png" text={"github"} alt="github icon"></ButtonWithIcon></a>
                 <a href="https://github.com/WiIIy"><ButtonWithIcon onClick={()=>{}} id="aboutIcon" iconLightSrc={"/icons/github_grey.png"} iconDarkSrc="/icons/github_white.png" text={"github"} alt="github icon"></ButtonWithIcon></a>
               </div>
             </div>

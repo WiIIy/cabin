@@ -12,6 +12,7 @@ import { ReturnToHome } from "./components/return-to-main";
 import { DarkModeBG } from "./components/dark-mode-bg";
 import { LightModeBG } from "./components/light-mode-bg";
 import MsgBoard from "./components/anonymous-msg-board";
+import { Timeout } from "./components/timeout";
 
 // Define types for Will's expressions
 export type WillExpression = 'reading' | 'blinking' | 'talking' | 'shocked'| 'really' | 'poked';
@@ -21,6 +22,7 @@ export default function Cabin() {
 
   const [isScrapBookOpen, setScrapBookOpen] = useState<boolean>(false);
   const [amountFaceIsClicked, setAmountFaceIsClicked] = useState<number>(0);
+  const [msgBoardOpen, setMsgBoardOpen] = useState<boolean>(false);
 
   const [cinderblocks, setCinderblocks] = useState<Cinderblock[]>([]);
   const [isHoldingCinderblock, setIsHoldingCinderblock] = useState<boolean>(false);
@@ -149,6 +151,18 @@ export default function Cabin() {
   const handleFacePoked = (()=>{
     if (amountFaceIsClicked === 10){
       triggerSpeechBubble("stop that",1000,"talking")
+      setAmountFaceIsClicked(amountFaceIsClicked+1)
+    } else if (amountFaceIsClicked === 15){
+      triggerSpeechBubble("if you keep doing that im gonna have to give you a timeout",3400,"talking")
+      setAmountFaceIsClicked(amountFaceIsClicked+1)
+    } else if (amountFaceIsClicked === 25){
+      triggerSpeechBubble("i've actually made it so if you do it a certain amount of times it IP bans you",3400,"talking")
+      setAmountFaceIsClicked(amountFaceIsClicked+1)
+    } else if (amountFaceIsClicked === 35){
+      triggerSpeechBubble("i lied about the ban but i am gonna give you a timeout",3400,"talking")
+      setAmountFaceIsClicked(amountFaceIsClicked+1)
+    } else if (amountFaceIsClicked === 37){
+      //TBA TIMOUT HERE
       setAmountFaceIsClicked(amountFaceIsClicked+1)
     } else {
       setAmountFaceIsClicked(amountFaceIsClicked+1)
@@ -302,6 +316,8 @@ export default function Cabin() {
 
       <ThemeToggle className="left-1/4 top-5" />
       <ReturnToHome/>
+      <MsgBoard onClose={()=>{setMsgBoardOpen(false)}} isOpen={msgBoardOpen} />
+      <Timeout/>
 
       {/* Speech Bubble: Ensure it has a high z-index to be visible */}
       {speechText && <SpeechBubble text={speechText} />}
@@ -321,7 +337,7 @@ export default function Cabin() {
           }
         }}
       >
-        <p className="text-white text-center mt-4">This drawer is locked</p>
+        <p className="text-white text-center mt-4"></p>
       </div>
 
       {/*Open scrap book*/}
@@ -346,7 +362,7 @@ export default function Cabin() {
       {/*Window*/}
       <div
         ref={windowRef}
-        className="absolute bg-accent z-110 left-98 top-25 h-32 w-50 border-white border-2 cursor-pointer"
+        className="absolute z-110 left-98 top-25 h-32 w-50 cursor-pointer"
         onClick={handleWindowClick}
       >
       </div>
@@ -364,7 +380,7 @@ export default function Cabin() {
       ))}
 
       {/*background items and hitboxes*/}
-      {theme === "dark"?( <DarkModeBG/>): (<LightModeBG handleCinderBlocksBoxClick={handleCinderBlockBoxClick} ref={cinderblocksBoxRef}/>)}
+      {theme === "dark"?( <DarkModeBG onPosterClick={()=>{setMsgBoardOpen(!msgBoardOpen)}}/>): (<LightModeBG handleCinderBlocksBoxClick={handleCinderBlockBoxClick} ref={cinderblocksBoxRef}/>)}
       {/*Cabin visuals*/}
       <CabinBG
         blindsDown={blindsDown}

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@font-face {font-family:"silkscreen"; src: url('https://dl.dropbox.com/s/l0frac4d7bz3zx6/silkscreen.ttf');}
 
 :root {
   --background: #ffffff;
@@ -14,6 +15,8 @@
 	--Speech-Bubble-Background:#ffefb6;
 	--Speech-Bubble-Text:#222;
   --Speech-Font-Size:16px;
+
+  --font-pixel: silkscreen;
 }
 
 @theme inline {
@@ -27,17 +30,10 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-size-normal: var(--font-size-normal);
-  --font-size-mini: var(--font-size-mini)
+  --font-size-mini: var(--font-size-mini);
 
-  --animate-rotate180: rotate180 .3s forwards;  
-  @keyframes rotate180 {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(180deg);
-  }
-}
+  --font-pixel: var(--font-pixel);
+
 }
 
 
@@ -52,10 +48,13 @@
   --alt-text:#ffffff;
 
   --Speech-Bubble-Border:#13133a;
-	--Speech-Bubble-Background:#A1AEBA;
-	--Speech-Bubble-Text:#13133a;
+  --Speech-Bubble-Background:#A1AEBA;
+  --Speech-Bubble-Text:#13133a;
   --Speech-Font-Size:16px;
+
+  --font-pixel: silkscreen;
 }
+
 
 body {
   background: var(--background);
@@ -66,7 +65,7 @@ body {
 /* 'silkscreen' font */
 /* author: Jason Aleksandr Kottke */
 /* //www.dafont.com/silkscreen.font */
-@font-face {font-family:"silkscreen"; src: url('https://dl.dropbox.com/s/l0frac4d7bz3zx6/silkscreen.ttf');}
+
 
 #speech-bubble {
 	width:200px;
