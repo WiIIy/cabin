@@ -161,20 +161,20 @@ export function MsgBoard({isOpen, onClose}: msgBoardProps) {
     <div ref={myRef} className={`absolute z-112 left-50 h-100 w-1/4 font-inter ${isOpen? 'visible' : 'hidden'}`}>
       <div className="bg-accent-light rounded-lg p-2 w-full max-w-2xl border-1 border-black">
 
-        <h1 className="text-xl font-bold text-center text-accent-dark mb-1">message board</h1>
-        <h1 className="absolute text-xl inline right-3 top-2 font-bold text-accent-dark mb-1" onClick={onClose}>[x]</h1>
+        <h1 className="text-xl font-bold text-center text-accent-dark mb-1 cursor-default">message board</h1>
+        <h1 className="absolute text-xl inline right-3 top-2 font-bold text-accent-dark mb-1 cursor-pointer" onClick={onClose}>[x]</h1>
 
         <div className="mt-1 pt-6 border-t border-accent-dark">
             {error && (
           <div className="bg-white border border-accent-dark text-accent-dark px-4 py-3 rounded-md relative mb-4" role="alert">
-            <strong className="font-bold text-red-700">Error!</strong>
+            <strong className="font-bold text-red-700">error!</strong>
             <span className="block sm:inline ml-2">{error}</span>
           </div>
         )}
           {loading && messages.length === 0 ? (
-            <p className="text-center text-black">Loading messages...</p>
+            <p className="text-center text-black cursor-default">loading messages...</p>
           ) : messages.length === 0 ? (
-            <p className="text-center text-black">No messages yet. Be the first to post!</p>
+            <p className="text-center text-black cursor-default">no messages yet. be the first to post!</p>
           ) : (
             <div className="space-y-2 overflow-scroll overscroll-none h-50 max-h-75">
               {messages.map((msg: Message) => ( // Type the map iteration variable
@@ -211,7 +211,7 @@ export function MsgBoard({isOpen, onClose}: msgBoardProps) {
             />
           </div>
           <div>
-            <label htmlFor="message" className="block text-sm font-medium text-black mb-1">Message</label>
+            <label htmlFor="message" className="block text-sm font-medium text-black mb-1">Mmssage</label>
             <textarea
               id="message"
               value={messageText}

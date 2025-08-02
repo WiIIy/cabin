@@ -322,7 +322,7 @@ export default function Cabin() {
 
       <ThemeToggle className="left-1/4 top-5" />
       <ReturnToHome/>
-      <MsgBoard onClose={()=>{setMsgBoardOpen(false)}} isOpen={msgBoardOpen} />
+      <MsgBoard onClose={()=>{setMsgBoardOpen(false); if (tapAudio.current){tapAudio.current.play()}}} isOpen={msgBoardOpen} />
       {isTimeout && <Timeout timeoutEndTime={timeoutEndTime} onTimeoutEnd={() => {
         setIsTimeout(false);
         setTimeoutEndTime(null);

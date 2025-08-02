@@ -100,7 +100,7 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
             {/*darkmode visual bg LIGHT MODE TBA*/}
             <Image
                 src={`https://wiiiy.github.io/cabin${isDark ? "/cabin/background/background_dark/bg_leftside_dark.png" : "/"}`}
-                className="absolute pointer-events-none"
+                className="absolute z-11 pointer-events-none"
                 alt="" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
             />
 
@@ -132,22 +132,15 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
 
             {/* Window Shine or Crack (conditional on windowBroken) */}
             {!windowBroken && !blindsDown && (
-                <>
-                    {windowShineToggle && (
-                        <Image
-                            src={"https://wiiiy.github.io/cabin/cabin/background/windowshine1_overlay.png"}
-                            className="absolute z-11 mix-blend-overlay pointer-events-none"
-                            alt="Window Shine 1" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
-                        />
-                    )}
-                    {!windowShineToggle && (
-                        <Image
-                            src={"https://wiiiy.github.io/cabin/cabin/background/windowshine2_overlay.png"}
-                            className="absolute z-11 mix-blend-overlay pointer-events-none"
-                            alt="Window Shine 2" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
-                        />
-                    )}
-                </>
+                <Image
+                    src={windowShineToggle ? "https://wiiiy.github.io/cabin/cabin/background/windowshine1_overlay.png" : "https://wiiiy.github.io/cabin/cabin/background/windowshine2_overlay.png"}
+                    className="absolute z-11 mix-blend-overlay pointer-events-none"
+                    alt={`Window Shine ${windowShineToggle ? '1' : '2'}`}
+                    width={1800}
+                    height={600}
+                    unoptimized={true}
+                    style={{ imageRendering: 'pixelated' }}
+                />
             )}
             {windowBroken && (
                 <Image
