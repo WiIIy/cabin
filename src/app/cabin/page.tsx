@@ -165,27 +165,27 @@ export default function Cabin() {
 
   const handleFacePoked = (()=>{
     if (amountFaceIsClicked === 10){
-      triggerSpeechBubble("stop that",1000,"talking")
-      setAmountFaceIsClicked(amountFaceIsClicked+1)
+      triggerSpeechBubble("stop that",1800,"talking")
+      
     } else if (amountFaceIsClicked === 15){
-      triggerSpeechBubble("if you keep doing that im gonna have to give you a timeout",3400,"talking")
-      setAmountFaceIsClicked(amountFaceIsClicked+1)
+      triggerSpeechBubble("you're gonna regret that",2400,"talking")
     } else if (amountFaceIsClicked === 25){
       triggerSpeechBubble("i've actually made it so if you do it a certain amount of times it IP bans you",3400,"talking")
-      setAmountFaceIsClicked(amountFaceIsClicked+1)
     } else if (amountFaceIsClicked === 35){
       triggerSpeechBubble("i lied about the ban but i am gonna give you a timeout",3400,"talking")
-      setAmountFaceIsClicked(amountFaceIsClicked+1)
     } else if (amountFaceIsClicked === 37){
       const endTime = Date.now() + 60 * 1000; // 1 minute from now
       localStorage.setItem('timeoutEndTime', endTime.toString());
       setIsTimeout(true);
       setTimeoutEndTime(endTime);
-      setAmountFaceIsClicked(amountFaceIsClicked+1);
-    } else {
-      setAmountFaceIsClicked(amountFaceIsClicked+1)
+    } else if (amountFaceIsClicked > 37 && amountFaceIsClicked % 3 === 0){
+      const endTime = Date.now() + 60 * 1000; // 1 minute from now
+      setIsTimeout(true);
+      setTimeoutEndTime(endTime);
+    }else {
       triggerSpeechBubble("ow",200,"poked")
     }
+    setAmountFaceIsClicked(amountFaceIsClicked+1)
   })
 
   const handleCinderBlockBoxClick = (e: React.MouseEvent<HTMLDivElement>): void => {
