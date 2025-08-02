@@ -17,7 +17,7 @@ export const LightModeBG =  forwardRef<HTMLDivElement, LightModeBGProps>((props,
       <div
         // 2. Attach the `ref` passed from the parent to your desired DOM element.
         ref={ref}
-        className="absolute z-110 left-68 bottom-30 h-28 w-32 cursor-pointer"
+        className="absolute z-110 left-68 top-110 h-28 w-32 cursor-pointer"
         // 3. Attach the `onClick` handler from props.
         onClick={handleCinderBlocksBoxClick}
       >

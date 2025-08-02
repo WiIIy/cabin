@@ -5,7 +5,7 @@ interface speechBubbleProps{
 
 export function SpeechBubble({text} : speechBubbleProps){
     return (
-    <div id="speech-bubble" className="absolute left-3/5 translate-x-1/5 top-10 z-200">
+    <div id="speech-bubble" className="absolute sm:left-265 translate-x-1/5 top-10 z-200">
       <div id="bub-part-a"></div>
       <div id="bub-part-b"></div>
       <div id="bub-part-c"></div>

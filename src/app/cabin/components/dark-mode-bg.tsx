@@ -59,7 +59,7 @@ export function DarkModeBG({onPosterClick}: darkModeBGProps){
         ></div>
 
         {/*globe*/}
-        <div className="absolute z-112 left-58 bottom-15 h-46 w-49 cursor-pointer">globe</div>
+        <div className="absolute z-112 left-58 top-104 h-46 w-49 cursor-pointer">globe</div>
 
         {/*picture*/}
         <div className="absolute z-112 left-65 top-35 h-21 w-17 cursor-pointer"></div>
@@ -68,10 +68,10 @@ export function DarkModeBG({onPosterClick}: darkModeBGProps){
         <div className="absolute z-112 left-175 top-78 h-26 w-32 cursor-pointer"></div>
 
         {/*laptop*/}
-        <div className="absolute z-112 left-5 bottom-44 h-32 w-36 cursor-pointer"></div>
+        <div className="absolute z-112 left-5 top-75 h-32 w-36 cursor-pointer"></div>
 
         {/*laptop plug*/}
-        <div className="absolute z-112 left-42 bottom-38 h-16 w-12 cursor-pointer" onClick={()=>{setPlugIn(!plugIn)}}></div>
+        <div className="absolute z-112 left-42 top-105 h-16 w-12 cursor-pointer" onClick={()=>{setPlugIn(!plugIn)}}></div>
         </>
     )
 }
