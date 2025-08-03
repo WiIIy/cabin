@@ -6,13 +6,17 @@ interface darkModeBGProps {
     onPosterClick: () => void;
     plugIn: boolean;
     onCableClick: () => void;
+
     achievements: Badge[];
     onUnlockAchievement: (name: string) => void;
     onGlobeClick: ()=>void;
+
+    laptopDrawerOpen: boolean;
+    onDrawerClose:()=>void;
 }
 
 const imageAspectRatio = 3;
-export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, onUnlockAchievement, onGlobeClick }: darkModeBGProps) {
+export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, onUnlockAchievement, onGlobeClick,laptopDrawerOpen,onDrawerClose }: darkModeBGProps) {
     const [laptopGlowToggle, setLaptopGlowToggle] = useState<boolean>(false);
     const [isLaptopUIOpen, setLaptopUIOpen] = useState<boolean>(false);
 
@@ -46,6 +50,13 @@ export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, 
                 <Image
                     src={`https://wiiiy.github.io/cabin${plugIn ? "/cabin/background/background_dark/plug_in.png" : "/cabin/background/background_dark/plug_out.png"}`}
                     className="absolute pointer-events-none z-21"
+                    alt="plug" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
+                />
+
+                {/*laptop drawer*/}
+                <Image
+                    src={`https://wiiiy.github.io/cabin/laptop_drawer_open.png`}
+                    className={`absolute pointer-events-none z-21 ${laptopDrawerOpen? "visible": "hidden"}`}
                     alt="plug" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
                 />
 
@@ -90,6 +101,9 @@ export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, 
 
             {/*laptop plug*/}
             <div className="absolute z-112 left-42 top-98 h-20 w-12 cursor-pointer" onClick={onCableClick}></div>
+            
+            {/*laptop drawer*/}
+            <div className="absolute z-112 left-27 top-105 -rotate-80 h-7 w-22 cursor-pointer"></div>
 
             {/*audio tags*/}
             <audio src="https://wiiiy.github.io/cabin/sounds/tap.mp3" ref={tapAudio} preload="auto" />

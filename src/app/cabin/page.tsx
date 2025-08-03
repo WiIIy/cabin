@@ -26,6 +26,8 @@ export default function Cabin() {
   const [msgBoardOpen, setMsgBoardOpen] = useState<boolean>(false);
   const [isTimeout, setIsTimeout] = useState<boolean>(false);
   const [timeoutEndTime, setTimeoutEndTime] = useState<number | null>(null);
+  const [isLaptopDrawerOpen, setLaptopDrawerOpen] = useState<boolean>(false);
+  const [firstTimeLaptopDrawerOpen, setFirstTimeLaptopDrawerOpen] = useState<boolean>(true);
 
 
   const [cinderblocks, setCinderblocks] = useState<Cinderblock[]>([]);
@@ -42,7 +44,7 @@ export default function Cabin() {
     { name: "the door was right there", description: "throw a brick at my window, why?", obtained: false, secret: true },
     { name: "big time nerd", description: "found all 3 flags, how long did that take?", obtained: false, secret: false },
     { name: "timeout", description: "bad!", obtained: false, secret: false },
-    { name: "the drawer", description: "well that was underwhelming", obtained: false, secret: true } // Marked as secret
+    { name: "this is fine", description: "commited arson", obtained: false, secret: true }
   ]);
 
   const openBookAudio = useRef<HTMLAudioElement>(null);
@@ -117,10 +119,11 @@ export default function Cabin() {
 
   const handleGlobeClick = () =>{
      const random = Math.random();
-        if (random < 4 / 5) { // 1/3 chance to say something
+        if (random < 9 / 10) { // 1/3 chance to say something
           const responses = [
             "i live there!",
             "i live there!",
+            "puts the `java` in javascript",
             "lots of corruption.",
             "might be a militaristic state",
             "about 23.5 degrees tilted depending on where you are!"
@@ -369,6 +372,14 @@ export default function Cabin() {
     }
   };
 
+  const handleLaptopDrawerClick= ():void => {
+    setLaptopDrawerOpen(!isLaptopDrawerOpen);
+    if (firstTimeLaptopDrawerOpen){
+      setFirstTimeLaptopDrawerOpen(false);
+      //TBA CROWBAR
+    }
+}
+
   // Initial setup for blinking when component mounts
   useEffect(() => {
     // Only start blinking initially if window isn't broken
@@ -475,6 +486,8 @@ export default function Cabin() {
         achievements={achievements}
         onUnlockAchievement={unlockAchievement}
         onGlobeClick={handleGlobeClick}
+        laptopDrawerOpen={isLaptopDrawerOpen}
+        onDrawerClose={handleLaptopDrawerClick}
       />) :
 
         (<LightModeBG handleCinderBlocksBoxClick={handleCinderBlockBoxClick} ref={cinderblocksBoxRef} />)}
