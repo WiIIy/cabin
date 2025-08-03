@@ -71,7 +71,7 @@ export function DarkModeBG({onPosterClick}: darkModeBGProps){
         <div className="absolute z-112 left-5 top-75 h-32 w-36 cursor-pointer"></div>
 
         {/*laptop plug*/}
-        <div className="absolute z-112 left-42 top-105 h-16 w-12 cursor-pointer" onClick={()=>{setPlugIn(!plugIn)}}></div>
+        <div className="absolute z-112 left-42 top-98 h-20 w-12 cursor-pointer" onClick={()=>{setPlugIn(!plugIn)}}></div>
         </>
     )
 }
