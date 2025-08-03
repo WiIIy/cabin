@@ -20,7 +20,7 @@ interface LaptopWindowProps {
 }
 
 export function LaptopWindow({ isOpen, onClose, achievements, onUnlockAchievement }: LaptopWindowProps) {
-    const [selectedTab, setSelectedTab] = useState<string>("flags");
+    const [selectedTab, setSelectedTab] = useState<string>("badges");
     // State to hold the values of the flag input fields
     const [flag1, setFlag1] = useState<string>('');
     const [flag2, setFlag2] = useState<string>('');
@@ -83,11 +83,11 @@ export function LaptopWindow({ isOpen, onClose, achievements, onUnlockAchievemen
 
         if (correctCount === 3) {
             onUnlockAchievement("big time nerd");
-            setOverallSubmitMessage("damn!");
+            setOverallSubmitMessage("All flags submitted! Achievement Unlocked!");
         } else if (correctCount > 0) {
-            setOverallSubmitMessage(`${correctCount} out of 3 flags.`);
+            setOverallSubmitMessage(`You found ${correctCount} out of 3 flags.`);
         } else {
-            setOverallSubmitMessage("can't bruteforce it like that!");
+            setOverallSubmitMessage("No flags found. Keep looking!");
         }
     };
 
@@ -104,6 +104,17 @@ export function LaptopWindow({ isOpen, onClose, achievements, onUnlockAchievemen
         }
     }, [overallSubmitMessage, flag1Feedback, flag2Feedback, flag3Feedback]);
 
+    // Sort achievements so obtained ones are on top
+    const sortedAchievements = [...achievements].sort((a, b) => {
+        if (a.obtained && !b.obtained) {
+            return -1; // a comes before b if a is obtained and b is not
+        }
+        if (!a.obtained && b.obtained) {
+            return 1; // b comes before a if b is obtained and a is not
+        }
+        return 0; // maintain relative order if both are obtained or both are not
+    });
+
     return (
         <Draggable nodeRef={myRef} cancel=".no-drag">
             <Tabs ref={myRef} className={`absolute z-112 bg-accent-light rounded-lg h-80 w-100 ${isOpen ? "visible" : "hidden"}`}>
@@ -113,13 +124,13 @@ export function LaptopWindow({ isOpen, onClose, achievements, onUnlockAchievemen
                     <TabsTrigger className={`no-drag px-2 rounded-lg h-full  ${selectedTab === "flags" ? 'bg-background-darkened' : 'bg-background'}`} onClick={() => { setSelectedTab("flags"); playTap() }} value="flags">flags</TabsTrigger>
                 </TabsList>
                 <TabsContent value="badges" className="p-2 absolute top-8 w-full text-black no-drag">
-                    <div className="overflow-scroll overscroll-none h-full max-h-89">
+                    <div className="overflow-scroll overscroll-none h-full max-h-70">
                         <p className="text-lg font-bold mb-2">{achievedBadgesCount}/{totalBadgesCount} Badges Achieved</p>
-                        {achievements.map((badge) => (
+                        {sortedAchievements.map((badge) => ( // Use sortedAchievements here
                             // Conditionally render secret badges only if obtained
                             (badge.secret && !badge.obtained) ? null : (
-                                <div key={badge.name} className={`mb-2 p-2 rounded-md ${badge.obtained ? 'bg-background-darkened' : 'bg-background'}`}>
-                                    <h3 className="font-semibold">{badge.name} {badge.obtained && '✅'}</h3>
+                                <div key={badge.name} className={`mb-2 p-2 rounded-md text-white ${badge.obtained ? 'bg-background' : 'bg-background opacity-30'}`}>
+                                    <h3 className="font-semibold">{badge.name} {badge.obtained}</h3>
                                     <p className="text-sm">{badge.description}</p>
                                 </div>
                             )
