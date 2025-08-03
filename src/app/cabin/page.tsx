@@ -13,9 +13,10 @@ import { DarkModeBG } from "./components/dark-mode-bg";
 import { LightModeBG } from "./components/light-mode-bg";
 import MsgBoard from "./components/anonymous-msg-board";
 import { Timeout } from "./components/timeout";
+import { Badge } from "./components/laptop-window"; // Import Badge interface
 
 // Define types for Will's expressions
-export type WillExpression = 'reading' | 'blinking' | 'talking' | 'shocked'| 'really' | 'poked';
+export type WillExpression = 'reading' | 'blinking' | 'talking' | 'shocked' | 'really' | 'poked';
 
 export default function Cabin() {
   const { theme } = useTheme();
@@ -36,6 +37,13 @@ export default function Cabin() {
   const [hasClickedCinderblockBox, sethasClickedCinderblockBox] = useState<boolean>(false);
   const [currentSpeechDuration, setCurrentSpeechDuration] = useState<number>(0);
   const [plugIn, setPlugIn] = useState<boolean>(false);
+  // State to manage achievements
+  const [achievements, setAchievements] = useState<Badge[]>([
+    { name: "in my own home??", description: "throw a brick at the window, why?", obtained: false, secret: true },
+    { name: "big time nerd", description: "found all 3 flags, how long did that take?", obtained: false, secret: false },
+    { name: "timeout", description: "bad!", obtained: false, secret: false },
+    { name: "the drawer", description: "well that was underwhelming", obtained: false, secret: true } // Marked as secret
+  ]);
 
   const openBookAudio = useRef<HTMLAudioElement>(null);
   const glassShatterAudio = useRef<HTMLAudioElement>(null);
@@ -43,8 +51,8 @@ export default function Cabin() {
   const tapAudio = useRef<HTMLAudioElement>(null);
   const lockedDrawerAudio = useRef<HTMLAudioElement>(null);
   const laptopHumAudio = useRef<HTMLAudioElement>(null);
-    const plugInAudio= useRef<HTMLAudioElement>(null);
-    const plugOutAudio = useRef<HTMLAudioElement>(null);
+  const plugInAudio = useRef<HTMLAudioElement>(null);
+  const plugOutAudio = useRef<HTMLAudioElement>(null);
 
   const cinderblocksBoxRef = useRef<HTMLDivElement>(null);
   const windowRef = useRef<HTMLDivElement>(null);
@@ -64,7 +72,30 @@ export default function Cabin() {
   useEffect(() => {
     speechTextRef.current = speechText;
   }, [speechText]);
-  
+
+  // Load achievements from localStorage on component mount
+  useEffect(() => {
+    const storedAchievements = localStorage.getItem('achievements');
+    if (storedAchievements) {
+      setAchievements(JSON.parse(storedAchievements));
+    }
+  }, []);
+
+  // Save achievements to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('achievements', JSON.stringify(achievements));
+  }, [achievements]);
+
+  // Function to unlock an achievement
+  const unlockAchievement = useCallback((name: string) => {
+    setAchievements(prevAchievements => {
+      const updatedAchievements = prevAchievements.map(badge =>
+        badge.name === name ? { ...badge, obtained: true } : badge
+      );
+      return updatedAchievements;
+    });
+  }, []);
+
   // Check for persistent timeout on component mount
   useEffect(() => {
     const storedTimeoutEndTime = localStorage.getItem('timeoutEndTime');
@@ -73,11 +104,15 @@ export default function Cabin() {
       if (Date.now() < endTime) {
         setIsTimeout(true);
         setTimeoutEndTime(endTime);
+        // Unlock "timeout" achievement if it's not already obtained
+        if (!achievements.find(a => a.name === "timeout")?.obtained) {
+          unlockAchievement("timeout");
+        }
       } else {
         localStorage.removeItem('timeoutEndTime');
       }
     }
-  }, []);
+  }, [achievements, unlockAchievement]); // Added achievements and unlockAchievement to dependencies
 
   // Function to start blinking animation
   const startBlinkingAnimation = useCallback(() => {
@@ -117,7 +152,7 @@ export default function Cabin() {
   const clearSpeechAndResetExpression = useCallback(() => {
     setSpeechText(null);
     // Only revert to reading if not currently shocked or talking
-    if (willExpressionRef.current !== 'reading' && willExpressionRef.current !== 'shocked' ) { // Use ref for latest state
+    if (willExpressionRef.current !== 'reading' && willExpressionRef.current !== 'shocked') { // Use ref for latest state
       setWillExpression('reading');
     }
     // Restart blinking animation if applicable
@@ -167,40 +202,42 @@ export default function Cabin() {
     };
   }, [speechText, willExpression, currentSpeechDuration, clearSpeechAndResetExpression, startBlinkingAnimation]); // Dependencies for this effect
 
-  const handleFacePoked = (()=>{
-    if (amountFaceIsClicked === 10){
-      triggerSpeechBubble("stop that",1800,"talking")
-      
-    } else if (amountFaceIsClicked === 15){
-      triggerSpeechBubble("you're gonna regret that",2400,"talking")
-    } else if (amountFaceIsClicked === 25){
-      triggerSpeechBubble("i've actually made it so if you do it a certain amount of times it IP bans you",3400,"talking")
-    } else if (amountFaceIsClicked === 35){
-      triggerSpeechBubble("i lied about the ban but i am gonna give you a timeout",3400,"talking")
-    } else if (amountFaceIsClicked === 37){
+  const handleFacePoked = (() => {
+    if (amountFaceIsClicked === 10) {
+      triggerSpeechBubble("stop that", 1800, "talking")
+
+    } else if (amountFaceIsClicked === 15) {
+      triggerSpeechBubble("you're gonna regret that", 2400, "talking")
+    } else if (amountFaceIsClicked === 25) {
+      triggerSpeechBubble("i've actually made it so if you do it a certain amount of times it IP bans you", 3400, "talking")
+    } else if (amountFaceIsClicked === 35) {
+      triggerSpeechBubble("i lied about the ban but i am gonna give you a timeout", 3400, "talking")
+    } else if (amountFaceIsClicked === 37) {
       const endTime = Date.now() + 60 * 1000; // 1 minute from now
       localStorage.setItem('timeoutEndTime', endTime.toString());
       setIsTimeout(true);
       setTimeoutEndTime(endTime);
-    } else if (amountFaceIsClicked > 37 && amountFaceIsClicked % 3 === 0){
+      unlockAchievement("timeout"); // Unlock timeout achievement
+    } else if (amountFaceIsClicked > 37 && amountFaceIsClicked % 3 === 0) {
       const endTime = Date.now() + 60 * 1000; // 1 minute from now
       setIsTimeout(true);
       setTimeoutEndTime(endTime);
-    }else {
-      triggerSpeechBubble("ow",200,"poked")
+    } else {
+      triggerSpeechBubble("ow", 200, "poked")
     }
-    setAmountFaceIsClicked(amountFaceIsClicked+1)
+    setAmountFaceIsClicked(amountFaceIsClicked + 1)
   })
 
-  const handleCableClick = ()=>{
-    setPlugIn(!plugIn);                      
-    if (plugIn===false && plugInAudio.current && laptopHumAudio.current){
-        plugInAudio.current.play();
-        laptopHumAudio.current.play()
-    } else if (plugIn===true && plugOutAudio.current && laptopHumAudio.current){
-        plugOutAudio.current.play();
-        laptopHumAudio.current.pause()
-    }}  
+  const handleCableClick = () => {
+    setPlugIn(!plugIn);
+    if (plugIn === false && plugInAudio.current && laptopHumAudio.current) {
+      plugInAudio.current.play();
+      laptopHumAudio.current.play()
+    } else if (plugIn === true && plugOutAudio.current && laptopHumAudio.current) {
+      plugOutAudio.current.play();
+      laptopHumAudio.current.pause()
+    }
+  }
 
   const handleCinderBlockBoxClick = (e: React.MouseEvent<HTMLDivElement>): void => {
     if (cinderblocksBoxRef.current) {
@@ -248,65 +285,66 @@ export default function Cabin() {
   };
 
   const handleDragStopCinderblock = (id: number, finalPosition: { x: number; y: number }): void => {
-  setIsHoldingCinderblock(false);
+    setIsHoldingCinderblock(false);
 
-  if (!windowBroken && windowRef.current) {
-    // Get the window's position relative to the parent
-    const windowRect = {
-      left: windowRef.current.offsetLeft,
-      top: windowRef.current.offsetTop,
-      right: windowRef.current.offsetLeft + windowRef.current.offsetWidth,
-      bottom: windowRef.current.offsetTop + windowRef.current.offsetHeight,
-    };
+    if (!windowBroken && windowRef.current) {
+      // Get the window's position relative to the parent
+      const windowRect = {
+        left: windowRef.current.offsetLeft,
+        top: windowRef.current.offsetTop,
+        right: windowRef.current.offsetLeft + windowRef.current.offsetWidth,
+        bottom: windowRef.current.offsetTop + windowRef.current.offsetHeight,
+      };
 
-    const cinderblockWidth = 50;
-    const cinderblockHeight = 50;
+      const cinderblockWidth = 50;
+      const cinderblockHeight = 50;
 
-    // Calculate the actual position of the cinderblock relative to the same coordinate system
-    const cinderblockRect = {
-      left: finalPosition.x,
-      top: finalPosition.y,
-      right: finalPosition.x + cinderblockWidth,
-      bottom: finalPosition.y + cinderblockHeight,
-    };
+      // Calculate the actual position of the cinderblock relative to the same coordinate system
+      const cinderblockRect = {
+        left: finalPosition.x,
+        top: finalPosition.y,
+        right: finalPosition.x + cinderblockWidth,
+        bottom: finalPosition.y + cinderblockHeight,
+      };
 
-    // Check for intersection
-    if (
-      cinderblockRect.left < windowRect.right &&
-      cinderblockRect.right > windowRect.left &&
-      cinderblockRect.top < windowRect.bottom &&
-      cinderblockRect.bottom > windowRect.top
-    ) {
-      setWindowBroken(true);
-      if (glassShatterAudio.current) {
+      // Check for intersection
+      if (
+        cinderblockRect.left < windowRect.right &&
+        cinderblockRect.right > windowRect.left &&
+        cinderblockRect.top < windowRect.bottom &&
+        cinderblockRect.bottom > windowRect.top
+      ) {
+        setWindowBroken(true);
+        if (glassShatterAudio.current) {
           glassShatterAudio.current.play();
         }
-      setBlindsDown(true)
-      triggerSpeechBubble("My window!", 1700, 'shocked');
-      setCinderblocks([]); // Remove all cinderblocks after breaking the window
+        setBlindsDown(true)
+        triggerSpeechBubble("My window!", 1700, 'shocked');
+        setCinderblocks([]); // Remove all cinderblocks after breaking the window
+        unlockAchievement("in my own home??"); // Unlock achievement for breaking window
 
-      // Set a timeout to change Will's expression back after being shocked
-      if (shockTimeoutRef.current) {
-        clearTimeout(shockTimeoutRef.current);
+        // Set a timeout to change Will's expression back after being shocked
+        if (shockTimeoutRef.current) {
+          clearTimeout(shockTimeoutRef.current);
+        }
+        shockTimeoutRef.current = setTimeout(() => {
+          triggerSpeechBubble("That was unnecessary...", 2000, 'really');
+          // After this speech, ensure Will's expression reverts and blinking resumes
+          setTimeout(() => {
+            clearSpeechAndResetExpression(); // Explicitly call to reset and restart blinking
+          }, 2300); // Duration for "That was unnecessary..."
+        }, 1500); // Duration for "My window!"
       }
-      shockTimeoutRef.current = setTimeout(() => {
-        triggerSpeechBubble("That was unnecessary...", 2000, 'really');
-        // After this speech, ensure Will's expression reverts and blinking resumes
-        setTimeout(() => {
-          clearSpeechAndResetExpression(); // Explicitly call to reset and restart blinking
-        }, 2300); // Duration for "That was unnecessary..."
-      }, 1500); // Duration for "My window!"
     }
-  }
-  // After drag stop, if window is not broken, restart blinking
-  if (!windowBroken) {
-    startBlinkingAnimation();
-  }
-};
+    // After drag stop, if window is not broken, restart blinking
+    if (!windowBroken) {
+      startBlinkingAnimation();
+    }
+  };
 
   const handleWindowClick = (): void => {
     setBlindsDown(prev => !prev);
-    if (blindsDown === true && blindsUpAudio.current){
+    if (blindsDown === true && blindsUpAudio.current) {
       blindsUpAudio.current.play()
     }
   };
@@ -328,41 +366,43 @@ export default function Cabin() {
   return (
     <div className="absolute h-screen w-fit overscroll-none">
 
-    <audio ref={glassShatterAudio} src="https://wiiiy.github.io/cabin/sounds/window_shatter.mp3" preload="auto" />
-    <audio ref={openBookAudio} src="https://wiiiy.github.io/cabin/sounds/open_book.mp3" preload="auto" />
-    <audio ref={blindsUpAudio} src="https://wiiiy.github.io/cabin/sounds/open_blinds.mp3" preload="auto" />
-    <audio ref={tapAudio} src="https://wiiiy.github.io/cabin/sounds/tap.mp3" preload="auto"/>
-    <audio ref={lockedDrawerAudio} src="https://wiiiy.github.io/cabin/sounds/locked_drawer.mp3" preload="auto"/>
+      <audio ref={glassShatterAudio} src="https://wiiiy.github.io/cabin/sounds/window_shatter.mp3" preload="auto" />
+      <audio ref={openBookAudio} src="https://wiiiy.github.io/cabin/sounds/open_book.mp3" preload="auto" />
+      <audio ref={blindsUpAudio} src="https://wiiiy.github.io/cabin/sounds/open_blinds.mp3" preload="auto" />
+      <audio ref={tapAudio} src="https://wiiiy.github.io/cabin/sounds/tap.mp3" preload="auto" />
+      <audio ref={lockedDrawerAudio} src="https://wiiiy.github.io/cabin/sounds/locked_drawer.mp3" preload="auto" />
 
-    {/*darkmode audio*/}
-    <audio ref={laptopHumAudio} src={`https://wiiiy.github.io/cabin/sounds/laptop_hum.mp3`} loop preload="auto" />
-    <audio ref={plugInAudio} src={`https://wiiiy.github.io/cabin/sounds/plug_in.mp3`} preload="auto" />
-    <audio ref={plugOutAudio} src={`https://wiiiy.github.io/cabin/sounds/plug_out.mp3`} preload="auto" />
+      {/*darkmode audio*/}
+      <audio ref={laptopHumAudio} src={`https://wiiiy.github.io/cabin/sounds/laptop_hum.mp3`} loop preload="auto" />
+      <audio ref={plugInAudio} src={`https://wiiiy.github.io/cabin/sounds/plug_in.mp3`} preload="auto" />
+      <audio ref={plugOutAudio} src={`https://wiiiy.github.io/cabin/sounds/plug_out.mp3`} preload="auto" />
 
       <ThemeToggle className="left-1/4 top-5" />
-      <ReturnToHome/>
-      <MsgBoard onClose={()=>{setMsgBoardOpen(false); if (tapAudio.current){tapAudio.current.play()}}} isOpen={msgBoardOpen} />
+      <ReturnToHome />
+      <MsgBoard onClose={() => { setMsgBoardOpen(false); if (tapAudio.current) { tapAudio.current.play() } }} isOpen={msgBoardOpen} />
       {isTimeout && <Timeout timeoutEndTime={timeoutEndTime} onTimeoutEnd={() => {
         setIsTimeout(false);
         setTimeoutEndTime(null);
         localStorage.removeItem('timeoutEndTime');
-      }}/>}
+      }} />}
 
       {speechText && <SpeechBubble text={speechText} />}
 
-      <ScrapBook isOpen={isScrapBookOpen} onClose={()=>{setScrapBookOpen(false)
-        if (tapAudio.current){
-            tapAudio.current.play()
+      <ScrapBook isOpen={isScrapBookOpen} onClose={() => {
+        setScrapBookOpen(false)
+        if (tapAudio.current) {
+          tapAudio.current.play()
         }
-      }}/>
+      }} />
 
       {/*drawer*/}
       <div
         className="absolute z-110 left-98 top-77 h-11 w-50 cursor-pointer"
-        onClick={()=>{
-          if (lockedDrawerAudio.current){
+        onClick={() => {
+          if (lockedDrawerAudio.current) {
             lockedDrawerAudio.current.play()
           }
+          unlockAchievement("the drawer"); // Unlock achievement for clicking drawer
         }}
       >
         <p className="text-white text-center mt-4"></p>
@@ -371,9 +411,9 @@ export default function Cabin() {
       {/*Open scrap book*/}
       <div
         className="absolute z-100 left-235 top-70 h-30 w-50 cursor-pointer"
-        onClick={()=>{
+        onClick={() => {
           setScrapBookOpen(true)
-          if (openBookAudio.current){
+          if (openBookAudio.current) {
             openBookAudio.current.play()
           }
         }}
@@ -394,7 +434,7 @@ export default function Cabin() {
         onClick={handleWindowClick}
       >
       </div>
-      
+
       {/*Cinderblocks*/}
       {cinderblocks.map((block: Cinderblock) => (
         <DraggableCinderblock
@@ -408,9 +448,15 @@ export default function Cabin() {
       ))}
 
       {/*background items and hitboxes*/}
-      {theme === "dark"?( <DarkModeBG plugIn={plugIn} onCableClick={handleCableClick} onPosterClick={()=>{setMsgBoardOpen(!msgBoardOpen); if (tapAudio.current){tapAudio.current.play()}}}/>): 
-            
-            (<LightModeBG handleCinderBlocksBoxClick={handleCinderBlockBoxClick} ref={cinderblocksBoxRef}/>)}
+      {theme === "dark" ? (<DarkModeBG
+        plugIn={plugIn}
+        onCableClick={handleCableClick}
+        onPosterClick={() => { setMsgBoardOpen(!msgBoardOpen); if (tapAudio.current) { tapAudio.current.play() } }}
+        achievements={achievements} // Pass achievements
+        onUnlockAchievement={unlockAchievement} // Pass unlock function
+      />) :
+
+        (<LightModeBG handleCinderBlocksBoxClick={handleCinderBlockBoxClick} ref={cinderblocksBoxRef} />)}
       {/*Cabin visuals*/}
       <CabinBG
         blindsDown={blindsDown}
