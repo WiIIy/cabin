@@ -21,7 +21,7 @@ export function CabinLink(){
     }, []);
 
     return(
-        <div  className="absolute bottom-1/20 sm:bottom-auto sm:right-1/8 sm:top-1/2 sm:-translate-y-9/10 cursor-pointer">
+        <div  className="absolute bottom-1/21 sm:bottom-auto sm:right-1/8 sm:top-1/2 sm:-translate-y-9/10 cursor-pointer">
             <HoverCard>
             <HoverCardTrigger>
                 <a href={"cabin"}>
