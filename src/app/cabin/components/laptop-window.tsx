@@ -7,12 +7,26 @@ interface laptopWindowProps {
     onClose: ()=>void
 }
 
+interface badge {
+    name:string,
+    description:string,
+    obtained:boolean
+}
+
 export function LaptopWindow({isOpen, onClose}: laptopWindowProps){
     const [selectedTab, setSelectedTab] = useState<string>("badges");
     const achievedBadges = 0
 
     const myRef = useRef(null);
     const tapAudio = useRef<HTMLAudioElement>(null);
+
+    const badgesList : badge[] = [
+        {name: "in my own home??", description:"throw a brick at the window, why?", obtained:false},
+        {name: "big time nerd", description:"found all 3 flags, how long did that take?", obtained:false},
+        {name: "timeout", description:"bad!", obtained:false},
+        {name: "the drawer", description:"well that was underwhelming", obtained:false}
+    ]
+    const badgeAmount = badgesList.length
 
     function playTap(){
         if (tapAudio.current){
@@ -29,10 +43,10 @@ export function LaptopWindow({isOpen, onClose}: laptopWindowProps){
                 </TabsList>
                 <TabsContent value="badges" className="p-2 absolute top-8 w-full text-black no-drag">
                     <div className="overflow-scroll overscroll-none h-full max-h-89">
-                        {achievedBadges}/7</div>
+                        {achievedBadges}/{badgeAmount}</div>
                 </TabsContent>
-                <TabsContent value="flags" className="p-2 absolute top-8 w-full text-black no-drag">
-                    <div className="overflow-scroll overscroll-none h-full max-h-89">
+                <TabsContent value="flags" className="p-2 absolute top-8 h-full w-full text-black no-drag">
+                    <div className="overflow-scroll overscroll-none h-full max-h-67">
                         Keep in mind all flags are within the main page,<br/> none are in the cabin!
                         <div className="flex flex-col ">
                             <div>
@@ -69,7 +83,9 @@ export function LaptopWindow({isOpen, onClose}: laptopWindowProps){
                             </textarea>
                             <button className="absolute ml-2 mt-2 w-8 h-8 bg-background rounded-lg cursor-pointer text-white">x</button>
                             </div>
-                            
+                            <div className="text-sm bottom-0 mt-10">
+                            And careful with refreshing, I dont keep your data so you might have to re-enter it
+                            </div>
                         </div>
                         
                     </div> 
