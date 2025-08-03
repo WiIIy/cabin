@@ -9,9 +9,9 @@ export function FlagHover(){
     const isDark = theme==="dark"? true : false;
     
     return (
-        <div className="sm:absolute sm:h-10 sm:w-10 sm:right-1/80 sm:bottom-1/40 sm:cursor-pointer">
+        <div className="sm:absolute sm:h-10 sm:w-10 sm:right-1/80 sm:bottom-1/40 sm:cursor-default">
             <HoverCard>
-            <HoverCardTrigger href="cabin">
+            <HoverCardTrigger>
                 <Image
                     src={`https://wiiiy.github.io/cabin${isDark?"/icons/flag_white.png":"/icons/flag_grey.png"}`}
                     alt="flags"
