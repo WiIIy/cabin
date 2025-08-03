@@ -32,6 +32,7 @@ export function DarkModeBG({onPosterClick}: darkModeBGProps){
         <>
     
         {/*purely visual bg items*/}
+        {/*DO NOT PUT ONCLICK EVENTS HERE*/}
         <div
             className="h-fit w-fit overflow-x-scroll overscroll-x-none"
             style={{ minWidth: `calc(var(--vh, 1vh) * 100 * ${imageAspectRatio})` }}
@@ -41,15 +42,6 @@ export function DarkModeBG({onPosterClick}: darkModeBGProps){
                 src={`https://wiiiy.github.io/cabin${plugIn? "/cabin/background/background_dark/plug_in.png" : "/cabin/background/background_dark/plug_out.png"}`}
                 className="absolute pointer-events-none z-21"
                 alt="plug" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
-                onClick={()=>{
-                    if (plugIn===true && plugInAudio.current && laptopHumAudio.current){
-                        plugInAudio.current.play();
-                        laptopHumAudio.current.play()
-                    } else if (plugIn===false && plugOutAudio.current && laptopHumAudio.current){
-                        plugOutAudio.current.play();
-                        laptopHumAudio.current.pause()
-                    }
-                }}
             />
 
             {/*laptop glow*/}
@@ -84,7 +76,16 @@ export function DarkModeBG({onPosterClick}: darkModeBGProps){
         <div className={`${plugIn? "": "pointer-events-none"} absolute z-112 left-5 top-75 h-32 w-36 cursor-pointer`}></div>
 
         {/*laptop plug*/}
-        <div className="absolute z-112 left-42 top-98 h-20 w-12 cursor-pointer" onClick={()=>{setPlugIn(!plugIn); if (laptopHumAudio.current){laptopHumAudio.current.pause()}}}></div>
+        <div className="absolute z-112 left-42 top-98 h-20 w-12 cursor-pointer" onClick={
+            ()=>{setPlugIn(!plugIn);                      
+            if (plugIn===true && plugInAudio.current && laptopHumAudio.current){
+                plugInAudio.current.play();
+                laptopHumAudio.current.play()
+            } else if (plugIn===false && plugOutAudio.current && laptopHumAudio.current){
+                plugOutAudio.current.play();
+                laptopHumAudio.current.pause()
+            }}      
+            }></div>
 
         {/*audio tags*/}
         <audio ref={laptopHumAudio} src={`https://wiiiy.github.io/cabin/sounds/laptop_hum.mp3`} loop preload="auto" />
