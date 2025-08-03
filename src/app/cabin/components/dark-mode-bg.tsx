@@ -78,10 +78,10 @@ export function DarkModeBG({onPosterClick}: darkModeBGProps){
         {/*laptop plug*/}
         <div className="absolute z-112 left-42 top-98 h-20 w-12 cursor-pointer" onClick={
             ()=>{setPlugIn(!plugIn);                      
-            if (plugIn===true && plugInAudio.current && laptopHumAudio.current){
+            if (plugIn===false && plugInAudio.current && laptopHumAudio.current){
                 plugInAudio.current.play();
                 laptopHumAudio.current.play()
-            } else if (plugIn===false && plugOutAudio.current && laptopHumAudio.current){
+            } else if (plugIn===true && plugOutAudio.current && laptopHumAudio.current){
                 plugOutAudio.current.play();
                 laptopHumAudio.current.pause()
             }}      
