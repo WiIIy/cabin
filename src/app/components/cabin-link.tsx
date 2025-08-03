@@ -23,21 +23,19 @@ export function CabinLink(){
     return(
         <div  className="absolute bottom-1/21 sm:bottom-auto sm:right-1/8 sm:top-1/2 sm:-translate-y-9/10 cursor-pointer">
             <HoverCard>
-            <HoverCardTrigger>
-                <a href={"cabin"}>
-                    <Image
-                        src={`https://wiiiy.github.io/cabin${
-                            cabinToggle
-                                ? (isDark ? "/icons/cabin_icon_dark_1.png" : "/icons/cabin_icon_light_1.png")
-                                : (isDark ? "/icons/cabin_icon_dark_2.png" : "/icons/cabin_icon_light_2.png")
-                        }`}
-                        alt="cabin"
-                        width={60}
-                        height={180}
-                        unoptimized={true}
-                        style={{ imageRendering: 'pixelated' }}
-                    />
-            </a>
+            <HoverCardTrigger href="cabin">
+                <Image
+                    src={`https://wiiiy.github.io/cabin${
+                        cabinToggle
+                            ? (isDark ? "/icons/cabin_icon_dark_1.png" : "/icons/cabin_icon_light_1.png")
+                            : (isDark ? "/icons/cabin_icon_dark_2.png" : "/icons/cabin_icon_light_2.png")
+                    }`}
+                    alt="cabin"
+                    width={60}
+                    height={180}
+                    unoptimized={true}
+                    style={{ imageRendering: 'pixelated' }}
+                />
             </HoverCardTrigger>
             <HoverCardContent>
                 <div className="border-1 border-accent-dark rounded-lg bg-accent-light p-1 text-sm text-accent-dark">This will take you to <br/> an adjacent site!</div>

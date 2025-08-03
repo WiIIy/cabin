@@ -8,7 +8,8 @@ export default function Home() {
   return (
     <div className="relative flex flex-col items-center h-screen w-screen">
       <ThemeToggle className="left-5 top-2"/>
-      
+
+      <div className="absolute text-accent-light bottom-20 left-10"> <p>flag_&#123;n0w_u_s33_m3_4pF@3&#125;</p> </div>
 
       <div className="flex items-center justify-center h-screen w-screen"> {/*invisible frame takes up the whole screen */}
           <div className=" flex w-7/8 sm:w-6/13 h-2/3 sm:bg-accent-dark sm:border-2 sm:border-text items-end rounded-lg sm:overflow-hidden"> {/*main window*/}

@@ -139,8 +139,8 @@ export function MainButtonArray(){
         <Draggable handle="strong" nodeRef={myRef} cancel=".no-drag">
           <div ref={myRef} className={`absolute box z-10 border-2 border-text rounded-lg no-cursor  ${isLinksTabOpen ? 'visible' : 'invisible'}`} style={{display: 'flex', flexDirection: 'column', height:'50%', overflow:'hidden'}}>
             <strong className="flex justify-between p-2 cursor-pointer bg-accent-dark text-white"><div>links</div><button onClick={handleCloseLinks} className="no-drag">[X]</button></strong>
-            <div style={{overflow: 'scroll', overscrollBehavior:'none', height:'100%'}}>
-              <div className={"bg-background mt-8 h-full grid grid-rows-2 grid-cols-3"} style={{cursor:'pointer' ,whiteSpace: 'pre-wrap', padding:10, textWrap:'wrap'}}>
+            <div className="bg-background" style={{overflow: 'scroll', overscrollBehavior:'none', height:'100%'}}>
+              <div className={"mt-8 h-full grid grid-rows-2 grid-cols-3"} style={{cursor:'pointer' ,whiteSpace: 'pre-wrap', padding:10, textWrap:'wrap'}}>
                 <a href="https://github.com/WiIIy" className="no-drag"><ButtonWithIcon onClick={()=>{}} id="githubicon" iconLightSrc={"/icons/github_grey.png"} iconDarkSrc="/icons/github_white.png" text={"f4lcon/wiIIy"} alt="github icon"></ButtonWithIcon></a>
                 <a href="https://discord.com/" className="no-drag"><ButtonWithIcon onClick={()=>{}} id="discordicon" iconLightSrc={"/icons/discord_grey.png"} iconDarkSrc="/icons/discord_white.png" text={"deer.dance"} alt="discord icon"></ButtonWithIcon></a>
               </div>
