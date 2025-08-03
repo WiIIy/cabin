@@ -158,13 +158,13 @@ export function MsgBoard({isOpen, onClose}: msgBoardProps) {
 
   return (
     <Draggable nodeRef={myRef} cancel=".no-drag">
-    <div ref={myRef} className={`absolute z-112 left-50 h-100 w-1/4 font-inter ${isOpen? 'visible' : 'hidden'}`}>
-      <div className="bg-accent-light rounded-lg p-2 w-full max-w-2xl border-1 border-black">
+    <div ref={myRef} className={`absolute z-112 left-50 h-100 w-1/5 font-inter ${isOpen? 'visible' : 'hidden'}`}>
+      <div className="bg-background rounded-lg p-2 w-full max-w-2xl border-1 border-black">
 
-        <h1 className="text-xl font-bold text-center text-accent-dark mb-1 cursor-default">message board</h1>
-        <button className="absolute text-xl inline right-3 top-2 font-bold text-accent-dark mb-1 cursor-pointer no-drag" onClick={onClose}>[x]</button>
+        <h1 className="text-lg font-bold text-center text-text cursor-default">message board</h1>
+        <button className="absolute text-xl inline right-3 top-1 font-bold text-text mb-1 cursor-pointer no-drag" onClick={onClose}>[x]</button>
 
-        <div className="mt-1 pt-6 border-t border-accent-dark">
+        <div className="mt-1 pt-6 border-t border-text">
             {error && (
           <div className="bg-white border border-accent-dark text-accent-dark px-4 py-3 rounded-md relative mb-4" role="alert">
             <strong className="font-bold text-red-700">error!</strong>
@@ -172,25 +172,25 @@ export function MsgBoard({isOpen, onClose}: msgBoardProps) {
           </div>
         )}
           {loading && messages.length === 0 ? (
-            <p className="text-center text-black cursor-default">loading messages...</p>
+            <p className="text-center text-text cursor-default">loading messages...</p>
           ) : messages.length === 0 ? (
-            <p className="text-center text-black cursor-default">no messages yet. be the first to post!</p>
+            <p className="text-center text-text cursor-default">no messages yet. be the first to post!</p>
           ) : (
             <div className="space-y-2 overflow-scroll overscroll-none h-50 max-h-75">
               {messages.map((msg: Message) => ( // Type the map iteration variable
-                <div key={msg.id} className="bg-gray-50 pl-2 pt-2 rounded-lg shadow-sm border border-gray-100 transition duration-200 ease-in-out hover:shadow-md">
-                  <p className="text-gray-800 text-base">{msg.message}</p>
-                  <p className="text-sm text-gray-600 font-small">
+                <div key={msg.id} className="bg-accent-light pl-2 pt-2 rounded-lg shadow-sm transition duration-200 ease-in-out hover:shadow-md">
+                  <p className="text-accent-dark text-base">{msg.message}</p>
+                  <p className="text-sm text-accent-dark opacity-70 font-small">
                     — {msg.name}
                     {msg.timestamp && (
-                      <span className="text-gray-400 ml-2 text-xs">
+                      <span className="text-accent-dark ml-2 text-xs">
                         ({new Date(msg.timestamp.toDate()).toLocaleString()})
                       </span>
                     )}
                   </p>
                   {/* Display userId for multi-user context, useful for debugging/identification */}
                   {msg.userId && (
-                    <p className="text-[8px] text-black">User ID: {msg.userId}</p>
+                    <p className="text-[8px] text-accent-dark opacity-50">User ID: {msg.userId}</p>
                   )}
                 </div>
               ))}
@@ -200,7 +200,7 @@ export function MsgBoard({isOpen, onClose}: msgBoardProps) {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-black mb-1">Name</label>
+            <label htmlFor="name" className="block text-sm font-medium text-text mb-1">Name</label>
             <input
               type="text"
               id="name"
@@ -211,7 +211,7 @@ export function MsgBoard({isOpen, onClose}: msgBoardProps) {
             />
           </div>
           <div>
-            <label htmlFor="message" className="block text-sm font-medium text-black mb-1">Mmssage</label>
+            <label htmlFor="message" className="block text-sm font-medium text-text mb-1">Message</label>
             <textarea
               id="message"
               value={messageText}
@@ -225,7 +225,7 @@ export function MsgBoard({isOpen, onClose}: msgBoardProps) {
           <button
             type="submit"
             disabled={loading || !isAuthReady}
-            className="w-full bg-accent-dark text-white py-2 px-4 rounded-md shadow-lg hover:bg-accent-dark-700 focus:ring-offset-2 transition duration-300 ease-in-out transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed no-drag"
+            className="w-full bg-accent-dark text-white py-1 px-4 rounded-md shadow-lg hover:bg-accent-dark-700 focus:ring-offset-2 transition duration-300 ease-in-out transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed no-drag"
           >
             {loading ? 'Posting...' : 'Post Message'}
           </button>

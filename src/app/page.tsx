@@ -2,11 +2,12 @@ import { ThemeToggle } from "./components/theme-toggle";
 import { MainButtonArray } from "./components/main-button-array";
 import { Footer } from "./components/footer";
 import { CabinLink } from "./components/cabin-link";
+import { FlagHover } from "./components/flag";
 
 export default function Home() {
 
   return (
-    <div className="relative flex flex-col items-center h-screen w-screen">
+    <div className="relative flex flex-col items-center h-screen w-screen overscroll-none overflow-hidden">
       <ThemeToggle className="left-5 top-2"/>
 
       <div className="absolute text-accent-light bottom-20 left-10"> <p>flag_&#123;n0w_u_s33_m3_4pF@3&#125;</p> </div>
@@ -20,6 +21,7 @@ export default function Home() {
       </div>
 
       <CabinLink/>
+      <FlagHover/>
 
       <div className="absolute bottom-0 left-0 h-1/13 w-full sm:h-1/2 bg-accent-light -z-10"> {/*half the background thats light */}
          <Footer/>

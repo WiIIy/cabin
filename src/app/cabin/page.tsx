@@ -33,14 +33,18 @@ export default function Cabin() {
   const [blindsDown, setBlindsDown] = useState<boolean>(false);
   const [speechText, setSpeechText] = useState<React.ReactNode | null>(null);
   const [willExpression, setWillExpression] = useState<WillExpression>('reading');
-  const [hasClickedTableOnce, setHasClickedTableOnce] = useState<boolean>(false);
+  const [hasClickedCinderblockBox, sethasClickedCinderblockBox] = useState<boolean>(false);
   const [currentSpeechDuration, setCurrentSpeechDuration] = useState<number>(0);
+  const [plugIn, setPlugIn] = useState<boolean>(false);
 
   const openBookAudio = useRef<HTMLAudioElement>(null);
   const glassShatterAudio = useRef<HTMLAudioElement>(null);
   const blindsUpAudio = useRef<HTMLAudioElement>(null);
   const tapAudio = useRef<HTMLAudioElement>(null);
   const lockedDrawerAudio = useRef<HTMLAudioElement>(null);
+  const laptopHumAudio = useRef<HTMLAudioElement>(null);
+    const plugInAudio= useRef<HTMLAudioElement>(null);
+    const plugOutAudio = useRef<HTMLAudioElement>(null);
 
   const cinderblocksBoxRef = useRef<HTMLDivElement>(null);
   const windowRef = useRef<HTMLDivElement>(null);
@@ -188,6 +192,16 @@ export default function Cabin() {
     setAmountFaceIsClicked(amountFaceIsClicked+1)
   })
 
+  const handleCableClick = ()=>{
+    setPlugIn(!plugIn);                      
+    if (plugIn===false && plugInAudio.current && laptopHumAudio.current){
+        plugInAudio.current.play();
+        laptopHumAudio.current.play()
+    } else if (plugIn===true && plugOutAudio.current && laptopHumAudio.current){
+        plugOutAudio.current.play();
+        laptopHumAudio.current.pause()
+    }}  
+
   const handleCinderBlockBoxClick = (e: React.MouseEvent<HTMLDivElement>): void => {
     if (cinderblocksBoxRef.current) {
       const newCinderblock: Cinderblock = {
@@ -197,9 +211,9 @@ export default function Cabin() {
       };
       setCinderblocks(prev => [...prev, newCinderblock]);
 
-      if (!hasClickedTableOnce) {
+      if (!hasClickedCinderblockBox) {
         triggerSpeechBubble("I forgot I had a box of cinderblocks!", 3000, 'talking');
-        setHasClickedTableOnce(true);
+        sethasClickedCinderblockBox(true);
       } else {
         const random = Math.random();
         if (random < 1 / 3) { // 1/3 chance to say something
@@ -320,6 +334,11 @@ export default function Cabin() {
     <audio ref={tapAudio} src="https://wiiiy.github.io/cabin/sounds/tap.mp3" preload="auto"/>
     <audio ref={lockedDrawerAudio} src="https://wiiiy.github.io/cabin/sounds/locked_drawer.mp3" preload="auto"/>
 
+    {/*darkmode audio*/}
+    <audio ref={laptopHumAudio} src={`https://wiiiy.github.io/cabin/sounds/laptop_hum.mp3`} loop preload="auto" />
+    <audio ref={plugInAudio} src={`https://wiiiy.github.io/cabin/sounds/plug_in.mp3`} preload="auto" />
+    <audio ref={plugOutAudio} src={`https://wiiiy.github.io/cabin/sounds/plug_out.mp3`} preload="auto" />
+
       <ThemeToggle className="left-1/4 top-5" />
       <ReturnToHome/>
       <MsgBoard onClose={()=>{setMsgBoardOpen(false); if (tapAudio.current){tapAudio.current.play()}}} isOpen={msgBoardOpen} />
@@ -389,7 +408,9 @@ export default function Cabin() {
       ))}
 
       {/*background items and hitboxes*/}
-      {theme === "dark"?( <DarkModeBG onPosterClick={()=>{setMsgBoardOpen(!msgBoardOpen)}}/>): (<LightModeBG handleCinderBlocksBoxClick={handleCinderBlockBoxClick} ref={cinderblocksBoxRef}/>)}
+      {theme === "dark"?( <DarkModeBG plugIn={plugIn} onCableClick={handleCableClick} onPosterClick={()=>{setMsgBoardOpen(!msgBoardOpen); if (tapAudio.current){tapAudio.current.play()}}}/>): 
+            
+            (<LightModeBG handleCinderBlocksBoxClick={handleCinderBlockBoxClick} ref={cinderblocksBoxRef}/>)}
       {/*Cabin visuals*/}
       <CabinBG
         blindsDown={blindsDown}

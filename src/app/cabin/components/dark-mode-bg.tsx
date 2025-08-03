@@ -1,17 +1,18 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { LaptopWindow } from "./laptop-window";
 interface darkModeBGProps {
     onPosterClick: ()=>void;
+    plugIn:boolean;
+    onCableClick: ()=> void;
 }
 
 const imageAspectRatio=3;
-export function DarkModeBG({onPosterClick}: darkModeBGProps){
-    const [plugIn, setPlugIn] = useState<boolean>(false);
-    const [laptopGlowToggle, setLaptopGlowToggle] = useState(false);
+export function DarkModeBG({onPosterClick, plugIn, onCableClick }: darkModeBGProps){
+    const [laptopGlowToggle, setLaptopGlowToggle] = useState<boolean>(false);
+    const [isLaptopUIOpen, setLaptopUIOpen] = useState<boolean>(false);
 
-    const laptopHumAudio = useRef<HTMLAudioElement>(null);
-    const plugInAudio= useRef<HTMLAudioElement>(null);
-    const plugOutAudio = useRef<HTMLAudioElement>(null);
+    const tapAudio = useRef<HTMLAudioElement>(null);
 
     useEffect(() => {
         let glowInterval: NodeJS.Timeout | null = null;
@@ -55,6 +56,8 @@ export function DarkModeBG({onPosterClick}: darkModeBGProps){
 
         </div>
 
+        <LaptopWindow isOpen={isLaptopUIOpen} onClose={()=>{setLaptopUIOpen(false); if (tapAudio.current){tapAudio.current.play()}}}/>
+
         {/*wood pile*/}
         <div className="absolute opacity-50 z-112 left-120 top-91 h-14 w-42 cursor-pointer">wood pile</div>
 
@@ -73,24 +76,13 @@ export function DarkModeBG({onPosterClick}: darkModeBGProps){
         <div className="absolute z-112 left-175 top-78 h-26 w-32 cursor-pointer"></div>
 
         {/*laptop*/}
-        <div className={`${plugIn? "": "pointer-events-none"} absolute z-112 left-5 top-75 h-32 w-36 cursor-pointer`}></div>
+        <div className={`${plugIn? "": "pointer-events-none"} absolute z-112 left-5 top-75 h-32 w-36 cursor-pointer`} onClick={()=>{setLaptopUIOpen(!isLaptopUIOpen); if (tapAudio.current){tapAudio.current.play()}}}></div>
 
         {/*laptop plug*/}
-        <div className="absolute z-112 left-42 top-98 h-20 w-12 cursor-pointer" onClick={
-            ()=>{setPlugIn(!plugIn);                      
-            if (plugIn===false && plugInAudio.current && laptopHumAudio.current){
-                plugInAudio.current.play();
-                laptopHumAudio.current.play()
-            } else if (plugIn===true && plugOutAudio.current && laptopHumAudio.current){
-                plugOutAudio.current.play();
-                laptopHumAudio.current.pause()
-            }}      
-            }></div>
+        <div className="absolute z-112 left-42 top-98 h-20 w-12 cursor-pointer" onClick={onCableClick}></div>
 
         {/*audio tags*/}
-        <audio ref={laptopHumAudio} src={`https://wiiiy.github.io/cabin/sounds/laptop_hum.mp3`} loop preload="auto" />
-        <audio ref={plugInAudio} src={`https://wiiiy.github.io/cabin/sounds/plug_in.mp3`} preload="auto" />
-        <audio ref={plugOutAudio} src={`https://wiiiy.github.io/cabin/sounds/plug_out.mp3`} preload="auto" />
+        <audio src="https://wiiiy.github.io/cabin/sounds/tap.mp3" ref={tapAudio} preload="auto"/>
         </>
     )
 }
