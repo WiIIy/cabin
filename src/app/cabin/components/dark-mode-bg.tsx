@@ -1,19 +1,18 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { LaptopWindow, Badge } from "./laptop-window"; // Import Badge interface
+import { LaptopWindow, Badge } from "./laptop-window";
 
 interface darkModeBGProps {
     onPosterClick: () => void;
     plugIn: boolean;
     onCableClick: () => void;
-    // New prop to pass achievements
     achievements: Badge[];
-    // New prop to pass achievement unlock function
     onUnlockAchievement: (name: string) => void;
+    onGlobeClick: ()=>void;
 }
 
 const imageAspectRatio = 3;
-export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, onUnlockAchievement }: darkModeBGProps) {
+export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, onUnlockAchievement, onGlobeClick }: darkModeBGProps) {
     const [laptopGlowToggle, setLaptopGlowToggle] = useState<boolean>(false);
     const [isLaptopUIOpen, setLaptopUIOpen] = useState<boolean>(false);
 
@@ -78,7 +77,7 @@ export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, 
             ></div>
 
             {/*globe*/}
-            <div className="absolute z-112 left-58 top-104 h-46 w-49 cursor-pointer">globe</div>
+            <div className="absolute z-112 left-58 top-104 h-46 w-49 cursor-pointer" onClick={onGlobeClick}>globe</div>
 
             {/*picture*/}
             <div className="absolute z-112 left-65 top-35 h-21 w-17 cursor-pointer"></div>

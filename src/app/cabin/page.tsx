@@ -39,7 +39,7 @@ export default function Cabin() {
   const [plugIn, setPlugIn] = useState<boolean>(false);
   // State to manage achievements
   const [achievements, setAchievements] = useState<Badge[]>([
-    { name: "in my own home??", description: "throw a brick at the window, why?", obtained: false, secret: true },
+    { name: "the door was right there", description: "throw a brick at my window, why?", obtained: false, secret: true },
     { name: "big time nerd", description: "found all 3 flags, how long did that take?", obtained: false, secret: false },
     { name: "timeout", description: "bad!", obtained: false, secret: false },
     { name: "the drawer", description: "well that was underwhelming", obtained: false, secret: true } // Marked as secret
@@ -113,6 +113,26 @@ export default function Cabin() {
       }
     }
   }, [achievements, unlockAchievement]); // Added achievements and unlockAchievement to dependencies
+
+
+  const handleGlobeClick = () =>{
+     const random = Math.random();
+        if (random < 4 / 5) { // 1/3 chance to say something
+          const responses = [
+            "i live there!",
+            "i live there!",
+            "lots of corruption.",
+            "might be a militaristic state",
+            "about 23.5 degrees tilted depending on where you are!"
+          ];
+          const randomIndex = Math.floor(Math.random() * responses.length);
+          triggerSpeechBubble(responses[randomIndex], 2000, 'talking');
+        } else {
+          // 2/3 chance to say nothing
+          setSpeechText(null); // Explicitly clear speech text
+          setWillExpression('reading'); // Ensure Will goes back to reading
+        }
+  }
 
   // Function to start blinking animation
   const startBlinkingAnimation = useCallback(() => {
@@ -452,8 +472,9 @@ export default function Cabin() {
         plugIn={plugIn}
         onCableClick={handleCableClick}
         onPosterClick={() => { setMsgBoardOpen(!msgBoardOpen); if (tapAudio.current) { tapAudio.current.play() } }}
-        achievements={achievements} // Pass achievements
-        onUnlockAchievement={unlockAchievement} // Pass unlock function
+        achievements={achievements}
+        onUnlockAchievement={unlockAchievement}
+        onGlobeClick={handleGlobeClick}
       />) :
 
         (<LightModeBG handleCinderBlocksBoxClick={handleCinderBlockBoxClick} ref={cinderblocksBoxRef} />)}
