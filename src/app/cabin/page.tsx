@@ -40,6 +40,7 @@ export default function Cabin() {
   const [hasClickedCinderblockBox, sethasClickedCinderblockBox] = useState<boolean>(false);
   const [currentSpeechDuration, setCurrentSpeechDuration] = useState<number>(0);
   const [plugIn, setPlugIn] = useState<boolean>(false);
+  const [oilDrawerBroken, setOilDrawerBroken] = useState<boolean>(false);
   const [oilDrawerOpen, setOilDrawerOpen] = useState<boolean>(false);
   
   // State to manage achievements
@@ -423,13 +424,18 @@ export default function Cabin() {
             crowbarRect.top < drawerRect.bottom &&
             crowbarRect.bottom > drawerRect.top
           ) {
-            setWindowBroken(true);
 
-            setBlindsDown(true)
-            triggerSpeechBubble("My window!", 1700, 'shocked');
+           setOilDrawerBroken(true);
 
         }
   }}
+
+  const handleOilDrawerClick=()=>{
+    if (lockedDrawerAudio.current) {
+      lockedDrawerAudio.current.play()
+    }
+    setOilDrawerOpen(true);
+  }
 
   // Initial setup for blinking when component mounts
   useEffect(() => {
@@ -482,12 +488,7 @@ export default function Cabin() {
       <div
         className="absolute z-110 left-98 top-77 h-11 w-50 cursor-pointer"
         ref={drawerRef}
-        onClick={() => {
-          if (lockedDrawerAudio.current) {
-            lockedDrawerAudio.current.play()
-          }
-          unlockAchievement("the drawer"); // Unlock achievement for clicking drawer
-        }}
+        onClick={handleOilDrawerClick}
       >
         <p className="text-white text-center mt-4"></p>
       </div>
@@ -507,7 +508,7 @@ export default function Cabin() {
       {/*crowbar*/}
       <Crowbar 
       isVisible={crowbarVisible}
-      initialPosition={{ x: 10, y: 10 }}
+      initialPosition={{ x: 130, y: 364 }}
       onDragStop={handleCrowbarDragStop}
       />
 
@@ -557,6 +558,7 @@ export default function Cabin() {
         willExpression={willExpression}
         currentTheme={theme as 'light' | 'dark'}
         willOutfit={willOutfit}
+        oilDrawerOpen={oilDrawerOpen}
       />
     </div>
   );

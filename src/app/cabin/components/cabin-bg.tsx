@@ -13,9 +13,10 @@ interface CabinBGProps {
     willExpression: WillExpression; // Changed to single expression prop
     currentTheme: 'light' | 'dark';
     willOutfit: WillOutfit;
+    oilDrawerOpen:boolean
 }
 
-export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme, willOutfit }: CabinBGProps) {
+export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme, willOutfit, oilDrawerOpen }: CabinBGProps) {
     const isDark = currentTheme === 'dark';
 
     const [lightsToggle, setLightsToggle] = useState(false);
@@ -170,6 +171,12 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
                     alt="Window Crack" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
                 />
             )}
+
+            <Image
+                    src={`https://wiiiy.github.io/cabin/cabin/background/oil_drawer_open.png ${oilDrawerOpen? "":""}`}//TBA
+                    className="absolute z-11 mix-blend-overlay pointer-events-none"
+                    alt="Window Crack" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
+                />
 
             {/* Will's Sprite - single Image element */}
             <Image
