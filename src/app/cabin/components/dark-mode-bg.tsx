@@ -12,11 +12,11 @@ interface darkModeBGProps {
     onGlobeClick: ()=>void;
 
     laptopDrawerOpen: boolean;
-    onDrawerClose:()=>void;
+    onLaptopDrawerClick:()=>void;
 }
 
 const imageAspectRatio = 3;
-export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, onUnlockAchievement, onGlobeClick,laptopDrawerOpen,onDrawerClose }: darkModeBGProps) {
+export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, onUnlockAchievement, onGlobeClick,laptopDrawerOpen,onLaptopDrawerClick }: darkModeBGProps) {
     const [laptopGlowToggle, setLaptopGlowToggle] = useState<boolean>(false);
     const [isLaptopUIOpen, setLaptopUIOpen] = useState<boolean>(false);
 
@@ -103,7 +103,7 @@ export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, 
             <div className="absolute z-112 left-42 top-98 h-20 w-12 cursor-pointer" onClick={onCableClick}></div>
             
             {/*laptop drawer*/}
-            <div className="absolute z-112 left-27 top-105 -rotate-80 h-7 w-22 cursor-pointer"></div>
+            <div className="absolute z-112 left-27 top-105 -rotate-80 h-7 w-22 cursor-pointer" onClick={onLaptopDrawerClick}></div>
 
             {/*audio tags*/}
             <audio src="https://wiiiy.github.io/cabin/sounds/tap.mp3" ref={tapAudio} preload="auto" />

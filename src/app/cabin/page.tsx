@@ -56,6 +56,7 @@ export default function Cabin() {
   const laptopHumAudio = useRef<HTMLAudioElement>(null);
   const plugInAudio = useRef<HTMLAudioElement>(null);
   const plugOutAudio = useRef<HTMLAudioElement>(null);
+  const openDrawerAudio = useRef<HTMLAudioElement>(null);
 
   const cinderblocksBoxRef = useRef<HTMLDivElement>(null);
   const windowRef = useRef<HTMLDivElement>(null);
@@ -376,6 +377,9 @@ export default function Cabin() {
 
   const handleLaptopDrawerClick= ():void => {
     setLaptopDrawerOpen(!isLaptopDrawerOpen);
+    if (openDrawerAudio.current){
+      openDrawerAudio.current.play();
+    }
     if (firstTimeLaptopDrawerOpen){
       setFirstTimeLaptopDrawerOpen(false);
       //TBA CROWBAR
@@ -422,6 +426,7 @@ export default function Cabin() {
       <audio ref={laptopHumAudio} src={`https://wiiiy.github.io/cabin/sounds/laptop_hum.mp3`} loop preload="auto" />
       <audio ref={plugInAudio} src={`https://wiiiy.github.io/cabin/sounds/plug_in.mp3`} preload="auto" />
       <audio ref={plugOutAudio} src={`https://wiiiy.github.io/cabin/sounds/plug_out.mp3`} preload="auto" />
+      <audio ref={openDrawerAudio} src={`https://wiiiy.github.io/cabin/sounds/drawer_opening.mp3`} preload="auto" />
 
       <ThemeToggle className="left-1/4 top-5" />
       <ReturnToHome />
@@ -502,7 +507,7 @@ export default function Cabin() {
         onUnlockAchievement={unlockAchievement}
         onGlobeClick={handleGlobeClick}
         laptopDrawerOpen={isLaptopDrawerOpen}
-        onDrawerClose={handleLaptopDrawerClick}
+        onLaptopDrawerClick={handleLaptopDrawerClick}
       />) :
 
         (<LightModeBG handleCinderBlocksBoxClick={handleCinderBlockBoxClick} ref={cinderblocksBoxRef} onWardrobeClick={handleWardrobeClick}/>)}
