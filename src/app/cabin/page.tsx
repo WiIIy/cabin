@@ -426,15 +426,23 @@ export default function Cabin() {
           ) {
 
            setOilDrawerBroken(true);
+           setCrowbarVisible(false);
 
         }
   }}
 
   const handleOilDrawerClick=()=>{
-    if (lockedDrawerAudio.current) {
+    if (!oilDrawerBroken){
+      if (lockedDrawerAudio.current) {
       lockedDrawerAudio.current.play()
+    }} else {
+      if (openDrawerAudio.current){
+        openDrawerAudio.current.play()
+      }
+      setOilDrawerOpen(!oilDrawerOpen);
     }
-    setOilDrawerOpen(true);
+    
+    
   }
 
   // Initial setup for blinking when component mounts
@@ -508,7 +516,7 @@ export default function Cabin() {
       {/*crowbar*/}
       <Crowbar 
       isVisible={crowbarVisible}
-      initialPosition={{ x: 130, y: 364 }}
+      initialPosition={{ x: 170, y: 344 }}
       onDragStop={handleCrowbarDragStop}
       />
 
