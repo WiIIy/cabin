@@ -3,7 +3,7 @@
 
 import Image from "next/image"
 import { useState, useEffect } from "react";
-import { WillExpression } from "../page"; // Import the WillExpression type
+import { WillExpression, WillOutfit } from "../page"; // Import the WillExpression type
 
 const imageAspectRatio = 3;
 
@@ -12,9 +12,10 @@ interface CabinBGProps {
     windowBroken: boolean;
     willExpression: WillExpression; // Changed to single expression prop
     currentTheme: 'light' | 'dark';
+    willOutfit: WillOutfit;
 }
 
-export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme }: CabinBGProps) {
+export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme, willOutfit }: CabinBGProps) {
     const isDark = currentTheme === 'dark';
 
     const [lightsToggle, setLightsToggle] = useState(false);
@@ -73,6 +74,26 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
                 break;  
             default:
                 fileName = `will_reading_${isDark ? 'dark' : 'light'}.png`; // Default fallback
+        }
+        return basePath + fileName;
+    };
+
+    const getWillOutfitSrc = () => {
+        const basePath = "https://wiiiy.github.io/cabin/cabin/will/";
+        let fileName = "";
+
+        switch (willOutfit) {
+            case "aldo":
+                fileName = `aldo_raine.png`;
+                break;
+            case "atari":
+                fileName = `atari_kobayashi.png`;
+                break;
+            case "dani":
+                fileName = `dani_ardor.png`;
+                break;
+            default:
+                fileName = `default_light.png`
         }
         return basePath + fileName;
     };
@@ -154,7 +175,13 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
             <Image
                 src={getWillSpriteSrc()}
                 className="absolute z-88 pointer-events-none"
-                alt={`Will ${willExpression}`} // Dynamic alt text
+                alt={`Will ${willExpression}`} //
+                width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
+            />
+            <Image
+                src={getWillOutfitSrc()}
+                className={`${isDark? "hidden":"visible"} absolute z-88 pointer-events-none`}
+                alt={`${willOutfit}`} // Dynamic alt text
                 width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
             />
         </div>

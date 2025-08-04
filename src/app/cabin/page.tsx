@@ -17,6 +17,7 @@ import { Badge } from "./components/laptop-window"; // Import Badge interface
 
 // Define types for Will's expressions
 export type WillExpression = 'reading' | 'blinking' | 'talking' | 'shocked' | 'really' | 'poked';
+export type WillOutfit = "aldo" | "atari" | "dani" | "default";
 
 export default function Cabin() {
   const { theme } = useTheme();
@@ -65,6 +66,7 @@ export default function Cabin() {
   // Refs to hold the latest state values for use in memoized callbacks
   const willExpressionRef = useRef(willExpression);
   const speechTextRef = useRef(speechText);
+  const [willOutfit, setWillOutfit] = useState<WillOutfit>("default");
 
   // Update refs whenever the state changes
   useEffect(() => {
@@ -380,6 +382,19 @@ export default function Cabin() {
     }
 }
 
+  const handleWardrobeClick=()=>{
+    if (willOutfit==="default"){
+      setWillOutfit("aldo")
+    } else if (willOutfit === "aldo") {
+      setWillOutfit("atari")
+    } else if (willOutfit === "atari"){
+      setWillOutfit("dani")
+    } else if (willOutfit === "dani"){
+      setWillOutfit("default")
+    }
+    
+  }
+
   // Initial setup for blinking when component mounts
   useEffect(() => {
     // Only start blinking initially if window isn't broken
@@ -490,13 +505,14 @@ export default function Cabin() {
         onDrawerClose={handleLaptopDrawerClick}
       />) :
 
-        (<LightModeBG handleCinderBlocksBoxClick={handleCinderBlockBoxClick} ref={cinderblocksBoxRef} />)}
+        (<LightModeBG handleCinderBlocksBoxClick={handleCinderBlockBoxClick} ref={cinderblocksBoxRef} onWardrobeClick={handleWardrobeClick}/>)}
       {/*Cabin visuals*/}
       <CabinBG
         blindsDown={blindsDown}
         windowBroken={windowBroken}
         willExpression={willExpression}
         currentTheme={theme as 'light' | 'dark'}
+        willOutfit={willOutfit}
       />
     </div>
   );
