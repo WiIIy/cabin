@@ -3,20 +3,16 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 
 interface DraggableCinderblockProps {
+  isVisible: boolean;
   initialPosition: { x: number; y: number };
-  onDelete: (id: number) => void;
-  id: number;
-  onDragStart: () => void;
-  onDragStop: (id: number, finalPosition: { x: number; y: number }) => void; // Modified signature
-  disableFallingAnimation?: boolean;
+  onDragStop: (finalPosition: { x: number; y: number }) => void;
 }
 
-export function Crowbar({ initialPosition, onDelete, id, onDragStart, onDragStop }: DraggableCinderblockProps){
+export function Crowbar({ initialPosition, onDragStop, isVisible }: DraggableCinderblockProps){
     const myRef = useRef<HTMLImageElement>(null);
     const [position, setPosition] = useState<{ x: number; y: number }>(initialPosition);
 
     const handleStart: DraggableEventHandler = () => {
-        onDragStart();
       };
     
       const handleDrag: DraggableEventHandler = (e, ui) => {
@@ -24,12 +20,8 @@ export function Crowbar({ initialPosition, onDelete, id, onDragStart, onDragStop
       };
     
       const handleStop: DraggableEventHandler = (e, ui) => {
-        // Pass the ID and final position to the parent's onDragStop handler
-        onDragStop(id, { x: ui.x, y: ui.y }); // Pass final position here
+        onDragStop({ x: ui.x, y: ui.y });
         setPosition({ x: ui.x, y: ui.y });
-
-          onDelete(id);
-
       };
     
     return (
@@ -43,9 +35,9 @@ export function Crowbar({ initialPosition, onDelete, id, onDragStart, onDragStop
             >
               <Image
                 ref={myRef}
-                src={`https://wiiiy.github.io/cabin/items/crowbar.png'}`} // Assuming this image exists
-                alt="Cinderblock"
-                className="absolute w-12 h-12 cursor-grab z-101"
+                src={`https://wiiiy.github.io/cabin/cabin/items/crowbar.png`} // Assuming this image exists
+                alt="Crowbar"
+                className={`${isVisible? "visible": "hiddden" } absolute w-12 h-12 cursor-grab z-101`}
                 width={50}
                 height={50}
                 style={{

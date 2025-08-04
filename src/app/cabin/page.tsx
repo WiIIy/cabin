@@ -14,6 +14,7 @@ import { LightModeBG } from "./components/light-mode-bg";
 import MsgBoard from "./components/anonymous-msg-board";
 import { Timeout } from "./components/timeout";
 import { Badge } from "./components/laptop-window"; // Import Badge interface
+import { Crowbar } from "./components/crowbar";
 
 // Define types for Will's expressions
 export type WillExpression = 'reading' | 'blinking' | 'talking' | 'shocked' | 'really' | 'poked';
@@ -29,10 +30,9 @@ export default function Cabin() {
   const [timeoutEndTime, setTimeoutEndTime] = useState<number | null>(null);
   const [isLaptopDrawerOpen, setLaptopDrawerOpen] = useState<boolean>(false);
   const [firstTimeLaptopDrawerOpen, setFirstTimeLaptopDrawerOpen] = useState<boolean>(true);
-
+  const [crowbarVisible, setCrowbarVisible] = useState<boolean>(false);
 
   const [cinderblocks, setCinderblocks] = useState<Cinderblock[]>([]);
-  const [isHoldingCinderblock, setIsHoldingCinderblock] = useState<boolean>(false);
   const [windowBroken, setWindowBroken] = useState<boolean>(false);
   const [blindsDown, setBlindsDown] = useState<boolean>(false);
   const [speechText, setSpeechText] = useState<React.ReactNode | null>(null);
@@ -40,6 +40,8 @@ export default function Cabin() {
   const [hasClickedCinderblockBox, sethasClickedCinderblockBox] = useState<boolean>(false);
   const [currentSpeechDuration, setCurrentSpeechDuration] = useState<number>(0);
   const [plugIn, setPlugIn] = useState<boolean>(false);
+  const [oilDrawerOpen, setOilDrawerOpen] = useState<boolean>(false);
+  
   // State to manage achievements
   const [achievements, setAchievements] = useState<Badge[]>([
     { name: "the door was right there", description: "throw a brick at my window, why?", obtained: false, secret: true },
@@ -60,6 +62,7 @@ export default function Cabin() {
 
   const cinderblocksBoxRef = useRef<HTMLDivElement>(null);
   const windowRef = useRef<HTMLDivElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
   const speechTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const blinkIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const shockTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -300,18 +303,7 @@ export default function Cabin() {
     setCinderblocks(prev => prev.filter(block => block.id !== idToDelete));
   };
 
-  const handleDragStartCinderblock = (): void => {
-    setIsHoldingCinderblock(true);
-    // When dragging starts, stop blinking and set expression to reading
-    if (blinkIntervalRef.current) {
-      clearInterval(blinkIntervalRef.current);
-      blinkIntervalRef.current = null;
-    }
-    setWillExpression('reading');
-  };
-
   const handleDragStopCinderblock = (id: number, finalPosition: { x: number; y: number }): void => {
-    setIsHoldingCinderblock(false);
 
     if (!windowBroken && windowRef.current) {
       // Get the window's position relative to the parent
@@ -382,11 +374,15 @@ export default function Cabin() {
     }
     if (firstTimeLaptopDrawerOpen){
       setFirstTimeLaptopDrawerOpen(false);
+      setCrowbarVisible(true);
       //TBA CROWBAR
     }
 }
 
   const handleWardrobeClick=()=>{
+    if (tapAudio.current){
+      tapAudio.current.play()
+    }
     if (willOutfit==="default"){
       setWillOutfit("aldo")
     } else if (willOutfit === "aldo") {
@@ -398,6 +394,42 @@ export default function Cabin() {
     }
     
   }
+
+  const handleCrowbarDragStop=(finalPosition: { x: number; y: number })=>{
+    if (!oilDrawerOpen && drawerRef.current) {
+          // Get the window's position relative to the parent
+          const drawerRect = {
+            left: drawerRef.current.offsetLeft,
+            top: drawerRef.current.offsetTop,
+            right: drawerRef.current.offsetLeft + drawerRef.current.offsetWidth,
+            bottom: drawerRef.current.offsetTop + drawerRef.current.offsetHeight,
+          };
+
+          const crowbarWidth = 50;
+          const crowbarHeight = 50;
+
+          // Calculate the actual position of the cinderblock relative to the same coordinate system
+          const crowbarRect = {
+            left: finalPosition.x,
+            top: finalPosition.y,
+            right: finalPosition.x + crowbarWidth,
+            bottom: finalPosition.y + crowbarHeight,
+          };
+
+          // Check for intersection
+          if (
+            crowbarRect.left < drawerRect.right &&
+            crowbarRect.right > drawerRect.left &&
+            crowbarRect.top < drawerRect.bottom &&
+            crowbarRect.bottom > drawerRect.top
+          ) {
+            setWindowBroken(true);
+
+            setBlindsDown(true)
+            triggerSpeechBubble("My window!", 1700, 'shocked');
+
+        }
+  }}
 
   // Initial setup for blinking when component mounts
   useEffect(() => {
@@ -449,6 +481,7 @@ export default function Cabin() {
       {/*drawer*/}
       <div
         className="absolute z-110 left-98 top-77 h-11 w-50 cursor-pointer"
+        ref={drawerRef}
         onClick={() => {
           if (lockedDrawerAudio.current) {
             lockedDrawerAudio.current.play()
@@ -470,6 +503,13 @@ export default function Cabin() {
         }}
       >
       </div>
+
+      {/*crowbar*/}
+      <Crowbar 
+      isVisible={crowbarVisible}
+      initialPosition={{ x: 10, y: 10 }}
+      onDragStop={handleCrowbarDragStop}
+      />
 
       {/*Face*/}
       <div
@@ -493,7 +533,6 @@ export default function Cabin() {
           id={block.id}
           initialPosition={{ x: block.x, y: block.y }}
           onDelete={handleDeleteCinderblock}
-          onDragStart={handleDragStartCinderblock}
           onDragStop={handleDragStopCinderblock}
         />
       ))}

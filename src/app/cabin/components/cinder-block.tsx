@@ -16,12 +16,11 @@ interface DraggableCinderblockProps {
   initialPosition: { x: number; y: number };
   onDelete: (id: number) => void;
   id: number;
-  onDragStart: () => void;
   onDragStop: (id: number, finalPosition: { x: number; y: number }) => void; // Modified signature
   disableFallingAnimation?: boolean;
 }
 
-export function DraggableCinderblock({ initialPosition, onDelete, id, onDragStart, onDragStop, disableFallingAnimation = false }: DraggableCinderblockProps) {
+export function DraggableCinderblock({ initialPosition, onDelete, id, onDragStop, disableFallingAnimation = false }: DraggableCinderblockProps) {
   const [isFalling, setIsFalling] = useState<boolean>(false);
   const {resolvedTheme} = useTheme()
   const [position, setPosition] = useState<{ x: number; y: number }>(initialPosition);
@@ -30,7 +29,6 @@ export function DraggableCinderblock({ initialPosition, onDelete, id, onDragStar
   const animationFrameRef = useRef<number | null>(null);
 
   const handleStart: DraggableEventHandler = () => {
-    onDragStart();
     setIsFalling(false); // Ensure it's not falling when a new drag starts
   };
 
