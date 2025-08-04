@@ -174,14 +174,14 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
             {/* Will's Sprite - single Image element */}
             <Image
                 src={getWillSpriteSrc()}
-                className="absolute z-88 pointer-events-none"
-                alt={`Will ${willExpression}`} //
+                className="absolute z-98 pointer-events-none"
+                alt={`Will ${willExpression}`}
                 width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
             />
             <Image
                 src={getWillOutfitSrc()}
                 className={`${isDark? "hidden":"visible"} absolute z-88 pointer-events-none`}
-                alt={`${willOutfit}`} // Dynamic alt text
+                alt={`${willOutfit}`}
                 width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
             />
         </div>
