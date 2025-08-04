@@ -55,7 +55,7 @@ export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, 
 
                 {/*laptop drawer*/}
                 <Image
-                    src={`https://wiiiy.github.io/cabin/laptop_drawer_open.png`}
+                    src={`https://wiiiy.github.io/cabin/cabin/background/background_dark/laptop_drawer_open.png`}
                     className={`absolute pointer-events-none z-21 ${laptopDrawerOpen? "visible": "hidden"}`}
                     alt="plug" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
                 />
