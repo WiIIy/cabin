@@ -173,7 +173,7 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
             )}
 
             <Image
-                    src={`https://wiiiy.github.io/cabin/cabin/background/oil_drawer_open.png ${oilDrawerOpen? "":""}`}//TBA
+                    src={`https://wiiiy.github.io/cabin/cabin/background/oil_drawer_open.png${oilDrawerOpen? "":""}`}//TBA
                     className="absolute z-11 mix-blend-overlay pointer-events-none"
                     alt="Window Crack" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
                 />
