@@ -464,7 +464,7 @@ export default function Cabin() {
     }
 }
 
-  const handleCupboardClick=()=>{
+  const handleCupboardInsideClick=()=>{
     if (tapAudio.current){
       tapAudio.current.play()
     }
@@ -477,7 +477,13 @@ export default function Cabin() {
     } else if (willOutfit === "dani"){
       setWillOutfit("default")
     }
-    
+  }
+
+  const handleCupboardClick=()=>{
+    if (openDrawerAudio.current){
+      openDrawerAudio.current.play()
+    }
+    setCupboardOpen(!isCupboardOpen);
   }
 
   const handleCrowbarDragStop=(finalPosition: { x: number; y: number })=>{
@@ -713,6 +719,7 @@ export default function Cabin() {
         (<LightModeBG 
         handleCinderBlocksBoxClick={handleCinderBlockBoxClick} 
         ref={cinderblocksBoxRef} 
+        onCupboardInsideClick={handleCupboardInsideClick}
         onCupboardClick={handleCupboardClick}
         cupboardOpen={isCupboardOpen}
         />)}

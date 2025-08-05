@@ -5,11 +5,12 @@ const imageAspectRatio = 3;
 
 interface LightModeBGProps {
   handleCinderBlocksBoxClick: (e: React.MouseEvent<HTMLDivElement>) => void;
-  onCupboardClick: ()=> void;
+  onCupboardInsideClick: ()=> void;
   cupboardOpen: boolean
+  onCupboardClick:()=>void
 }
 
-export const LightModeBG =  forwardRef<HTMLDivElement, LightModeBGProps>(({onCupboardClick, handleCinderBlocksBoxClick, cupboardOpen}:LightModeBGProps, ref) => {
+export const LightModeBG =  forwardRef<HTMLDivElement, LightModeBGProps>(({onCupboardClick, handleCinderBlocksBoxClick, cupboardOpen, onCupboardInsideClick}:LightModeBGProps, ref) => {
   
   return (
     <>
@@ -36,7 +37,10 @@ export const LightModeBG =  forwardRef<HTMLDivElement, LightModeBGProps>(({onCup
       </div>
 
     {/*cupboard*/}
-      <div className="absolute z-112 left-15 top-25 h-70 w-70 bg-black cursor-pointer bg-black" onClick={onCupboardClick}></div>
+      <div className={`absolute z-112  ${cupboardOpen? "left-48 w-30" :"left-15 w-63"} top-25 h-82 cursor-pointer`} onClick={onCupboardClick}></div>
+
+    {/*cupboard inside*/}
+      <div className={`absolute z-111 left-15 top-25 h-82 w-33 cursor-pointer`} onClick={onCupboardInsideClick}></div>
     </>
   );
 });

@@ -22,7 +22,6 @@ interface DraggableWoodProps {
 
 export function DraggableWood({ initialPosition, onDelete, id, onDragStop, disableFallingAnimation = false }: DraggableWoodProps) {
   const [isFalling, setIsFalling] = useState<boolean>(false);
-  const {resolvedTheme} = useTheme()
   const [position, setPosition] = useState<{ x: number; y: number }>(initialPosition);
   const myRef = useRef<HTMLImageElement>(null);
   const fallSpeed: number = 5;
