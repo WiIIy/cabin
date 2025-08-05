@@ -35,7 +35,7 @@ export const LightModeBG =  forwardRef<HTMLDivElement, LightModeBGProps>(({onCup
         <p className="text-white text-center mt-4">Click to grab a cinderblock</p>
       </div>
 
-    {}
+    {/*cupboard*/}
       <div className="absolute z-112 left-15 top-25 h-70 w-70 bg-black cursor-pointer bg-black" onClick={onCupboardClick}></div>
     </>
   );

@@ -559,6 +559,7 @@ export default function Cabin() {
            setOilVisible(false);
            setRoomOnFire(true);
            triggerSpeechBubble("This is fine", 3000, "talking")
+           unlockAchievement("this is fine")
 
         }
       }
