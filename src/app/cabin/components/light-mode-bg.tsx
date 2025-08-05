@@ -37,14 +37,16 @@ export const LightModeBG =  forwardRef<HTMLDivElement, LightModeBGProps>(({onCup
           />
       </div>
 
+      {/*initial cinderblock hitbox*/}
+      <div className={`${cinderBoxFell?"pointer-events-none":""} absolute z-111 left-53 top-12 h-15 w-23 cursor-pointer`} onClick={onTopOfCupboardClick}></div>
 
-      {/*cinderblock hitbox*/}
+      {/*final cinderblock hitbox*/}
       <div
         ref={ref}
-        className="absolute z-110 left-68 top-110 h-28 w-32 cursor-pointer"
+        className={`${cinderBoxFell?"":"pointer-events-none"} absolute z-110 left-58 top-105 h-32 w-36 cursor-pointer`}
         onClick={handleCinderBlocksBoxClick}
       >
-        <p className="text-white text-center mt-4">Click to grab a cinderblock</p>
+        <p className="text-white text-center mt-4"></p>
       </div>
 
     {/*cupboard*/}
@@ -53,8 +55,7 @@ export const LightModeBG =  forwardRef<HTMLDivElement, LightModeBGProps>(({onCup
     {/*cupboard inside*/}
       <div className={`absolute z-111 left-15 top-25 h-82 w-33 cursor-pointer`} onClick={onCupboardInsideClick}></div>
 
-    {/*cinderblock box on top of cupboard*/}
-      <div className={`absolute z-111 left-15 top-15 h-15 w-33 bg-black opacity-50 cursor-pointer`} onClick={onTopOfCupboardClick}></div>
+    
     </>
   );
 });
