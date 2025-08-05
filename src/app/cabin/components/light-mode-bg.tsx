@@ -9,9 +9,10 @@ interface LightModeBGProps {
   cupboardOpen: boolean
   onCupboardClick:()=>void
   cinderBoxFell:boolean;
+  onTopOfCupboardClick:()=>void;
 }
 
-export const LightModeBG =  forwardRef<HTMLDivElement, LightModeBGProps>(({onCupboardClick, handleCinderBlocksBoxClick, cupboardOpen, onCupboardInsideClick, cinderBoxFell}:LightModeBGProps, ref) => {
+export const LightModeBG =  forwardRef<HTMLDivElement, LightModeBGProps>(({onCupboardClick, handleCinderBlocksBoxClick, cupboardOpen, onCupboardInsideClick, cinderBoxFell, onTopOfCupboardClick}:LightModeBGProps, ref) => {
   
   return (
     <>
@@ -53,7 +54,7 @@ export const LightModeBG =  forwardRef<HTMLDivElement, LightModeBGProps>(({onCup
       <div className={`absolute z-111 left-15 top-25 h-82 w-33 cursor-pointer`} onClick={onCupboardInsideClick}></div>
 
     {/*cinderblock box on top of cupboard*/}
-      <div className={`absolute z-111 left-15 top-15 h-15 w-33 bg-black opacity-50 cursor-pointer`}></div>
+      <div className={`absolute z-111 left-15 top-15 h-15 w-33 bg-black opacity-50 cursor-pointer`} onClick={onTopOfCupboardClick}></div>
     </>
   );
 });
