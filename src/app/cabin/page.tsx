@@ -52,6 +52,7 @@ export default function Cabin() {
   const [oilDrawerOpen, setOilDrawerOpen] = useState<boolean>(false);
   const [oilVisible, setOilVisible] = useState<boolean>(false);
   const [woodInFirePlace, setWoodInFirePlace] = useState<boolean>(false);
+  const [cinderBoxFell, setCinderBoxFell] = useState<boolean>(false);
   
   // State to manage achievements
   const [achievements, setAchievements] = useState<Badge[]>([
@@ -722,6 +723,8 @@ export default function Cabin() {
         onCupboardInsideClick={handleCupboardInsideClick}
         onCupboardClick={handleCupboardClick}
         cupboardOpen={isCupboardOpen}
+        cinderBoxFell={cinderBoxFell}
+        onTopOfCupboardClick={()=>{setCinderBoxFell(true)}}
         />)}
 
       {/*Cabin visuals*/}

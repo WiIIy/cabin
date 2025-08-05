@@ -8,9 +8,10 @@ interface LightModeBGProps {
   onCupboardInsideClick: ()=> void;
   cupboardOpen: boolean
   onCupboardClick:()=>void
+  cinderBoxFell:boolean;
 }
 
-export const LightModeBG =  forwardRef<HTMLDivElement, LightModeBGProps>(({onCupboardClick, handleCinderBlocksBoxClick, cupboardOpen, onCupboardInsideClick}:LightModeBGProps, ref) => {
+export const LightModeBG =  forwardRef<HTMLDivElement, LightModeBGProps>(({onCupboardClick, handleCinderBlocksBoxClick, cupboardOpen, onCupboardInsideClick, cinderBoxFell}:LightModeBGProps, ref) => {
   
   return (
     <>
@@ -20,12 +21,21 @@ export const LightModeBG =  forwardRef<HTMLDivElement, LightModeBGProps>(({onCup
         className="h-fit w-fit overflow-x-scroll overscroll-x-none"
         style={{ minWidth: `calc(var(--vh, 1vh) * 100 * ${imageAspectRatio})`}}>
             
+        {/*cupboard*/}
         <Image
           src={`https://wiiiy.github.io/cabin/cabin/background/background_light/cupboard_${cupboardOpen?"open":"closed"}.png`}
           className="absolute pointer-events-none z-21"
-          alt="plug" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
+          alt="cupboard" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
       />
+
+      {/*cinderblock box*/}
+      <Image
+          src={`https://wiiiy.github.io/cabin/cabin/background/background_light/cinderblockBox_${cinderBoxFell?"fallen":"up"}.png`}
+          className="absolute pointer-events-none z-21"
+          alt="cinderbox" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
+          />
       </div>
+
 
       {/*cinderblock hitbox*/}
       <div
@@ -41,6 +51,9 @@ export const LightModeBG =  forwardRef<HTMLDivElement, LightModeBGProps>(({onCup
 
     {/*cupboard inside*/}
       <div className={`absolute z-111 left-15 top-25 h-82 w-33 cursor-pointer`} onClick={onCupboardInsideClick}></div>
+
+    {/*cinderblock box on top of cupboard*/}
+      <div className={`absolute z-111 left-15 top-15 h-15 w-33 bg-black opacity-50 cursor-pointer`}></div>
     </>
   );
 });
