@@ -24,6 +24,7 @@ interface darkModeBGProps {
 const imageAspectRatio = 3;
 export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, onUnlockAchievement, onGlobeClick,laptopDrawerOpen,onLaptopDrawerClick, fireplaceOn, roomOnFire, firePlaceRef, onFirePlaceClick }: darkModeBGProps) {
     const [laptopGlowToggle, setLaptopGlowToggle] = useState<boolean>(false);
+    const [fireGlowToggle, setFireGlowToggle] = useState<boolean>(false);
     const [isLaptopUIOpen, setLaptopUIOpen] = useState<boolean>(false);
 
     const tapAudio = useRef<HTMLAudioElement>(null);
@@ -42,6 +43,21 @@ export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, 
             }
         };
     }, [plugIn]);
+
+    useEffect(() => {
+        let glowInterval: NodeJS.Timeout | null = null;
+        if (fireplaceOn) {
+            glowInterval = setInterval(() => {
+                setFireGlowToggle(prev => !prev);
+            }, 500);
+        }
+
+        return () => {
+            if (glowInterval) {
+                clearInterval(glowInterval);
+            }
+        };
+    }, [fireplaceOn]);
 
     return (
         <>
@@ -85,7 +101,7 @@ export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, 
                 {/*fireplace fire*/}
                 {fireplaceOn && (
                     <Image
-                        src={`https://wiiiy.github.io/cabin${laptopGlowToggle ? "/cabin/background/background_dark/fireplace_fire1.png" : "/cabin/background/background_dark/fireplace_fire2.png"}`}
+                        src={`https://wiiiy.github.io/cabin${fireGlowToggle ? "/cabin/background/background_dark/fireplace_fire1.png" : "/cabin/background/background_dark/fireplace_fire2.png"}`}
                         className="absolute mix-blend-color-dodge pointer-events-none z-20"
                         alt="laptop glow" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
                     />
@@ -93,12 +109,20 @@ export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, 
 
                 {/*room on fire */}
                 {roomOnFire && (
+                    <>
                     <Image
-                        src={`https://wiiiy.github.io/cabin${laptopGlowToggle ? "/cabin/background/background_dark/cabinfire_cdodge1.png" : "/cabin/background/background_dark/cabinfire_cdodge2.png"}`}
-                        className="absolute mix-blend-color-dodge pointer-events-none z-20"
-                        alt="laptop glow" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
+                        src={`https://wiiiy.github.io/cabin${fireGlowToggle ? "/cabin/background/background_dark/cabinfire_cdodge1.png" : "/cabin/background/background_dark/cabinfire_cdodge2.png"}`}
+                        className="absolute mix-blend-color-dodge z-140 pointer-events-none z-20"
+                        alt="room on fire" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
                     />
+                     <Image
+                        src={`https://wiiiy.github.io/cabin/cabin/background/background_dark/heatedRoom_cdodge_o15.png`}
+                        className="absolute mix-blend-color-dodge z-140 opacity-15 pointer-events-none z-20"
+                        alt="room on fire" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
+                    />
+                    </>
                 )}
+                
 
             </div>
 
