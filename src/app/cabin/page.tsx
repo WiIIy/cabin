@@ -15,6 +15,7 @@ import MsgBoard from "./components/anonymous-msg-board";
 import { Timeout } from "./components/timeout";
 import { Badge } from "./components/laptop-window"; // Import Badge interface
 import { Crowbar } from "./components/crowbar";
+import { Oil } from "./components/oil";
 
 // Define types for Will's expressions
 export type WillExpression = 'reading' | 'blinking' | 'talking' | 'shocked' | 'really' | 'poked';
@@ -31,6 +32,7 @@ export default function Cabin() {
   const [isLaptopDrawerOpen, setLaptopDrawerOpen] = useState<boolean>(false);
   const [firstTimeLaptopDrawerOpen, setFirstTimeLaptopDrawerOpen] = useState<boolean>(true);
   const [crowbarVisible, setCrowbarVisible] = useState<boolean>(false);
+  const [isFireplaceOn, setFirePlaceOn] = useState<boolean>(false);
 
   const [cinderblocks, setCinderblocks] = useState<Cinderblock[]>([]);
   const [windowBroken, setWindowBroken] = useState<boolean>(false);
@@ -42,6 +44,7 @@ export default function Cabin() {
   const [plugIn, setPlugIn] = useState<boolean>(false);
   const [oilDrawerBroken, setOilDrawerBroken] = useState<boolean>(false);
   const [oilDrawerOpen, setOilDrawerOpen] = useState<boolean>(false);
+  const [oilVisible, setOilVisible] = useState<boolean>(false);
   
   // State to manage achievements
   const [achievements, setAchievements] = useState<Badge[]>([
@@ -269,7 +272,7 @@ export default function Cabin() {
     }
   }
 
-  const handleCinderBlockBoxClick = (e: React.MouseEvent<HTMLDivElement>): void => {
+  const handleCinderBlockBoxClick = (): void => {
     if (cinderblocksBoxRef.current) {
       const newCinderblock: Cinderblock = {
         id: Date.now(),
@@ -426,6 +429,7 @@ export default function Cabin() {
           ) {
 
            setOilDrawerBroken(true);
+           setOilVisible(true);
            setCrowbarVisible(false);
 
         }
@@ -441,8 +445,10 @@ export default function Cabin() {
       }
       setOilDrawerOpen(!oilDrawerOpen);
     }
-    
-    
+  }
+
+  const handleOilDragStop=()=>{
+
   }
 
   // Initial setup for blinking when component mounts
@@ -456,7 +462,7 @@ export default function Cabin() {
         clearInterval(blinkIntervalRef.current);
       }
     };
-  }, []); // Empty dependency array means this runs once on mount
+  }); // Empty dependency array means this runs once on mount
 
 
   return (
@@ -518,6 +524,13 @@ export default function Cabin() {
       isVisible={crowbarVisible}
       initialPosition={{ x: 170, y: 344 }}
       onDragStop={handleCrowbarDragStop}
+      />
+
+      {/**/}
+      <Oil
+      isVisible={oilVisible}
+      initialPosition={{x: 370, y: 284}}
+      onDragStop={handleOilDragStop}
       />
 
       {/*Face*/}

@@ -80,7 +80,7 @@ export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, 
             />
 
             {/*wood pile*/}
-            <div className="absolute opacity-50 z-112 left-120 top-91 h-14 w-42 cursor-pointer">wood pile</div>
+            <div className="absolute opacity-50 z-112 left-120 top-91 h-14 w-42 cursor-pointer"></div>
 
             {/*msg board*/}
             <div className="absolute opacity-50 z-112 left-20 top-38 h-40 w-35 cursor-pointer"
@@ -88,7 +88,7 @@ export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, 
             ></div>
 
             {/*globe*/}
-            <div className="absolute z-112 left-58 top-104 h-46 w-49 cursor-pointer" onClick={onGlobeClick}>globe</div>
+            <div className="absolute z-112 left-58 top-104 h-46 w-49 cursor-pointer" onClick={onGlobeClick}></div>
 
             {/*picture*/}
             <div className="absolute z-112 left-65 top-35 h-21 w-17 cursor-pointer"></div>
