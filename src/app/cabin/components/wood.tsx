@@ -6,7 +6,7 @@ import Draggable, { DraggableEventHandler } from 'react-draggable';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 
-export interface Cinderblock {
+export interface Wood {
   id: number;
   x: number;
   y: number;
@@ -49,6 +49,8 @@ export function DraggableWood({ initialPosition, onDelete, id, onDragStop, disab
       onDelete(id);
     }
   };
+
+  
 
   const startFallingAnimation = (startX: number, startY: number): void => {
     let currentFallY = startY;

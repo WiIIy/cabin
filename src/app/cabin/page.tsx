@@ -16,6 +16,8 @@ import { Timeout } from "./components/timeout";
 import { Badge } from "./components/laptop-window"; // Import Badge interface
 import { Crowbar } from "./components/crowbar";
 import { Oil } from "./components/oil";
+import { Wood } from "./components/wood";
+import { DraggableWood } from "./components/wood";
 
 // Define types for Will's expressions
 export type WillExpression = 'reading' | 'blinking' | 'talking' | 'shocked' | 'really' | 'poked';
@@ -32,9 +34,13 @@ export default function Cabin() {
   const [isLaptopDrawerOpen, setLaptopDrawerOpen] = useState<boolean>(false);
   const [firstTimeLaptopDrawerOpen, setFirstTimeLaptopDrawerOpen] = useState<boolean>(true);
   const [crowbarVisible, setCrowbarVisible] = useState<boolean>(false);
+  const [hasClickedWoodPile, setHasClickedWoodPile] = useState<boolean>(false);
   const [isFireplaceOn, setFirePlaceOn] = useState<boolean>(false);
+  const [roomOnFire, setRoomOnFire] = useState<boolean>(false);
+  const [isCupboardOpen, setCupboardOpen] = useState<boolean>(false);
 
   const [cinderblocks, setCinderblocks] = useState<Cinderblock[]>([]);
+  const [woods, setWoods] = useState<Wood[]>([]);
   const [windowBroken, setWindowBroken] = useState<boolean>(false);
   const [blindsDown, setBlindsDown] = useState<boolean>(false);
   const [speechText, setSpeechText] = useState<React.ReactNode | null>(null);
@@ -45,6 +51,7 @@ export default function Cabin() {
   const [oilDrawerBroken, setOilDrawerBroken] = useState<boolean>(false);
   const [oilDrawerOpen, setOilDrawerOpen] = useState<boolean>(false);
   const [oilVisible, setOilVisible] = useState<boolean>(false);
+  const [woodInFirePlace, setWoodInFirePlace] = useState<boolean>(false);
   
   // State to manage achievements
   const [achievements, setAchievements] = useState<Badge[]>([
@@ -65,8 +72,10 @@ export default function Cabin() {
   const openDrawerAudio = useRef<HTMLAudioElement>(null);
 
   const cinderblocksBoxRef = useRef<HTMLDivElement>(null);
+  const woodPileRef = useRef<HTMLDivElement>(null);
   const windowRef = useRef<HTMLDivElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
+  const firePlaceRef = useRef<HTMLDivElement>(null);
   const speechTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const blinkIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const shockTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -364,6 +373,78 @@ export default function Cabin() {
     }
   };
 
+  const handleDeleteWood = (idToDelete: number): void => {
+    setCinderblocks(prev => prev.filter(block => block.id !== idToDelete));
+  };
+
+  const handleDragStopWood = (id: number, finalPosition: { x: number; y: number }): void => {
+
+    if (firePlaceRef.current) {
+      // Get the window's position relative to the parent
+      const firePlaceRect = {
+        left: firePlaceRef.current.offsetLeft,
+        top: firePlaceRef.current.offsetTop,
+        right: firePlaceRef.current.offsetLeft + firePlaceRef.current.offsetWidth,
+        bottom: firePlaceRef.current.offsetTop + firePlaceRef.current.offsetHeight,
+      };
+
+      const woodWidth = 50;
+      const woodHeight = 50;
+
+      // Calculate the actual position of the cinderblock relative to the same coordinate system
+      const woodRect = {
+        left: finalPosition.x,
+        top: finalPosition.y,
+        right: finalPosition.x + woodWidth,
+        bottom: finalPosition.y + woodHeight,
+      };
+
+      // Check for intersection
+      if (
+        woodRect.left < firePlaceRect.right &&
+        woodRect.right > firePlaceRect.left &&
+        woodRect.top < firePlaceRect.bottom &&
+        woodRect.bottom > firePlaceRect.top
+      ) {
+        setWoodInFirePlace(true);
+        setWoods([]);
+        
+      }
+    }
+  };
+
+
+  const handleWoodPileClick = (): void => {
+    if (woodPileRef.current) {
+      const newWood:Wood  = {
+        id: Date.now(),
+        x: 500, // Initial position, adjust as needed
+        y: 450, // Initial position, adjust as needed
+      };
+      setWoods(prev => [...prev, newWood]);
+
+      if (!hasClickedWoodPile) {
+        setHasClickedWoodPile(true);
+        triggerSpeechBubble("Wood", 2400, 'talking');
+      } else {
+        const random = Math.random();
+        if (random < 1 / 3) { // 1/3 chance to say something
+          const responses = [
+            "Decently flammable",
+            "Ideally not moist"
+          ];
+          const randomIndex = Math.floor(Math.random() * responses.length);
+          triggerSpeechBubble(responses[randomIndex], 2000, 'talking');
+        } else {
+          // 2/3 chance to say nothing
+          setSpeechText(null); // Explicitly clear speech text
+          setWillExpression('reading'); // Ensure Will goes back to reading
+        }
+      }
+    }
+  };
+
+  
   const handleWindowClick = (): void => {
     setBlindsDown(prev => !prev);
     if (blindsDown === true && blindsUpAudio.current) {
@@ -383,7 +464,7 @@ export default function Cabin() {
     }
 }
 
-  const handleWardrobeClick=()=>{
+  const handleCupboardClick=()=>{
     if (tapAudio.current){
       tapAudio.current.play()
     }
@@ -447,8 +528,45 @@ export default function Cabin() {
     }
   }
 
-  const handleOilDragStop=()=>{
+  const handleOilDragStop=(finalPosition: { x: number; y: number })=>{
+    if (firePlaceRef.current && isFireplaceOn) {
+          // Get the window's position relative to the parent
+          const fireplaceRect = {
+            left: firePlaceRef.current.offsetLeft,
+            top: firePlaceRef.current.offsetTop,
+            right: firePlaceRef.current.offsetLeft + firePlaceRef.current.offsetWidth,
+            bottom: firePlaceRef.current.offsetTop + firePlaceRef.current.offsetHeight,
+          };
 
+          const oilWidth = 50;
+          const oilHeight = 50;
+
+          // Calculate the actual position of the cinderblock relative to the same coordinate system
+          const crowbarRect = {
+            left: finalPosition.x,
+            top: finalPosition.y,
+            right: finalPosition.x + oilWidth,
+            bottom: finalPosition.y + oilHeight,
+          };
+
+          // Check for intersection
+          if (
+            crowbarRect.left < fireplaceRect.right &&
+            crowbarRect.right > fireplaceRect.left &&
+            crowbarRect.top < fireplaceRect.bottom &&
+            crowbarRect.bottom > fireplaceRect.top
+          ) {;
+           setOilVisible(false);
+           setRoomOnFire(true);
+
+        }
+      }
+  }
+
+  const handleFirePlaceClick=()=>{
+    if (woodInFirePlace){
+      setFirePlaceOn(true);
+    }
   }
 
   // Initial setup for blinking when component mounts
@@ -533,6 +651,11 @@ export default function Cabin() {
       onDragStop={handleOilDragStop}
       />
 
+      {/*wood pile*/}
+      <div className={`${theme==="light"?"pointer-events-none":""} absolute opacity-50 z-112 left-120 top-91 h-14 w-42 cursor-pointer`}
+      ref={woodPileRef}
+      onClick={handleWoodPileClick}></div>
+
       {/*Face*/}
       <div
         className="absolute z-100 left-245 top-15 h-30 w-25 cursor-pointer"
@@ -559,6 +682,16 @@ export default function Cabin() {
         />
       ))}
 
+      {woods.map((block: Wood) => (
+        <DraggableWood
+          key={block.id}
+          id={block.id}
+          initialPosition={{ x: block.x, y: block.y }}
+          onDelete={handleDeleteWood}
+          onDragStop={handleDragStopWood}
+        />
+      ))}
+
       {/*background items and hitboxes*/}
       {theme === "dark" ? (<DarkModeBG
         plugIn={plugIn}
@@ -569,9 +702,19 @@ export default function Cabin() {
         onGlobeClick={handleGlobeClick}
         laptopDrawerOpen={isLaptopDrawerOpen}
         onLaptopDrawerClick={handleLaptopDrawerClick}
+        fireplaceOn={isFireplaceOn}
+        roomOnFire={roomOnFire}
+        firePlaceRef={firePlaceRef}
+        onFirePlaceClick={handleFirePlaceClick}
       />) :
 
-        (<LightModeBG handleCinderBlocksBoxClick={handleCinderBlockBoxClick} ref={cinderblocksBoxRef} onWardrobeClick={handleWardrobeClick}/>)}
+        (<LightModeBG 
+        handleCinderBlocksBoxClick={handleCinderBlockBoxClick} 
+        ref={cinderblocksBoxRef} 
+        onCupboardClick={handleCupboardClick}
+        cupboardOpen={isCupboardOpen}
+        />)}
+
       {/*Cabin visuals*/}
       <CabinBG
         blindsDown={blindsDown}

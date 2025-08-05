@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { Ref, useEffect, useRef, useState } from "react";
 import { LaptopWindow, Badge } from "./laptop-window";
 
 interface darkModeBGProps {
@@ -13,10 +13,16 @@ interface darkModeBGProps {
 
     laptopDrawerOpen: boolean;
     onLaptopDrawerClick:()=>void;
+
+    fireplaceOn:boolean;
+    roomOnFire:boolean;
+    firePlaceRef:Ref<HTMLDivElement>|undefined;
+
+    onFirePlaceClick:()=>void;
 }
 
 const imageAspectRatio = 3;
-export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, onUnlockAchievement, onGlobeClick,laptopDrawerOpen,onLaptopDrawerClick }: darkModeBGProps) {
+export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, onUnlockAchievement, onGlobeClick,laptopDrawerOpen,onLaptopDrawerClick, fireplaceOn, roomOnFire, firePlaceRef, onFirePlaceClick }: darkModeBGProps) {
     const [laptopGlowToggle, setLaptopGlowToggle] = useState<boolean>(false);
     const [isLaptopUIOpen, setLaptopUIOpen] = useState<boolean>(false);
 
@@ -69,6 +75,31 @@ export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, 
                     />
                 )}
 
+                {/*fireplace bg*/}
+                <Image
+                    src={`https://wiiiy.github.io/cabin/cabin/background/background_dark/fireplace_bg.png`}
+                    className={`absolute pointer-events-none z-21 ${laptopDrawerOpen? "visible": "hidden"}`}
+                    alt="plug" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
+                />
+
+                {/*fireplace fire*/}
+                {fireplaceOn && (
+                    <Image
+                        src={`https://wiiiy.github.io/cabin${laptopGlowToggle ? "/cabin/background/background_dark/fireplace_fire1.png" : "/cabin/background/background_dark/fireplace_fire2.png"}`}
+                        className="absolute mix-blend-color-dodge pointer-events-none z-20"
+                        alt="laptop glow" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
+                    />
+                )}
+
+                {/*room on fire */}
+                {roomOnFire && (
+                    <Image
+                        src={`https://wiiiy.github.io/cabin${laptopGlowToggle ? "/cabin/background/background_dark/cabinfire_cdodge1.png" : "/cabin/background/background_dark/cabinfire_cdodge2.png"}`}
+                        className="absolute mix-blend-color-dodge pointer-events-none z-20"
+                        alt="laptop glow" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
+                    />
+                )}
+
             </div>
 
             {/* Pass achievements and onUnlockAchievement to LaptopWindow */}
@@ -79,8 +110,7 @@ export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, 
                 onUnlockAchievement={onUnlockAchievement}
             />
 
-            {/*wood pile*/}
-            <div className="absolute opacity-50 z-112 left-120 top-91 h-14 w-42 cursor-pointer"></div>
+           
 
             {/*msg board*/}
             <div className="absolute opacity-50 z-112 left-20 top-38 h-40 w-35 cursor-pointer"
@@ -93,8 +123,8 @@ export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, 
             {/*picture*/}
             <div className="absolute z-112 left-65 top-35 h-21 w-17 cursor-pointer"></div>
 
-            {/*fire*/}
-            <div className="absolute z-112 left-175 top-78 h-26 w-32 cursor-pointer"></div>
+            {/*fireplace*/}
+            <div ref={firePlaceRef}className="absolute z-112 left-175 top-78 h-26 w-32 cursor-pointer" onClick={onFirePlaceClick}></div>
 
             {/*laptop*/}
             <div className={`${plugIn ? "" : "pointer-events-none"} absolute z-112 left-5 top-75 h-32 w-36 cursor-pointer`} onClick={() => { setLaptopUIOpen(!isLaptopUIOpen); if (tapAudio.current) { tapAudio.current.play() } }}></div>
