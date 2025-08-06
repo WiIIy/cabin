@@ -561,8 +561,9 @@ export default function Cabin() {
             crowbarRect.left < fireplaceRect.right &&
             crowbarRect.right > fireplaceRect.left &&
             crowbarRect.top < fireplaceRect.bottom &&
-            crowbarRect.bottom > fireplaceRect.top
-          ) {;
+            crowbarRect.bottom > fireplaceRect.top &&
+            isFireplaceOn
+          ) {
            setOilVisible(false);
            setRoomOnFire(true);
            triggerSpeechBubble("This is fine", 3000, "talking")
@@ -627,7 +628,7 @@ export default function Cabin() {
 
       {/*drawer*/}
       <div
-        className="absolute z-110 left-98 top-77 h-11 w-50 cursor-pointer"
+        className="absolute z-10 left-98 top-77 h-11 w-50 cursor-pointer"
         ref={drawerRef}
         onClick={handleOilDrawerClick}
       >
@@ -653,7 +654,7 @@ export default function Cabin() {
       onDragStop={handleCrowbarDragStop}
       />
 
-      {/**/}
+      {/*oil*/}
       <Oil
       isVisible={oilVisible}
       initialPosition={{x: 370, y: 284}}
@@ -661,7 +662,7 @@ export default function Cabin() {
       />
 
       {/*wood pile*/}
-      <div className={`${theme==="light"?"pointer-events-none":""} absolute z-112 left-120 top-91 h-14 w-42 cursor-pointer`}
+      <div className={`${theme==="dark"?"":"pointer-events-none"} absolute z-112 left-120 top-91 h-14 w-42 cursor-pointer`}
       ref={woodPileRef}
       onClick={handleWoodPileClick}></div>
 

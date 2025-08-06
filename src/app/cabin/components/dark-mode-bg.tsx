@@ -148,7 +148,7 @@ export function DarkModeBG({ onPosterClick, plugIn, onCableClick, achievements, 
             <div className="absolute z-112 left-65 top-35 h-21 w-17 cursor-pointer"></div>
 
             {/*fireplace*/}
-            <div ref={firePlaceRef}className="absolute z-112 left-175 top-78 h-26 w-32 cursor-pointer" onClick={onFirePlaceClick}></div>
+            <div ref={firePlaceRef}className="absolute z-10 left-175 top-78 h-26 w-32 cursor-pointer" onClick={onFirePlaceClick}></div>
 
             {/*laptop*/}
             <div className={`${plugIn ? "" : "pointer-events-none"} absolute z-112 left-5 top-75 h-32 w-36 cursor-pointer`} onClick={() => { setLaptopUIOpen(!isLaptopUIOpen); if (tapAudio.current) { tapAudio.current.play() } }}></div>
