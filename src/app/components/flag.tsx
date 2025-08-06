@@ -9,7 +9,7 @@ export function FlagHover(){
     const isDark = theme==="dark"? true : false;
     
     return (
-        <div className="hidden sm:visible sm:absolute sm:h-10 sm:w-10 sm:right-1/80 sm:bottom-1/40 sm:cursor-default">
+        <div className="hidden sm:block sm:absolute sm:h-10 sm:w-10 sm:right-1/80 sm:bottom-1/40 sm:cursor-default">
             <HoverCard>
             <HoverCardTrigger>
                 <Image

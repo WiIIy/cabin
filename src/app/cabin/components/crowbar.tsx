@@ -37,7 +37,7 @@ export function Crowbar({ initialPosition, onDragStop, isVisible }: DraggableCin
                 ref={myRef}
                 src={`https://wiiiy.github.io/cabin/cabin/items/crowbar.png`} // Assuming this image exists
                 alt="Crowbar"
-                className={`${isVisible? "visible": "hidden" } absolute w-12 h-12 cursor-grab z-101`}
+                className={`${isVisible? "visible": "hidden" } absolute w-12 h-12 cursor-grab z-121`}
                 width={50}
                 height={50}
                 style={{

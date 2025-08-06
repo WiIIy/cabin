@@ -593,7 +593,7 @@ export default function Cabin() {
 
 
   return (
-    <div className="absolute h-screen w-fit overscroll-none">
+    <div className="absolute h-screen w-fit overscroll-none" suppressHydrationWarning>
 
       <audio ref={glassShatterAudio} src="https://wiiiy.github.io/cabin/sounds/window_shatter.mp3" preload="auto" />
       <audio ref={openBookAudio} src="https://wiiiy.github.io/cabin/sounds/open_book.mp3" preload="auto" />
@@ -661,7 +661,7 @@ export default function Cabin() {
       />
 
       {/*wood pile*/}
-      <div className={`${theme==="light"?"pointer-events-none":""} absolute opacity-50 z-112 left-120 top-91 h-14 w-42 cursor-pointer`}
+      <div className={`${theme==="light"?"pointer-events-none":""} absolute z-112 left-120 top-91 h-14 w-42 cursor-pointer`}
       ref={woodPileRef}
       onClick={handleWoodPileClick}></div>
 

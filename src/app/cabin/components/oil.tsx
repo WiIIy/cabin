@@ -37,7 +37,7 @@ export function Oil({ initialPosition, onDragStop, isVisible }: DraggableCinderb
                 ref={myRef}
                 src={`https://wiiiy.github.io/cabin/cabin/items/oil.png`} // Assuming this image exists
                 alt="Oil"
-                className={`${isVisible? "visible": "hidden" } absolute w-12 h-12 cursor-grab z-101`}
+                className={`${isVisible? "visible": "hidden" } absolute w-12 h-12 cursor-grab z-121`}
                 width={50}
                 height={50}
                 style={{
