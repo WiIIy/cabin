@@ -353,7 +353,7 @@ export default function Cabin() {
         setBlindsDown(true)
         triggerSpeechBubble("My window!", 1700, 'shocked');
         setCinderblocks([]); // Remove all cinderblocks after breaking the window
-        unlockAchievement("in my own home??"); // Unlock achievement for breaking window
+        unlockAchievement("the door was right there"); // Unlock achievement for breaking window
 
         // Set a timeout to change Will's expression back after being shocked
         if (shockTimeoutRef.current) {
