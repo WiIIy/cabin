@@ -668,7 +668,7 @@ export default function Cabin() {
 
       {/*Face*/}
       <div
-        className="absolute z-100 left-245 top-15 h-30 w-25 cursor-pointer"
+        className="absolute z-10 left-245 top-15 h-30 w-25 cursor-pointer"
         onClick={handleFacePoked}
       >
       </div>
@@ -676,7 +676,7 @@ export default function Cabin() {
       {/*Window*/}
       <div
         ref={windowRef}
-        className="absolute z-110 left-98 top-25 h-32 w-50 cursor-pointer"
+        className="absolute z-10 left-98 top-25 h-32 w-50 cursor-pointer"
         onClick={handleWindowClick}
       >
       </div>
