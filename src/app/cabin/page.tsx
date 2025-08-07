@@ -648,18 +648,22 @@ export default function Cabin() {
       </div>
 
       {/*crowbar*/}
+      {crowbarVisible &&
       <Crowbar 
       isVisible={crowbarVisible}
       initialPosition={{ x: 170, y: 344 }}
       onDragStop={handleCrowbarDragStop}
       />
-
+      }
+      
       {/*oil*/}
+      {oilVisible &&
       <Oil
       isVisible={oilVisible}
       initialPosition={{x: 370, y: 284}}
       onDragStop={handleOilDragStop}
       />
+      }
 
       {/*wood pile*/}
       <div className={`${theme==="dark"?"":"pointer-events-none"} absolute z-112 left-120 top-91 h-14 w-42 cursor-pointer`}
