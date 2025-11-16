@@ -2,6 +2,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs"
 import { useRef, useState } from "react"
 import Draggable from "react-draggable";
 import Image from "next/image";
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+import 'react-photo-view/dist/react-photo-view.css';
 
 interface ScrapBookProps {
   isOpen: boolean;
@@ -33,18 +35,18 @@ export function ScrapBook ( {isOpen,onClose}: ScrapBookProps){
                     <button className="absolute right-3 top-1 inline align-right text-text-normal cursor-pointer no-drag" onClick={onClose}>[X]</button>
                     
                 </TabsList>
-                    <TabsContent value="home" className="p-2 text-text-normal">
+                    <TabsContent value="home" className="p-2 text-text-normal no-drag">
                         <div className="overflow-scroll overscroll-none h-full max-h-89">
                             <div className={"bg-background h-full cursor-default"}>
                                 Welcome to the art book! <br/> Here, you can find the various things I&apos;ve worked on. <br/>
                                 <br/>
                                 Keep in mind things here might be outdated<br/>
-                                Last updated: 1st Aug 2025
+                                Last updated: 16th Nov 2025
                             </div>
                         </div>
                     </TabsContent>
 
-                    <TabsContent value="misc" className="p-2 text-text-normal">
+                    <TabsContent value="misc" className="p-2 text-text-normal no-drag">
                         <div className="overflow-scroll overscroll-none h-full max-h-89">
                             For interesting facts!
                             <div className={"bg-background h-full cursor-default grid grid-flow-row grid-cols-2 gap-1"}>
@@ -53,52 +55,116 @@ export function ScrapBook ( {isOpen,onClose}: ScrapBookProps){
                         </div>
                     </TabsContent>
 
-                    <TabsContent value="doodles" className="p-2 text-text-normal">
+                    <TabsContent value="doodles" className="p-2 text-text-normal no-drag">
                         <div className="overflow-scroll overscroll-none h-full max-h-89">
                             Mostly black n white<br/>
                             <div className={"bg-background h-full cursor-default grid grid-flow-row grid-cols-2 gap-1"}>
-                                <Image src="https://wiiiy.github.io/cabin/arts/doodles/bw_1.png" alt="deers" width={200} height={200}/>
-                                <Image src="https://wiiiy.github.io/cabin/arts/doodles/bw_2.png" alt="heart stabber" width={200} height={200}/>
-                                <Image src="https://wiiiy.github.io/cabin/arts/doodles/bw_3.png" alt="demon posing i guess" width={200} height={200}/>
-                                <Image src="https://wiiiy.github.io/cabin/arts/doodles/bw_4.png" alt="mountain goat" width={200} height={200}/>
-                                <Image src="https://wiiiy.github.io/cabin/arts/doodles/bw_5.png" alt="anime styled" width={200} height={200}/>
-                                <Image src="https://wiiiy.github.io/cabin/arts/doodles/bw_6.png" alt="demons" width={200} height={200}/>
+                                <PhotoProvider>
+                                <PhotoView src="https://wiiiy.github.io/cabin/arts/doodles/bw_1.png">
+                                    <Image src="https://wiiiy.github.io/cabin/arts/doodles/bw_1.png" alt="demon deers" width={200} height={200} />
+                                </PhotoView>
+                                <PhotoView src="https://wiiiy.github.io/cabin/arts/doodles/bw_2.png">
+                                    <Image src="https://wiiiy.github.io/cabin/arts/doodles/bw_2.png" alt="cupid" width={200} height={200}/>
+                                </PhotoView>
+                                 <PhotoView src="https://wiiiy.github.io/cabin/arts/doodles/bw_3.png">
+                                    <Image src="https://wiiiy.github.io/cabin/arts/doodles/bw_3.png" alt="demon also" width={200} height={200}/>
+                                </PhotoView>
+                                 <PhotoView src="https://wiiiy.github.io/cabin/arts/doodles/bw_4.png">
+                                    <Image src="https://wiiiy.github.io/cabin/arts/doodles/bw_4.png" alt="mountain goat" width={200} height={200}/>
+                                </PhotoView>
+                                 <PhotoView src="https://wiiiy.github.io/cabin/arts/doodles/bw_5.png">
+                                    <Image src="https://wiiiy.github.io/cabin/arts/doodles/bw_5.png" alt="anime ew" width={200} height={200}/>
+                                </PhotoView>
+                                 <PhotoView src="https://wiiiy.github.io/cabin/arts/doodles/bw_6.jpg">
+                                    <Image src="https://wiiiy.github.io/cabin/arts/doodles/bw_6.jpg" alt="demon w knife" width={200} height={200}/>
+                                </PhotoView>
+                                
+                                </PhotoProvider>
                             </div>
                         </div>
                     </TabsContent>
                     
-                    <TabsContent value="arts" className="p-2 text-text-normal">
+                    <TabsContent value="arts" className="p-2 text-text-normal no-drag">
                         <div className="overflow-scroll overscroll-none h-full max-h-89 space-y-2">
                             <div className={"bg-background h-full cursor-default grid grid-flow-row grid-cols-2 gap-1"}>
-                                <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_1.png" alt="demons" width={200} height={200}/>
-                                <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_2.png" alt="demons" width={200} height={200}/>
-                                <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_3.png" alt="demons" width={200} height={200}/>
-                                <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_4.png" alt="demons" width={200} height={200}/>
-                                <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_5.png" alt="demons" width={200} height={200}/>
-                                <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_6.png" alt="demons" width={200} height={200}/>
-                                <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_7.png" alt="demons" width={200} height={200}/>
-                                <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_8.png" alt="demons" width={200} height={200}/>
-                                <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_9.png" alt="demons" width={200} height={200}/>
-                                <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_10.jpg" alt="demons" width={200} height={200}/>
+                                <PhotoProvider>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/detailed/detailed_11.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_11.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/detailed/detailed_1.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_1.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/detailed/detailed_2.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_2.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/detailed/detailed_3.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_3.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/detailed/detailed_4.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_4.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/detailed/detailed_5.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_5.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/detailed/detailed_6.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_6.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/detailed/detailed_7.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_7.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/detailed/detailed_8.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_8.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/detailed/detailed_9.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_9.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/detailed/detailed_10.jpg">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_10.jpg" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                </PhotoProvider>
                             </div>
                         </div>
                     </TabsContent>
 
-                    <TabsContent value="chars" className="p-2 text-text-normal">
+                    <TabsContent value="chars" className="p-2 text-text-normal no-drag">
                         <div className="overflow-scroll overscroll-none h-full max-h-89">
                             For character portraits
                             <div className={"bg-background h-full cursor-default grid grid-flow-row grid-cols-2 gap-1"}>
-                                <Image src="https://wiiiy.github.io/cabin/arts/characters/char_1.png" alt="demons" width={200} height={200}/>
-                                <Image src="https://wiiiy.github.io/cabin/arts/characters/char_2.png" alt="demons" width={200} height={200}/>
-                                <Image src="https://wiiiy.github.io/cabin/arts/characters/char_3.png" alt="demons" width={200} height={200}/>
-                                <Image src="https://wiiiy.github.io/cabin/arts/characters/char_4.png" alt="demons" width={200} height={200}/>
-                                <Image src="https://wiiiy.github.io/cabin/arts/characters/char_5.png" alt="demons" width={200} height={200}/>
-                                 <Image src="https://wiiiy.github.io/cabin/arts/characters/char_6.jpg" alt="demons" width={200} height={200}/>
+                                <PhotoProvider>
+                                     <PhotoView src="https://wiiiy.github.io/cabin/arts/characters/char_7.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/characters/char_7.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                     <PhotoView src="https://wiiiy.github.io/cabin/arts/characters/char_8.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/characters/char_8.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                     <PhotoView src="https://wiiiy.github.io/cabin/arts/characters/char_9.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/characters/char_9.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/characters/char_1.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/characters/char_1.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/characters/char_2.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/characters/char_2.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/characters/char_3.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/characters/char_3.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/characters/char_4.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/characters/char_4.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/characters/char_5.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/characters/char_5.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/characters/char_6.jpg">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/characters/char_6.jpg" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                            
+                                </PhotoProvider>
                             </div>
                         </div>
                     </TabsContent>
 
-                    <TabsContent value="3D" className="p-2 text-text-normal">
+                    <TabsContent value="3D" className="p-2 text-text-normal no-drag">
                         <div className="overflow-scroll overscroll-none h-full max-h-89">
                             TBA!
                             <div className={"bg-background h-full cursor-default grid grid-flow-row grid-cols-2 gap-1"}>
