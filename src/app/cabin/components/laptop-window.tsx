@@ -115,9 +115,13 @@ export function LaptopWindow({ isOpen, onClose, achievements, onUnlockAchievemen
         return 0; // maintain relative order if both are obtained or both are not
     });
 
+    if (!isOpen) {
+    return null; 
+  }
+
     return (
         <Draggable nodeRef={myRef} cancel=".no-drag">
-            <Tabs ref={myRef} className={`absolute z-112 bg-accent-light rounded-lg h-80 w-100 ${isOpen ? "visible" : "hidden"}`}>
+            <Tabs ref={myRef} className={`absolute z-112 bg-accent-light rounded-lg h-80 w-100`} defaultValue="badges">
                 <TabsList className="absolute bg-background p-1 h-8 w-full rounded-t-lg">
                     <div onClick={onClose} className="absolute right-3 cursor-pointer no-drag">[x]</div>
                     <TabsTrigger className={`no-drag px-2 rounded-lg h-full ${selectedTab === "badges" ? 'bg-background-darkened' : 'bg-background'}`} onClick={() => { setSelectedTab("badges"); playTap() }} value="badges">badges</TabsTrigger>
