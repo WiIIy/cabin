@@ -158,7 +158,7 @@ export function MsgBoard({isOpen, onClose}: msgBoardProps) {
 
   return (
     <Draggable nodeRef={myRef} cancel=".no-drag">
-    <div ref={myRef} className={`absolute z-112 left-50 h-100 w-1/5 font-inter ${isOpen? 'visible' : 'hidden'}`}>
+    <div ref={myRef} className={`absolute z-212 left-50 h-100 w-1/5 font-inter ${isOpen? 'visible' : 'hidden'}`}>
       <div className="bg-background rounded-lg p-2 w-full max-w-2xl border-1 border-black">
 
         <h1 className="text-lg font-bold text-center text-text cursor-default">message board</h1>

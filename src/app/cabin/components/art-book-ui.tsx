@@ -94,9 +94,6 @@ export function ScrapBook ( {isOpen,onClose}: ScrapBookProps){
                                     <PhotoView src="https://wiiiy.github.io/cabin/arts/detailed/detailed_1.png">
                                         <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_1.png" alt="demons" width={200} height={200}/>
                                     </PhotoView>
-                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/detailed/detailed_2.png">
-                                        <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_2.png" alt="demons" width={200} height={200}/>
-                                    </PhotoView>
                                     <PhotoView src="https://wiiiy.github.io/cabin/arts/detailed/detailed_3.png">
                                         <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_3.png" alt="demons" width={200} height={200}/>
                                     </PhotoView>
@@ -121,6 +118,9 @@ export function ScrapBook ( {isOpen,onClose}: ScrapBookProps){
                                     <PhotoView src="https://wiiiy.github.io/cabin/arts/detailed/detailed_10.jpg">
                                         <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_10.jpg" alt="demons" width={200} height={200}/>
                                     </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/detailed/detailed_2.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/detailed/detailed_2.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
                                 </PhotoProvider>
                             </div>
                         </div>
@@ -131,14 +131,23 @@ export function ScrapBook ( {isOpen,onClose}: ScrapBookProps){
                             For character portraits
                             <div className={"bg-background h-full cursor-default grid grid-flow-row grid-cols-2 gap-1"}>
                                 <PhotoProvider>
-                                     <PhotoView src="https://wiiiy.github.io/cabin/arts/characters/char_7.png">
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/characters/char_7.png">
                                         <Image src="https://wiiiy.github.io/cabin/arts/characters/char_7.png" alt="demons" width={200} height={200}/>
                                     </PhotoView>
-                                     <PhotoView src="https://wiiiy.github.io/cabin/arts/characters/char_8.png">
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/characters/char_8.png">
                                         <Image src="https://wiiiy.github.io/cabin/arts/characters/char_8.png" alt="demons" width={200} height={200}/>
                                     </PhotoView>
-                                     <PhotoView src="https://wiiiy.github.io/cabin/arts/characters/char_9.png">
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/characters/char_9.png">
                                         <Image src="https://wiiiy.github.io/cabin/arts/characters/char_9.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/characters/char_10.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/characters/char_10.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/characters/char_11.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/characters/char_11.png" alt="demons" width={200} height={200}/>
+                                    </PhotoView>
+                                    <PhotoView src="https://wiiiy.github.io/cabin/arts/characters/char_12.png">
+                                        <Image src="https://wiiiy.github.io/cabin/arts/characters/char_12.png" alt="demons" width={200} height={200}/>
                                     </PhotoView>
                                     <PhotoView src="https://wiiiy.github.io/cabin/arts/characters/char_1.png">
                                         <Image src="https://wiiiy.github.io/cabin/arts/characters/char_1.png" alt="demons" width={200} height={200}/>
