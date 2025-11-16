@@ -176,7 +176,7 @@ export function MsgBoard({isOpen, onClose}: msgBoardProps) {
           ) : messages.length === 0 ? (
             <p className="text-center text-text cursor-default">no messages yet. be the first to post!</p>
           ) : (
-            <div className="space-y-2 overflow-scroll overscroll-none h-50 max-h-75">
+            <div className="space-y-2 overflow-scroll overscroll-none h-50 max-h-75 no-drag">
               {messages.map((msg: Message) => ( // Type the map iteration variable
                 <div key={msg.id} className="bg-accent-light pl-2 pt-2 rounded-lg shadow-sm transition duration-200 ease-in-out hover:shadow-md">
                   <p className="text-accent-dark text-base">{msg.message}</p>

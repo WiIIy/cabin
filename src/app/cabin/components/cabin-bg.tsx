@@ -122,7 +122,7 @@ export function CabinBG({ blindsDown, windowBroken, willExpression, currentTheme
             {/*darkmode visual bg LIGHT MODE TBA*/}
             <Image
                 src={`https://wiiiy.github.io/cabin${isDark ? "/cabin/background/background_dark/bg_leftside_dark.png" : "/"}`}
-                className="absolute z-11 pointer-events-none"
+                className={`absolute z-11 pointer-events-none ${isDark? "visible": "hidden"}`}
                 alt="" width={1800} height={600} unoptimized={true} style={{ imageRendering: 'pixelated' }}
             />
 
